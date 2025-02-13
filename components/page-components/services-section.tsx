@@ -80,7 +80,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="relative py-32">
+    <section className="relative py-20">
       <div className="container mx-auto px-4 relative">
         <div className="grid lg:grid-cols-2 gap-24">
           {/* Left Column - Core Competencies */}

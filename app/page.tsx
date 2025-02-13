@@ -30,6 +30,8 @@ import HeroWithFeatures from "@/components/page-components/hero-with-features";
 import TransformSection from "@/components/page-components/transform-section";
 import FloatingBackground from "@/components/page-components/foating-background";
 import ServicesSection from "@/components/page-components/services-section";
+import TrustedClientsSection from "@/components/page-components/partners-section";
+import ContactSection from "@/components/page-components/contacts-us-section";
 
 export default function Home() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -224,110 +226,12 @@ export default function Home() {
       <TransformSection />
 
       <ServicesSection />
+      
+      <TrustedClientsSection />
 
-      {/* <section className="py-20 bg-[#150b2e]">
-        <div className="container mx-auto px-4 mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={chooseUsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-2xl text-white mb-16">
-              We are trusted by thousands of clients
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-              {clientLogos.map((client, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  animate={chooseUsInView ? { opacity: 0.6 } : { opacity: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ opacity: 1 }}
-                  className="flex justify-center"
-                >
-                  <img
-                    src={client.logo}
-                    alt={client.name}
-                    className="h-8 w-auto grayscale hover:grayscale-0 transition-all duration-300"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
 
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              ref={chooseUsRef}
-              initial={{ opacity: 0, x: -50 }}
-              animate={chooseUsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-6"
-            >
-              <h4 className="text-[#2BB7DA] font-medium">WHY CHOOSE US</h4>
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
-                Crafting experiences,<br />
-                delivering success.
-              </h2>
-              <p className="text-gray-400 text-lg">
-                Our commitment to quality and excellence is unparalleled. From the first
-                brainstorming session to the final product delivery, we ensure that every
-                step of the process is executed to perfection. You are not just getting a
-                service; you are getting a partner who is committed to your growth and success.
-              </p>
 
-              <div className="pt-8 space-y-6">
-                <div className="flex items-center gap-3 text-gray-300">
-                  <BookOpen className="w-5 h-5 text-[#2BB7DA]" />
-                  <span>Digital solutions under one roof.</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <Target className="w-5 h-5 text-[#2BB7DA]" />
-                  <span>Strategies tailored to your business needs.</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <Diamond className="w-5 h-5 text-[#2BB7DA]" />
-                  <span>Competitive pricing for exceptional value.</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-8 pt-4">
-                <div>
-                  <h3 className="text-5xl font-bold text-[#2BB7DA]">15<span className="text-[#ff712a]">+</span></h3>
-                  <p className="text-sm text-gray-400 mt-2">YEARS OF EXPERIENCE</p>
-                </div>
-                <Button
-                  variant="outline"
-                  className="border-[#2BB7DA] text-[#2BB7DA] hover:bg-[#2BB7DA]/10"
-                >
-                  MORE ABOUT US
-                </Button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={chooseUsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative z-10">
-                <img
-                  src="/api/placeholder/600/400"
-                  alt="Team"
-                  className="w-full rounded-lg"
-                />
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#2BB7DA]/20 to-[#ff712a]/20 mix-blend-multiply" />
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-[#2BB7DA] rounded-lg" />
-            </motion.div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* <section className="py-20 bg-[#0a0118] relative overflow-hidden">
+      <section className="py-20 bg-[#0a0118] relative overflow-hidden">
         <div className="absolute inset-0 opacity-50">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#ff712a]/20 rounded-full filter blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#2BB7DA]/20 rounded-full filter blur-3xl" />
@@ -401,88 +305,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#150b2e] relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
-        </div>
-
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              ref={partnersRef}
-              initial={{ opacity: 0, x: -50 }}
-              animate={partnersInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="relative w-full aspect-square p-8">
-                <img
-                  src="/api/placeholder/600/600"
-                  alt="Digital Success"
-                  className="w-full h-full object-contain"
-                />
-                <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-[#2BB7DA] rounded-full animate-pulse filter blur-sm" />
-                <div className="absolute bottom-1/3 right-1/3 w-4 h-4 bg-[#ff712a] rounded-full animate-pulse filter blur-sm" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={partnersInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-8"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
-                Your partner in digital success.
-              </h2>
-
-              <p className="text-gray-400 text-lg">
-                Our services are designed with a primary focus on the benefits they can
-                bring to your business. We seek to streamline your processes and
-                operations, utilizing the latest technologies to automate tasks and reduce
-                overheads.
-              </p>
-
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
-                    <Feather className="w-6 h-6 text-[#2BB7DA]" />
-                  </div>
-                  <p className="text-gray-300">
-                    Our solutions are designed to streamline your operations, leading to
-                    higher productivity and lower costs.
-                  </p>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
-                    <BarChart3 className="w-6 h-6 text-[#2BB7DA]" />
-                  </div>
-                  <p className="text-gray-300">
-                    By delivering a sleek and modern digital presence, we help elevate your
-                    brand's image and reputation.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                <Button
-                  className="bg-[#ff712a] hover:bg-[#ff712a]/90"
-                >
-                  GET FREE QUOTE
-                </Button>
-
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-[#2BB7DA]" />
-                  <span className="text-white font-medium">(123) 456 7890</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* <section className="py-20 bg-[#0a0118] relative">
+      <section className="py-20 bg-[#0a0118] relative">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0118] via-[#150b2e] to-[#0a0118] opacity-50" />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -546,7 +369,7 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
-      </section> */}
+      </section>
 
       {/* <section className="py-20 bg-[#150b2e] relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5" />
@@ -574,11 +397,11 @@ export default function Home() {
                   <div className="flex flex-wrap gap-8 mt-6">
                     <div className="flex items-center gap-2 text-gray-300">
                       <Phone className="w-5 h-5 text-[#2BB7DA]" />
-                      <span>(123) 456 7890</span>
+                      <span>+65 6809 7118</span>
                     </div>
                     <div className="flex items-center gap-2 text-gray-300">
                       <Mail className="w-5 h-5 text-[#2BB7DA]" />
-                      <span>info@example.com</span>
+                      <span>info@hics.com.sg</span>
                     </div>
                   </div>
                 </div>
@@ -649,6 +472,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section> */}
+      <ContactSection />
       <footer className="bg-[#0a0118] pt-20 pb-8">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-12 pb-12">
