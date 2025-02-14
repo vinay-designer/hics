@@ -1,285 +1,331 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { BadgeCheck, Tags, Boxes, MessageSquare } from "lucide-react";
-import FloatingBackground from './foating-background';
+import { motion, useAnimation } from "framer-motion";
+import { Rocket, Zap, Target, Laptop } from "lucide-react";
+import * as THREE from 'three';
 
+const BackgroundAnimation = () => {
+  const mountRef = useRef<HTMLDivElement>(null);
 
-const BackgroundSVGs = () => (
-    <svg width="0" height="0" className="hidden">
-      <defs>
-        {/* Original Icons */}
-        <g id="dna-icon">
-          <path d="M3,3 Q8,8 3,13 M3,3 Q-2,8 3,13 M3,6 Q6,8 3,10 M3,6 Q0,8 3,10" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-        </g>
-        <g id="pulse-icon">
-          <path d="M0,8 L3,8 L5,3 L7,13 L9,8 L12,8" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-        </g>
-        
-        {/* New Healthcare Icons */}
-        <g id="hospital-icon">
-          <path d="M2,12 V5 H12 V12" fill="none" stroke="currentColor" strokeWidth="1"/>
-          <path d="M6,2 H8 V4 H10 V6 H8 V8 H6 V6 H4 V4 H6 Z" fill="currentColor"/>
-        </g>
-        <g id="microscope-icon">
-          <circle cx="8" cy="3" r="1.5" fill="none" stroke="currentColor"/>
-          <path d="M8,4.5 V7 M6,7 H10 M7,7 V12 M9,7 V12" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-        </g>
-        <g id="medical-data-icon">
-          <rect x="2" y="2" width="10" height="10" rx="1" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-          <path d="M4,5 H10 M4,7 H8 M4,9 H9" 
-            stroke="currentColor" strokeWidth="1"/>
-        </g>
-        
-        {/* New Tech Icons */}
-        <g id="cloud-secure-icon">
-          <path d="M3,8 C3,4 8,4 8,6 C11,6 11,10 8,10 H4 C2,10 2,8 3,8" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-          <circle cx="6" cy="8" r="1" fill="currentColor"/>
-          <path d="M6,8 V9.5" stroke="currentColor" strokeWidth="1"/>
-        </g>
-        <g id="network-icon">
-          <circle cx="7" cy="7" r="1.5" fill="currentColor"/>
-          <circle cx="3" cy="3" r="1" fill="currentColor"/>
-          <circle cx="11" cy="3" r="1" fill="currentColor"/>
-          <circle cx="3" cy="11" r="1" fill="currentColor"/>
-          <circle cx="11" cy="11" r="1" fill="currentColor"/>
-          <path d="M7,7 L3,3 M7,7 L11,3 M7,7 L3,11 M7,7 L11,11" 
-            stroke="currentColor" strokeWidth="0.5"/>
-        </g>
-        <g id="data-analytics-icon">
-          <path d="M2,12 H12 M4,12 V8 M7,12 V4 M10,12 V6" 
-            stroke="currentColor" strokeWidth="1"/>
-          <circle cx="4" cy="8" r="0.5" fill="currentColor"/>
-          <circle cx="7" cy="4" r="0.5" fill="currentColor"/>
-          <circle cx="10" cy="6" r="0.5" fill="currentColor"/>
-        </g>
-        
-        {/* SAP Related Icons */}
-        <g id="sap-cube-icon">
-          <path d="M7,2 L12,5 L7,8 L2,5 L7,2 Z" fill="none" stroke="currentColor" strokeWidth="1"/>
-          <path d="M2,5 V9 L7,12 V8 L2,5" fill="none" stroke="currentColor" strokeWidth="1"/>
-          <path d="M7,8 V12 L12,9 V5 L7,8" fill="none" stroke="currentColor" strokeWidth="1"/>
-        </g>
-        <g id="database-icon">
-          <path d="M4,3 C4,2 10,2 10,3 M4,3 V11 C4,12 10,12 10,11 V3" 
-            fill="none" stroke="currentColor" strokeWidth="1"/>
-          <path d="M4,7 C4,8 10,8 10,7" fill="none" stroke="currentColor" strokeWidth="1"/>
-        </g>
-      </defs>
-    </svg>
-  );
+  useEffect(() => {
+    let scene: THREE.Scene,
+      camera: THREE.PerspectiveCamera,
+      renderer: THREE.WebGLRenderer,
+      lines: { line: THREE.Line; initialRotation: { x: number; y: number; z: number }; rotationSpeed: { x: number; y: number; z: number } }[] = [];
+    let animationFrameId: number;
 
-  type FloatingElementProps = { 
-    icon: string;   
-    className: string;
-  }
+    const init = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (mountRef.current) {
+        mountRef.current.appendChild(renderer.domElement);
+      }
 
-  const FloatingElement = ({ icon, className }: FloatingElementProps) => {
-    const randomDuration = () => 15 + Math.random() * 20;
-    const randomDelay = () => -Math.random() * 20;
-  
-    return (
-      <motion.div
-        className={`absolute text-purple-500/10 ${className}`}
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 360],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{
-          duration: randomDuration(),
-          repeat: Infinity,
-          delay: randomDelay(),
-          ease: "linear"
-        }}
-      >
-        <svg width="40" height="40" viewBox="0 0 14 14">
-          <use href={`#${icon}`} />
-        </svg>
-      </motion.div>
-    );
+      // Create multiple line geometries
+      for (let i = 0; i < 50; i++) {
+        const geometry = new THREE.BufferGeometry();
+        const points = [];
+
+        // Create curved lines
+        for (let j = 0; j < 100; j++) {
+          const x = (Math.random() - 0.5) * 20;
+          const y = (Math.random() - 0.5) * 20;
+          const z = (Math.random() - 0.5) * 20;
+          points.push(new THREE.Vector3(x, y, z));
+        }
+
+        geometry.setFromPoints(points);
+
+        const material = new THREE.LineBasicMaterial({
+          color: new THREE.Color(1, 0.44, 0.16), // #ff712a
+          transparent: true,
+          opacity: 0.3 + Math.random() * 0.5
+        });
+
+        const line = new THREE.Line(geometry, material);
+        lines.push({
+          line,
+          initialRotation: {
+            x: Math.random() * Math.PI,
+            y: Math.random() * Math.PI,
+            z: Math.random() * Math.PI
+          },
+          rotationSpeed: {
+            x: (Math.random() - 0.5) * 0.002,
+            y: (Math.random() - 0.5) * 0.002,
+            z: (Math.random() - 0.5) * 0.002
+          }
+        });
+        scene.add(line);
+      }
+
+      camera.position.z = 30;
+    };
+
+    interface MouseMoveEvent {
+      clientX: number;
+      clientY: number;
+    }
+
+    const handleMouseMove = (event: MouseMoveEvent): void => {
+      const mouseX: number = (event.clientX / window.innerWidth) * 2 - 1;
+      const mouseY: number = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      camera.position.x += (mouseX - camera.position.x) * 0.05;
+      camera.position.y += (mouseY - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+    };
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+
+      lines.forEach((lineObj) => {
+        lineObj.line.rotation.x += lineObj.rotationSpeed.x;
+        lineObj.line.rotation.y += lineObj.rotationSpeed.y;
+        lineObj.line.rotation.z += lineObj.rotationSpeed.z;
+      });
+
+      renderer.render(scene, camera);
+    };
+
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    init();
+    animate();
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      mountRef.current?.removeChild(renderer.domElement);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <div ref={mountRef} className="absolute inset-0 z-0" />;
+};
+
+const AnimatedText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
+  const letters = Array.from(text);
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.03, delayChildren: delay * 0.3 }
+    })
   };
 
-// Background Elements Component
-const BackgroundElements = () => {
-    const elements = [
-      { icon: 'dna-icon', positions: ['top-20 left-20', 'bottom-40 right-1/4'] },
-      { icon: 'pulse-icon', positions: ['top-40 right-40', 'bottom-1/4 left-1/4'] },
-      { icon: 'hospital-icon', positions: ['top-1/4 right-1/3', 'bottom-20 left-20'] },
-      { icon: 'microscope-icon', positions: ['top-1/3 left-40', 'bottom-1/3 right-1/3'] },
-      { icon: 'medical-data-icon', positions: ['top-1/2 right-20', 'bottom-40 left-1/3'] },
-      { icon: 'cloud-secure-icon', positions: ['top-60 left-1/4', 'bottom-1/4 right-20'] },
-      { icon: 'network-icon', positions: ['top-32 right-1/4', 'bottom-60 left-40'] },
-      { icon: 'data-analytics-icon', positions: ['top-1/3 right-40', 'bottom-32 right-1/4'] },
-      { icon: 'sap-cube-icon', positions: ['top-40 left-1/3', 'bottom-1/3 left-20'] },
-      { icon: 'database-icon', positions: ['top-20 right-20', 'bottom-20 right-1/3'] }
-    ];
+  const child = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200
+      }
+    },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200
+      }
+    }
+  };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {elements.map((element, i) => (
-      element.positions.map((position, j) => (
-        <FloatingElement
-          key={`${i}-${j}`}
-          icon={element.icon}
-          className={position}
-        />
-      ))
-    ))}
-    
-    {/* Tech grid pattern */}
-    <div className="absolute inset-0" style={{
-      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.05) 1px, transparent 0)`,
-      backgroundSize: '40px 40px'
-    }} />
-  </div>
+    <motion.div
+      style={{ display: "flex", overflow: "hidden" }}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      {letters.map((letter, index) => (
+        <motion.span key={index} variants={child}>
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.div>
   );
 };
 
 const HeroWithFeatures = () => {
   const features = [
     {
-      icon: <BadgeCheck className="w-6 h-6" />,
-      title: "Quality Assurance",
-      description: "Ensuring the highest standards in every project",
+      icon: <Rocket className="w-6 h-6" />,
+      title: "Next-Gen Solutions",
+      description: "Pushing boundaries with innovative tech",
     },
     {
-      icon: <Tags className="w-6 h-6" />,
-      title: "Competitive Pricing",
-      description: "Best value for your investment",
+      icon: <Zap className="w-6 h-6" />,
+      title: "Lightning Fast",
+      description: "Optimized for peak performance",
     },
     {
-      icon: <Boxes className="w-6 h-6" />,
-      title: "Experienced Team",
-      description: "Expert professionals at your service",
+      icon: <Target className="w-6 h-6" />,
+      title: "Precision Focus",
+      description: "Targeted solutions for your needs",
     },
     {
-      icon: <MessageSquare className="w-6 h-6" />,
-      title: "Excellent Support",
-      description: "24/7 dedicated customer service",
+      icon: <Laptop className="w-6 h-6" />,
+      title: "Smart Systems",
+      description: "Intelligent automated workflows",
     },
   ];
 
   return (
-    <div className="relative bg-[#0a0118] min-h-screen overflow-hidden">
-      {/* Background SVG Definitions */}
-      <BackgroundSVGs />
-      
-      {/* Animated Background Elements */}
-      <BackgroundElements />
+    <div className="relative min-h-screen overflow-hidden bg-black">
+      <BackgroundAnimation />
 
-      
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90" />
 
-      {/* Main Content Container */}
-      <div className="container mx-auto px-4  mt-[40px] relative z-10">
+      <div className="container mx-auto px-4 mt-10 relative z-10">
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Left Column - Text Content */}
+          {/* Left Column */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
             className="pt-20 space-y-8"
           >
             <div className="space-y-2">
-              <h1 className="text-4xl md:text-5xl font-bold text-white">
-                Leading Healthcare
-              </h1>
+              <div className="text-5xl md:text-7xl font-bold text-white mb-4">
+                <AnimatedText text="POWER UP" delay={0.2} />
+              </div>
               <div className="space-y-0">
-                <span className="block text-4xl md:text-5xl font-light text-cyan-400 leading-tight">
-                  Technology
-                </span>
-                <span className="block text-4xl md:text-5xl font-light text-cyan-400 leading-tight">
-                  Solutions!
-                </span>
+                <div className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500] leading-tight">
+                  <AnimatedText text="YOUR BUSINESS" delay={0.4} />
+                </div>
+                <div className="text-2xl font-light text-[#ffa763] leading-tight mt-4">
+                  <AnimatedText text="Innovate • Transform • Succeed" delay={0.6} />
+                </div>
               </div>
             </div>
-            
-            <p className="text-gray-400 text-base max-w-xl">
-              Since 2015, we've been Singapore's trusted partner for SAP Healthcare, 
-              Cloud Infrastructure, and Cyber Security solutions. Empowering healthcare 
-              through innovation.
-            </p>
 
-            <div className="flex gap-4 pt-4">
-              <Button 
-                size="lg" 
-                className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-8 py-6 text-base"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="text-gray-400 text-lg max-w-xl"
+            >
+              Break through limitations with our cutting-edge solutions.
+              We transform businesses into industry leaders through
+              innovative technology and strategic implementation.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="flex gap-4 pt-4"
+            >
+              <Button
+                size="lg"
+                className="relative overflow-hidden group bg-gradient-to-r from-[#ff712a] to-[#ff9500] hover:from-[#ff9500] hover:to-[#ff712a] text-white px-8 py-6 text-lg font-semibold transform transition-all duration-300 hover:scale-105"
               >
-                GET FREE QUOTE
+                GET STARTED
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/5 px-8 py-6 text-base"
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-[#ff712a] text-[#ff712a] hover:bg-[#ff712a] hover:text-white px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105"
               >
-                OUR SERVICES
+                EXPLORE MORE
               </Button>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Right Column - Image */}
+          {/* Right Column */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             className="relative pt-20"
           >
             <div className="relative z-10">
-              <div className="w-full h-[500px] overflow-hidden relative">
-                {/* Neon border effect */}
-                <div className="absolute inset-0 p-[1px] bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500">
-                  <div className="absolute inset-0 bg-[#0a0118]" />
-                </div>
+              <div className="w-full h-[500px] overflow-hidden relative rounded-lg">
+                <div className="absolute inset-0 bg-black/40" />
                 <img
                   src="/api/placeholder/800/800"
-                  alt="Digital Solutions"
-                  className="relative z-10 w-full h-full object-cover"
+                  alt="Future Technology"
+                  className="relative z-10 w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                />
+                {/* Animated corners */}
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: 64, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                  className="absolute top-0 left-0 h-px bg-[#ff712a]"
+                />
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 64, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.4 }}
+                  className="absolute top-0 left-0 w-px bg-[#ff712a]"
+                />
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: 64, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.6 }}
+                  className="absolute bottom-0 right-0 h-px bg-[#ff712a]"
+                />
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 64, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.8 }}
+                  className="absolute bottom-0 right-0 w-px bg-[#ff712a]"
                 />
               </div>
-              {/* Glow effect */}
-              <div className="absolute -z-10 -inset-2 bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-purple-500/20 rounded-2xl blur-xl" />
             </div>
           </motion.div>
         </div>
 
         {/* Features Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid md:grid-cols-4 relative z-20"
+          transition={{ duration: 0.8, delay: 1 }}
+          className="grid md:grid-cols-4 gap-1 relative z-20 mt-16"
         >
           {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-              className="bg-[#0f0627] p-8 relative group overflow-hidden border-r border-purple-900/20 last:border-r-0"
+              transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
+              className="relative group transform transition-all duration-300 hover:scale-105"
             >
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="w-12 h-12 mx-auto mb-4 relative">
-                  {/* Icon with glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-400 opacity-75 blur-sm" />
-                  <div className="relative z-10 w-full h-full flex items-center justify-center text-white">
-                    {feature.icon}
-                  </div>
+              <div className="bg-black/40 backdrop-blur-sm p-8 relative z-10 h-full border-r border-[#ff712a]/10 last:border-r-0 group-hover:bg-black/60 transition-all duration-300">
+                <div className="relative z-10">
+                  <motion.div
+                    className="w-16 h-16 mx-auto mb-4 relative"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <div className="relative z-10 w-full h-full flex items-center justify-center text-white bg-black/40 rounded-lg p-3 group-hover:text-[#ff712a] transition-colors duration-300">
+                      {feature.icon}
+                    </div>
+                  </motion.div>
+
+                  <h3 className="text-xl font-bold mb-3 text-white text-center group-hover:text-[#ff712a] transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm text-center group-hover:text-gray-300 transition-colors duration-300">
+                    {feature.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-lg font-semibold mb-2 text-white text-center">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 text-sm text-center">
-                  {feature.description}
-                </p>
               </div>
             </motion.div>
           ))}

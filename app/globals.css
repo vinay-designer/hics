@@ -3,9 +3,52 @@
 @tailwind utilities;
 
 :root {
+  /* Base colors */
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  /* Theme colors */
+  --background: 222 89% 5%;
+  --foreground: 210 40% 98%;
+  --card: 217 33% 17%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 89% 5%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 226 70% 55%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 226 70% 55%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --ring: 226 70% 55%;
+  --radius: 0.5rem;
+
+  /* Custom theme colors */
+  --bg-primary: #0a0118;
+  --bg-secondary: #150b2e;
+  --accent-blue: #2BB7DA;
+  --accent-orange: #ff712a;
+  --accent-purple: #8B5CF6;
+  --accent-purple-dark: #7C3AED;
+  --accent-fuchsia: #FF0080;
+  
+  /* Opacity variants */
+  --bg-opacity-20: rgba(10, 1, 24, 0.2);
+  --bg-opacity-30: rgba(10, 1, 24, 0.3);
+  --bg-opacity-40: rgba(10, 1, 24, 0.4);
+  --bg-opacity-50: rgba(10, 1, 24, 0.5);
+  
+  /* Gradient presets */
+  --gradient-primary: linear-gradient(to right, var(--accent-blue), var(--accent-orange));
+  --gradient-secondary: linear-gradient(to right, var(--accent-purple), var(--accent-fuchsia));
+  --gradient-blur: linear-gradient(to right, rgba(43, 183, 218, 0.2), rgba(255, 113, 42, 0.2));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,35 +60,41 @@
 }
 
 @layer base {
-  :root {
-    --background: 222 89% 5%;
-    --foreground: 210 40% 98%;
-    --card: 217 33% 17%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 89% 5%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 226 70% 55%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 226 70% 55%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 226 70% 55%;
-    --radius: 0.5rem;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom utility classes */
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-secondary {
+  background: var(--gradient-secondary);
+}
+
+.text-gradient-primary {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-secondary {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.border-gradient-primary {
+  border-image: var(--gradient-primary) 1;
+}
+
+.bg-blur-gradient {
+  background: var(--gradient-blur);
 }
