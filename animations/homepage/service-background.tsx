@@ -2,14 +2,25 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const ServicesBackground = () => {
-  const mountRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let scene, camera, renderer;
+    let scene: THREE.Scene,
+        camera: THREE.PerspectiveCamera,
+        renderer: THREE.WebGLRenderer;
     let particles = [];
-    let animationFrameId;
+    let animationFrameId: number;
 
     class FlowParticle {
+      private geometry: THREE.SphereGeometry;
+      private material: THREE.MeshBasicMaterial;
+      public mesh: THREE.Mesh;
+      private center: THREE.Vector3;
+      private angle: number;
+      private speed: number;
+      private radius: number;
+      private verticalSpeed: number;
+
       constructor() {
         this.geometry = new THREE.SphereGeometry(0.03, 8, 8);
         this.material = new THREE.MeshBasicMaterial({
@@ -62,7 +73,9 @@ const ServicesBackground = () => {
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      mountRef.current.appendChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.appendChild(renderer.domElement);
+      }
 
       // Create flow particles
       for (let i = 0; i < 200; i++) {
@@ -78,7 +91,12 @@ const ServicesBackground = () => {
       camera.position.z = 15;
 
       // Add mouse interaction
-      const handleMouseMove = (event) => {
+      interface MouseMoveEvent {
+        clientX: number;
+        clientY: number;
+      }
+
+      const handleMouseMove = (event: MouseMoveEvent) => {
         const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 

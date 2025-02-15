@@ -2,14 +2,20 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const TransformBackground = () => {
-  const mountRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let scene, camera, renderer;
+    let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
     let particles = [];
-    let animationFrameId;
+    let animationFrameId: number;
 
     class Particle {
+      geometry: THREE.SphereGeometry;
+      material: THREE.MeshBasicMaterial;
+      mesh: THREE.Mesh;
+      velocity: THREE.Vector3;
+      connections: Array<{ line: THREE.Line; target: Particle }>;
+
       constructor() {
         this.geometry = new THREE.SphereGeometry(0.05, 8, 8);
         this.material = new THREE.MeshBasicMaterial({
@@ -46,7 +52,9 @@ const TransformBackground = () => {
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      mountRef.current.appendChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.appendChild(renderer.domElement);
+      }
 
       // Create particles
       for (let i = 0; i < 100; i++) {
@@ -79,7 +87,7 @@ const TransformBackground = () => {
       camera.position.z = 15;
 
       // Mouse interaction
-      const handleMouseMove = (event) => {
+      const handleMouseMove = (event: MouseEvent) => {
         const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -110,9 +118,9 @@ const TransformBackground = () => {
             // Only show connections for particles within a certain distance
             const distance = particle.mesh.position.distanceTo(target.mesh.position);
             if (distance < 5) {
-              line.material.opacity = 0.2 * (1 - distance / 5);
+              (line.material as THREE.LineBasicMaterial).opacity = 0.2 * (1 - distance / 5);
             } else {
-              line.material.opacity = 0;
+              (line.material as THREE.LineBasicMaterial).opacity = 0;
             }
 
             line.geometry.attributes.position.needsUpdate = true;

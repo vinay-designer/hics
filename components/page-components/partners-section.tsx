@@ -1,156 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-    Shield, Star, ArrowUpRight, Globe,
-    Award, Sparkles, Users, ArrowRight
+     Sparkles, Users, ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import * as THREE from 'three';
-
-// Background Animation Component
-const PartnersBackground = () => {
-  const mountRef = useRef(null);
-
-  useEffect(() => {
-    let scene, camera, renderer;
-    let nodes = [];
-    let connections = [];
-    let animationFrameId;
-
-    class Node {
-      constructor() {
-        const geometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const material = new THREE.MeshBasicMaterial({
-          color: new THREE.Color('#ff712a'),
-          transparent: true,
-          opacity: 0.6
-        });
-        this.mesh = new THREE.Mesh(geometry, material);
-        
-        const phi = Math.random() * Math.PI * 2;
-        const theta = Math.random() * Math.PI;
-        const radius = 5 + Math.random() * 3;
-        
-        this.mesh.position.set(
-          radius * Math.sin(theta) * Math.cos(phi),
-          radius * Math.sin(theta) * Math.sin(phi),
-          radius * Math.cos(theta)
-        );
-        
-        this.velocity = new THREE.Vector3(
-          (Math.random() - 0.5) * 0.01,
-          (Math.random() - 0.5) * 0.01,
-          (Math.random() - 0.5) * 0.01
-        );
-      }
-
-      update() {
-        this.mesh.position.add(this.velocity);
-        
-        const maxDistance = 8;
-        if (this.mesh.position.length() > maxDistance) {
-          this.mesh.position.normalize().multiplyScalar(maxDistance);
-          this.velocity.multiplyScalar(-1);
-        }
-      }
-    }
-
-    class Connection {
-      constructor(node1, node2) {
-        const geometry = new THREE.BufferGeometry();
-        const material = new THREE.LineBasicMaterial({
-          color: new THREE.Color('#ff9500'),
-          transparent: true,
-          opacity: 0.2
-        });
-        
-        const points = [node1.mesh.position, node2.mesh.position];
-        geometry.setFromPoints(points);
-        
-        this.line = new THREE.Line(geometry, material);
-        this.node1 = node1;
-        this.node2 = node2;
-      }
-
-      update() {
-        const points = [this.node1.mesh.position, this.node2.mesh.position];
-        this.line.geometry.setFromPoints(points);
-        const distance = this.node1.mesh.position.distanceTo(this.node2.mesh.position);
-        this.line.material.opacity = Math.max(0, 0.5 - distance / 15);
-      }
-    }
-
-    const init = () => {
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      mountRef.current.appendChild(renderer.domElement);
-
-      for (let i = 0; i < 50; i++) {
-        const node = new Node();
-        nodes.push(node);
-        scene.add(node.mesh);
-      }
-
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          if (Math.random() < 0.1) {
-            const connection = new Connection(nodes[i], nodes[j]);
-            connections.push(connection);
-            scene.add(connection.line);
-          }
-        }
-      }
-
-      camera.position.z = 15;
-
-      const handleMouseMove = (event) => {
-        const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        camera.position.x += (mouseX - camera.position.x) * 0.05;
-        camera.position.y += (mouseY - camera.position.y) * 0.05;
-        camera.lookAt(scene.position);
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-
-      const animate = () => {
-        animationFrameId = requestAnimationFrame(animate);
-        nodes.forEach(node => node.update());
-        connections.forEach(connection => connection.update());
-        scene.rotation.y += 0.001;
-        scene.rotation.x += 0.0005;
-        renderer.render(scene, camera);
-      };
-
-      const handleResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-      animate();
-
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('resize', handleResize);
-        mountRef.current?.removeChild(renderer.domElement);
-        cancelAnimationFrame(animationFrameId);
-      };
-    };
-
-    init();
-  }, []);
-
-  return <div ref={mountRef} className="absolute inset-0 z-0" />;
-};
+import PartnersBackground from '../../animations/homepage/partner-background';
 
 // Smooth Marquee Component
-const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }) => {
-    const [duplicated, setDuplicated] = useState([]);
-    const containerRef = useRef(null);
+const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }: { children: React.ReactNode; direction?: 'left' | 'right'; speed?: number; className?: string }) => {
+    const [duplicated, setDuplicated] = useState<React.ReactNode[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [containerWidth, setContainerWidth] = useState(0);
 
     useEffect(() => {
@@ -202,7 +61,7 @@ const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '
 // Main Partners Section Component
 const PartnersSection = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const partners = [
         {
@@ -239,7 +98,7 @@ const PartnersSection = () => {
     ];
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        const handleMouseMove = (e: { clientX: number; clientY: number; }) => {
             if (!containerRef.current) return;
             const rect = containerRef.current.getBoundingClientRect();
             setMousePosition({

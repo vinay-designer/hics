@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Brain, Settings, Wrench, Power } from 'lucide-react';
-import ProcessBackground from './process-animation';
+import ProcessBackground from '../../animations/homepage/process-animation';
 
 const ProcessSection = () => {
   const processRef = useRef(null);

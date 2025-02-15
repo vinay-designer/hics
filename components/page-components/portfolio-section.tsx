@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import PortfolioBackground from './portfolio-background';
+import PortfolioBackground from '../../animations/homepage/portfolio-background';
 
 const PortfolioSection = () => {
   const portfolioRef = useRef(null);

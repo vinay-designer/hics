@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, Send, MessageSquare, User, AtSign, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ContactBackground from '@/animations/homepage/contact-background';
 
 const ContactSection = () => {
   const [formFocus, setFormFocus] = useState<string | null>(null);
@@ -42,6 +43,7 @@ const ContactSection = () => {
 
   return (
     <section className="relative py-32 overflow-hidden bg-black">
+      <ContactBackground />
       {/* Background gradients */}
       <div className="absolute inset-0">
         <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 " />

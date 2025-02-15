@@ -6,11 +6,11 @@ import {
   Sparkles, ArrowUpRight,
   CheckCircle
 } from 'lucide-react';
-import ServicesBackground from './service-backgroound';
+import ServicesBackground from '../../animations/homepage/service-background';
 
 const ServicesSection = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [hoveredFeature, setHoveredFeature] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<any>(null);
+  const [hoveredFeature, setHoveredFeature] = useState<any>(null);
 
   const competencies = [
     { 

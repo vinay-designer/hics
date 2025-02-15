@@ -2,15 +2,23 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const ProcessBackground = () => {
-  const mountRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let scene, camera, renderer;
+    let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
     let hexagons = [];
-    let animationFrameId;
+    let animationFrameId: number;
 
     class HexagonCell {
-      constructor(x, y, size = 2) {
+      mesh: THREE.Mesh;
+      progress: number;
+      targetProgress: number;
+      activated: boolean;
+      baseScale: number;
+      pulsePhase: number;
+      pulseSpeed: number;
+
+      constructor(x: number, y: number, size: number = 2) {
         // Create hexagon shape
         const shape = new THREE.Shape();
         const vertices = 6;
@@ -75,7 +83,7 @@ const ProcessBackground = () => {
         this.pulseSpeed = 0.5 + Math.random() * 0.5;
       }
 
-      update(time, mousePosition) {
+      update(time: number, mousePosition: { x: number; y: number }) {
         // Distance-based activation
         const dx = this.mesh.position.x - mousePosition.x * 30;
         const dy = this.mesh.position.y - mousePosition.y * 30;
@@ -85,8 +93,8 @@ const ProcessBackground = () => {
         this.progress += (this.targetProgress - this.progress) * 0.1;
         
         // Update uniforms
-        this.mesh.material.uniforms.time.value = time;
-        this.mesh.material.uniforms.progress.value = this.progress;
+        (this.mesh.material as THREE.ShaderMaterial).uniforms.time.value = time;
+        (this.mesh.material as THREE.ShaderMaterial).uniforms.progress.value = this.progress;
         
         // Scale animation
         const scale = this.baseScale + Math.sin(time * this.pulseSpeed + this.pulsePhase) * 0.03;
@@ -105,7 +113,9 @@ const ProcessBackground = () => {
       
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      mountRef.current.appendChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.appendChild(renderer.domElement);
+      }
 
       // Create hexagonal grid
       const gridWidth = 20;
@@ -131,7 +141,7 @@ const ProcessBackground = () => {
       let mouseX = 0;
       let mouseY = 0;
 
-      const handleMouseMove = (event) => {
+      const handleMouseMove = (event: MouseEvent) => {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
       };

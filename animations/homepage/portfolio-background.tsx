@@ -2,17 +2,21 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const PortfolioBackground = () => {
-  const mountRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let scene, camera, renderer;
+    let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
     let flowLines = [];
-    let animationFrameId;
+    let animationFrameId: number;
     let mouseX = 0;
     let mouseY = 0;
 
     class FlowLine {
-      constructor(startX) {
+      mesh: THREE.Mesh;
+      speed: number;
+      yOffset: number;
+      
+      constructor(startX: number) {
         const points = [];
         const segments = 200;
         const width = 120; // Increased width
@@ -75,10 +79,10 @@ const PortfolioBackground = () => {
         this.yOffset = Math.random() * Math.PI * 2;
     }
 
-      update(time, mousePosition) {
+      update(time: number, mousePosition: THREE.Vector2) {
         // Update uniforms
-        this.mesh.material.uniforms.time.value = time * this.speed;
-        this.mesh.material.uniforms.mousePosition.value = mousePosition;
+        (this.mesh.material as THREE.ShaderMaterial).uniforms.time.value = time * this.speed;
+        (this.mesh.material as THREE.ShaderMaterial).uniforms.mousePosition.value = mousePosition;
         
         // Gentle floating motion
         this.mesh.position.y = Math.sin(time + this.yOffset) * 0.2;
@@ -96,7 +100,9 @@ const PortfolioBackground = () => {
       
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      mountRef.current.appendChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.appendChild(renderer.domElement);
+      }
 
       // Create flow lines across the width
       const numLines = 20;
@@ -115,7 +121,12 @@ const PortfolioBackground = () => {
       camera.rotation.x = -Math.PI / 4;
 
       // Mouse interaction
-      const handleMouseMove = (event) => {
+      interface MouseMoveEvent {
+        clientX: number;
+        clientY: number;
+      }
+
+      const handleMouseMove = (event: MouseMoveEvent) => {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
         mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
       };

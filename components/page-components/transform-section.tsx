@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Sparkles, Workflow, Shield, Check } from "lucide-react";
-import TransformBackground from './transform-background';
+import TransformBackground from '../../animations/homepage/transform-background';
 
 const TransformSection = () => {
   const [hoveredCard, setHoveredCard] = useState<any>(null);
