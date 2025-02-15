@@ -6,8 +6,8 @@ const PartnersBackground = () => {
 
   useEffect(() => {
     let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
-    let nodes = [];
-    let connections = [];
+    let nodes: any = [];
+    let connections: any = [];
     interface NodeMesh extends THREE.Mesh {
       position: THREE.Vector3;
     }
@@ -151,10 +151,10 @@ const PartnersBackground = () => {
         animationFrameId = requestAnimationFrame(animate);
 
         // Update nodes
-        nodes.forEach(node => node.update());
+        nodes.forEach((node: NodeType) => node.update());
 
         // Update connections
-        connections.forEach(connection => connection.update());
+        connections.forEach((connection: { update: () => any; }) => connection.update());
 
         // Rotate entire scene slowly
         scene.rotation.y += 0.001;
