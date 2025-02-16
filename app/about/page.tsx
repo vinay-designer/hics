@@ -1,401 +1,456 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from "framer-motion";
-import { Globe, Target, Rocket, Users, Building2, Clock, Server, Shield, Zap } from "lucide-react";
+import { Globe, Target, Rocket, Users, Building2, Server, Shield, Zap, Award, Clock, CheckCircle, Heart, Code, Lightbulb } from "lucide-react";
 import AboutBackground from '../../animations/about/about-background';
 
 const AboutPage = () => {
-  const industries = [
-    "Healthcare", "Life Sciences", "Retail", "Utilities", 
-    "Shipping", "Logistics", "Transportation"
-  ];
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const underlineAnimation = {
+    initial: { width: "0%" },
+    animate: { width: "100%" },
+    transition: { duration: 0.8, delay: 0.2 }
+  };
 
   const offerings = [
     { 
-      icon: <Server className="w-6 h-6" />,
+      icon: <Server className="w-8 h-8" />,
       title: "SAP Healthcare",
-      description: "Specialized solutions for healthcare sector"
+      description: "Comprehensive SAP healthcare implementation expertise for modern healthcare facilities"
     },
     { 
-      icon: <Shield className="w-6 h-6" />,
+      icon: <Shield className="w-8 h-8" />,
       title: "Cyber Security",
-      description: "Comprehensive security solutions"
+      description: "Advanced security solutions to protect your digital assets and infrastructure"
     },
     { 
-      icon: <Globe className="w-6 h-6" />,
+      icon: <Globe className="w-8 h-8" />,
       title: "Cloud Infrastructure",
-      description: "Public and private cloud solutions"
+      description: "Robust SAP infrastructure solutions for both public and private cloud environments"
     },
     { 
-      icon: <Zap className="w-6 h-6" />,
+      icon: <Zap className="w-8 h-8" />,
       title: "Microsoft Dynamics",
-      description: "Enterprise business solutions"
+      description: "Cutting-edge enterprise business solutions and IoT integration services"
+    }
+  ];
+
+  const industries = [
+    "Healthcare", "Life Sciences", "Retail", "Utilities", 
+    "Shipping", "Logistics", "Transportation", "Manufacturing"
+  ];
+
+  const achievements = [
+    {
+      icon: <Heart className="w-6 h-6" />,
+      stat: "98%",
+      label: "Client Satisfaction"
+    },
+    {
+      icon: <Code className="w-6 h-6" />,
+      stat: "500+",
+      label: "Deployments"
+    },
+    {
+      icon: <Lightbulb className="w-6 h-6" />,
+      stat: "24/7",
+      label: "Support"
     }
   ];
 
   return (
-    <div className="relative min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background">
       <AboutBackground />
       
-      {/* Content Wrapper */}
-      <div className="relative z-10">
-        {/* Hero Section */}
-        <section className="pt-32 pb-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
-              >
-                <h1 className="text-7xl font-bold">
-                  <span className="block text-white">Innovating</span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                    Since 2015
-                  </span>
-                </h1>
-                <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                  Leading the digital transformation in Singapore's healthcare sector and beyond
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Our Story Section */}
-        <section className="py-20 relative overflow-hidden">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              {/* Story Content */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="space-y-8"
-              >
-                <div className="space-y-4">
-                  <h2 className="text-4xl font-bold">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                      Our Story
-                    </span>
-                  </h2>
-                  <div className="space-y-4 text-gray-400">
-                    <p>
-                      HICS was founded in 2015 with a clear focus on SAP healthcare implementation
-                      in Singapore's public and private sector hospitals. Inspired by government
-                      initiatives to leverage technology for quality, affordable healthcare, we
-                      set out to become a leading healthcare solution provider.
-                    </p>
-                    <p>
-                      Originally known as "Healthcare IT Consultants Singapore", we built our
-                      foundation on client centricity and delivery excellence. Today, as HICS
-                      Technologies, we continue to expand our expertise across multiple domains.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Timeline */}
-                <div className="flex items-center gap-8">
-                  <div className="flex-1 relative h-24 bg-gradient-to-r from-[#ff712a]/20 to-[#ff9500]/20 rounded-lg p-4">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-center gap-4">
-                      <Clock className="w-6 h-6 text-[#ff712a]" />
-                      <div>
-                        <div className="text-sm text-gray-400">Founded</div>
-                        <div className="text-xl font-bold text-white">2015</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-1 relative h-24 bg-gradient-to-r from-[#ff712a]/20 to-[#ff9500]/20 rounded-lg p-4">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-center gap-4">
-                      <Globe className="w-6 h-6 text-[#ff712a]" />
-                      <div>
-                        <div className="text-sm text-gray-400">Global Presence</div>
-                        <div className="text-xl font-bold text-white">3 Countries</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Vision & Mission Cards */}
-              <div className="space-y-8">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="relative bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8"
-                >
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#ff712a] to-[#ff9500] p-px">
-                        <div className="w-full h-full bg-black rounded-lg flex items-center justify-center">
-                          <Target className="w-6 h-6 text-white" />
-                        </div>
-                      </div>
-                      <h3 className="text-2xl font-bold text-white">Vision</h3>
-                    </div>
-                    <p className="text-gray-400">
-                      "Empowering businesses through innovative technology solutions,
-                      delivering exceptional customer service, and fostering long-term
-                      partnerships for growth and success."
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="relative bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8"
-                >
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#ff712a] to-[#ff9500] p-px">
-                        <div className="w-full h-full bg-black rounded-lg flex items-center justify-center">
-                          <Rocket className="w-6 h-6 text-white" />
-                        </div>
-                      </div>
-                      <h3 className="text-2xl font-bold text-white">Mission</h3>
-                    </div>
-                    <p className="text-gray-400">
-                      "Our mission is to provide innovative and reliable IT solutions that
-                      empower businesses to achieve their goals and thrive in today's
-                      digital landscape."
-                    </p>
-                  </div>
-                </motion.div>
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-white"
+          >
+            <h1 className="text-7xl font-bold mb-6">
+              <span className="block">Innovating</span>
+              <span className="block text-[#ff712a] relative">
+                Since 2015
+              </span>
+            </h1>
+            <p className="text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              Leading the digital transformation in Singapore's healthcare sector and beyond, 
+              delivering cutting-edge solutions for tomorrow's challenges.
+            </p>
+            <div className="flex justify-center gap-8 text-gray-300 mb-12">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-[#ff712a] mb-2">8+</div>
+                <div>Years Experience</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-[#ff712a] mb-2">100+</div>
+                <div>Projects Completed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-[#ff712a] mb-2">50+</div>
+                <div>Happy Clients</div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Offerings Section */}
-        <section className="py-20 bg-[#080808]">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold mb-4">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                  Our Expertise
-                </span>
-              </h2>
-              <p className="text-xl text-gray-400">
-                Comprehensive solutions across multiple domains
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-4 gap-6">
-              {offerings.map((offering, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative"
-                >
-                  <div className="relative bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6
-                                transition-all duration-300 group-hover:bg-[#ff712a]/5">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        {offering.icon}
-                      </div>
-                      <h3 className="text-lg font-semibold text-white">{offering.title}</h3>
-                      <p className="text-sm text-gray-400">{offering.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Industries Grid */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold mb-4">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                  Industries We Serve
-                </span>
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {industries.map((industry, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative"
-                >
-                  <div className="relative bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6
-                                transition-all duration-300 group-hover:bg-[#ff712a]/5">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        <Building2 className="w-5 h-5" />
-                      </div>
-                      <span className="text-white group-hover:text-[#ff712a] transition-colors duration-300">
-                        {industry}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Global Presence */}
-        <section className="py-20 bg-[#080808]">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold mb-4">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                  Global Presence
-                </span>
-              </h2>
-              <p className="text-xl text-gray-400">Our team of professionals add value from</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {['Singapore', 'Philippines', 'India'].map((location, index) => (
-                <motion.div
-                  key={location}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  className="group relative"
-                >
-                  <div className="relative bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8
-                                transition-all duration-300 group-hover:bg-[#ff712a]/5">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#ff712a] to-[#ff9500] p-px">
-                        <div className="w-full h-full bg-black rounded-lg flex items-center justify-center">
-                          <Globe className="w-6 h-6 text-white" />
-                        </div>
-                      </div>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-[#ff712a] transition-colors duration-300">
-                        {location}
-                      </h3>
-                      <p className="text-gray-400">
-                        Technical Excellence Center
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Value Proposition */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-5xl mx-auto bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="flex justify-center gap-4"
             >
-              <h2 className="text-4xl font-bold mb-12 text-center">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-                  Our Value Proposition
-                </span>
-              </h2>
+              <button className="px-8 py-3 bg-[#ff712a] text-white rounded-lg hover:bg-[#ff9500] transition-colors">
+                Get Started
+              </button>
+              <button className="px-8 py-3 border border-[#ff712a] text-white rounded-lg hover:bg-[#ff712a]/10 transition-colors">
+                Learn More
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-8">
-                  <div className="relative p-6 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        <Users className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Personalized Service</h3>
-                        <p className="text-gray-400">
-                          Providing tailored solutions and exceptional service experience for our clients
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative p-6 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        <Server className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Azure Expertise</h3>
-                        <p className="text-gray-400">
-                          Proven experience in managing SAP workloads on Microsoft Azure
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-8">
-                  <div className="relative p-6 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        <Globe className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Cloud Innovation</h3>
-                        <p className="text-gray-400">
-                          Leveraging cloud technologies to enable effective digital transformation
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative p-6 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg">
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#ff712a] to-[#ff9500]" />
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-                        <Target className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Quality Focus</h3>
-                        <p className="text-gray-400">
-                          Delivering cost-effective solutions with the highest degree of quality
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      {/* Story Section */}
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div 
+            className="grid md:grid-cols-2 gap-12 items-start"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <motion.div variants={fadeIn} className="space-y-6 text-white">
+              <div className="relative inline-block">
+                <h2 className="text-5xl font-bold text-[#ff712a]">
+                  Our Story
+                </h2>
+                <motion.div
+                  variants={underlineAnimation}
+                  className="h-1 bg-[#ff712a] mt-2"
+                />
+              </div>
+              <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
+                <p>
+                  HICS was founded in 2015 with a clear vision: to revolutionize healthcare IT in Singapore. 
+                  Initially focusing on SAP healthcare implementations across public and private sector hospitals, 
+                  we've grown to become a comprehensive technology solutions provider.
+                </p>
+                <p>
+                  Known formally as "Healthcare IT Consultants Singapore" and fondly as "HICS", we've built our 
+                  reputation on the pillars of client centricity and delivery excellence.
+                </p>
+                <p>
+                  Today, our expertise spans across SAP Healthcare, cloud infrastructure, cybersecurity, and 
+                  innovative IoT solutions. We've successfully expanded our services while maintaining our core 
+                  commitment to healthcare excellence.
+                </p>
+                <p>
+                  Our journey has been marked by continuous innovation, strategic partnerships, and a deep 
+                  understanding of the evolving healthcare landscape. We're proud to have played a crucial role 
+                  in Singapore's healthcare digital transformation journey.
+                </p>
               </div>
             </motion.div>
-          </div>
-        </section>
-      </div>
+
+            <motion.div 
+              variants={fadeIn}
+              className="grid grid-cols-1 gap-6"
+            >
+              <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="space-y-4 text-white"
+                >
+                  <Target className="w-12 h-12 text-[#ff712a]" />
+                  <h3 className="text-2xl font-bold">Vision</h3>
+                  <p className="text-gray-300">
+                    "Empowering businesses through innovative technology solutions, delivering exceptional customer service, 
+                    and fostering long-term partnerships for growth and success."
+                  </p>
+                </motion.div>
+              </div>
+              
+              <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="space-y-4 text-white"
+                >
+                  <Rocket className="w-12 h-12 text-[#ff712a]" />
+                  <h3 className="text-2xl font-bold">Mission</h3>
+                  <p className="text-gray-300">
+                    "Our mission is to provide innovative and reliable IT solutions that empower businesses to achieve 
+                    their goals and thrive in today's digital landscape."
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section className="py-16 relative">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {achievements.map((achievement, index) => (
+              <motion.div
+                key={index}
+                variants={fadeIn}
+                className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6"
+              >
+                <div className="flex items-center gap-4 text-white">
+                  <div className="w-12 h-12 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
+                    {achievement.icon}
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-[#ff712a]">{achievement.stat}</div>
+                    <div className="text-gray-300">{achievement.label}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Offerings Section */}
+      <section className="py-24 relative bg-black/40">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="relative inline-block">
+              <h2 className="text-5xl font-bold text-[#ff712a]">
+                Our Expertise
+              </h2>
+              <motion.div
+                variants={underlineAnimation}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                className="h-1 bg-[#ff712a] mt-2"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-4 gap-6"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {offerings.map((offering, index) => (
+              <motion.div
+                key={index}
+                variants={fadeIn}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <div className="h-full bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6
+                            transition-all duration-300">
+                  <div className="space-y-4 text-white">
+                    <div className="w-16 h-16 rounded-lg bg-[#ff712a]/10 
+                                flex items-center justify-center text-[#ff712a] group-hover:text-[#ff9500]">
+                      {offering.icon}
+                    </div>
+                    <h3 className="text-xl font-bold">{offering.title}</h3>
+                    <p className="text-gray-300">{offering.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Industries Section */}
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="relative inline-block">
+              <h2 className="text-5xl font-bold text-[#ff712a]">
+                Industries We Serve
+              </h2>
+              <motion.div
+                variants={underlineAnimation}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                className="h-1 bg-[#ff712a] mt-2"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-4 gap-6"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {industries.map((industry, index) => (
+              <motion.div
+                key={index}
+                variants={fadeIn}
+                whileHover={{ scale: 1.05 }}
+                className="group"
+              >
+                <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6
+                            transition-all duration-300">
+                  <div className="flex items-center gap-4 text-white">
+                    <div className="w-12 h-12 rounded-lg bg-[#ff712a]/10 
+                                flex items-center justify-center text-[#ff712a] group-hover:text-[#ff9500]">
+                      <Building2 className="w-6 h-6" />
+                    </div>
+                    <span className="text-xl font-semibold group-hover:text-[#ff712a]">
+                      {industry}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Value Proposition */}
+      <section className="py-24 relative bg-black/40">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="relative inline-block">
+              <h2 className="text-5xl font-bold text-[#ff712a]">
+                Our Value Proposition
+              </h2>
+              <motion.div
+                variants={underlineAnimation}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                className="h-1 bg-[#ff712a] mt-2"
+              />
+            </div>
+            <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
+              We deliver exceptional value through our commitment to innovation, 
+              expertise, and customer success.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6 mb-12"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <motion.div
+              variants={fadeIn}
+              className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6"
+            >
+              <div className="space-y-4 text-white">
+                <Users className="w-12 h-12 text-[#ff712a]" />
+                <h3 className="text-xl font-bold">Personalized Service</h3>
+                <p className="text-gray-300">
+                  Tailored solutions and dedicated support for each client's unique needs and challenges. 
+                  Our team works closely with you to understand your specific requirements.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeIn}
+              className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6"
+            >
+              <div className="space-y-4 text-white">
+                <Award className="w-12 h-12 text-[#ff712a]" />
+                <h3 className="text-xl font-bold">Industry Excellence</h3>
+                <p className="text-gray-300">
+                  Recognized expertise in healthcare IT and enterprise solutions across Asia. 
+                  Our track record speaks to our commitment to excellence.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeIn}
+              className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6"
+            >
+              <div className="space-y-4 text-white">
+                <CheckCircle className="w-12 h-12 text-[#ff712a]" />
+                <h3 className="text-xl font-bold">Proven Track Record</h3>
+                <p className="text-gray-300">
+                  Consistent delivery of high-quality solutions with measurable business impact. 
+                  We pride ourselves on delivering results that exceed expectations.
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Additional Value Proposition Content */}
+          <motion.div
+            variants={fadeIn}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="text-center text-white"
+          >
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8">
+              At HICS, we combine technical expertise with deep industry knowledge to deliver solutions 
+              that drive real business value. Our commitment to excellence, innovation, and customer 
+              success has made us a trusted partner for organizations across Asia.
+            </p>
+            <div className="flex justify-center gap-6">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="px-8 py-3 bg-[#ff712a] text-white rounded-lg hover:bg-[#ff9500] transition-colors"
+              >
+                Contact Us
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="px-8 py-3 border border-[#ff712a] text-white rounded-lg hover:bg-[#ff712a]/10 transition-colors"
+              >
+                View Case Studies
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from "react";
 import { usePathname } from 'next/navigation';
@@ -92,7 +92,8 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
 
   const isActive = (path?: string) => {
     if (!path) return false;
-    return path !== "/" ? pathname.startsWith(path) : pathname === path;
+    if (path === '/') return pathname === path;
+    return pathname.startsWith(path);
   };
 
   const handleMouseEnter = () => {
@@ -171,7 +172,8 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
   const isActive = (path?: string) => {
     if (!path) return false;
-    return pathname === path || pathname.startsWith(path);
+    if (path === '/') return pathname === path;
+    return pathname.startsWith(path);
   };
 
   const renderMobileItems = (items: NavItem[], depth = 0) => {
