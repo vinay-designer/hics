@@ -91,10 +91,24 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
   const pathname = usePathname();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const isActive = (path?: string) => {
-    if (!path) return false;
-    if (path === '/') return pathname === path;
-    return pathname.startsWith(path);
+  const isActive = (item: NavItem): boolean => {
+    if (item.path) {
+      if (item.path === '/') return pathname === item.path;
+      return pathname.startsWith(item.path);
+    }
+    
+    // Check if any child routes are active
+    if (item.children) {
+      return item.children.some(child => {
+        if (child.path) {
+          return pathname.startsWith(child.path);
+        }
+        // Recursively check nested children
+        return child.children ? isActive(child) : false;
+      });
+    }
+    
+    return false;
   };
 
   const handleMouseEnter = () => {
@@ -117,23 +131,26 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
         {item.path ? (
           <Link
             href={item.path}
-            className={`text-sm font-medium transition-colors duration-200 ${isActive(item.path)
+            className={`text-sm font-medium transition-colors duration-200 ${
+              isActive(item)
                 ? 'text-orange-500'
                 : 'text-gray-200 hover:text-orange-500'
-              }`}
+            }`}
           >
             {item.title}
           </Link>
         ) : (
-          <span className={`text-sm font-medium text-gray-200 hover:text-orange-500 transition-colors duration-200 ${isOpen ? 'text-orange-500' : ''
-            }`}>
+          <span className={`text-sm font-medium text-gray-200 hover:text-orange-500 transition-colors duration-200 ${
+            isActive(item) || isOpen ? 'text-orange-500' : ''
+          }`}>
             {item.title}
           </span>
         )}
         {item.children && (
           <ChevronDown
-            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-500' : 'text-gray-400'
-              }`}
+            className={`w-4 h-4 transition-transform duration-200 ${
+              isOpen ? 'rotate-180 text-orange-500' : 'text-gray-400'
+            }`}
           />
         )}
       </div>
@@ -148,10 +165,11 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
               ) : (
                 <Link
                   href={child.path || '#'}
-                  className={`block text-sm ${isActive(child.path)
+                  className={`block text-sm ${
+                    isActive(child)
                       ? 'text-orange-500'
                       : 'text-gray-300 hover:text-orange-500'
-                    } transition-colors duration-200`}
+                  } transition-colors duration-200`}
                 >
                   {child.title}
                 </Link>

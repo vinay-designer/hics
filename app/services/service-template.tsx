@@ -8,8 +8,7 @@ import {
   ArrowRight, Check, Server, Shield, Database, Cloud,
   Cpu, Code, Settings, Network, Lock, GraduationCap,
   MoveRight, Zap, Users, ArrowUpCircle, ChevronRight,
-  ArrowUpRight, BrainCircuit,
- Clock, Globe, Smartphone,
+  ArrowUpRight, BrainCircuit, Clock, Globe, Smartphone,
   GitBranch, Activity, CheckSquare, AlertTriangle, 
   RefreshCw, ClipboardList, ClipboardCheck, Search,
   HelpCircle, Key, Play, Briefcase, AppWindow,
@@ -39,6 +38,7 @@ export interface ServiceContent {
   keyPoints: string[];
   technologies?: string[];
   caseStudy?: CaseStudy;
+  image?: string;
 }
 
 interface ServiceTemplateProps {
@@ -53,10 +53,9 @@ const iconMap = {
   BrainCircuit, Clock, Globe, Smartphone, GitBranch,
   Activity, CheckSquare, AlertTriangle, RefreshCw,
   ClipboardList, ClipboardCheck, Search, HelpCircle,
-   Key, Play, Briefcase, AppWindow, BarChart,
+  Key, Play, Briefcase, AppWindow, BarChart,
   Download, LineChart, UserPlus,
 } as const;
-
 
 type IconName = keyof typeof iconMap;
 
@@ -150,7 +149,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  // Default to Settings icon if no icon is specified or if icon is not found in map
   const IconComponent = feature.icon && iconMap[feature.icon as IconName] 
     ? iconMap[feature.icon as IconName] 
     : Settings;
@@ -164,24 +162,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
       whileHover={{ scale: 1.05, rotateZ: 1 }}
       className="group relative"
     >
-      <div 
-        className="absolute inset-0 bg-gradient-to-r from-[#ff712a]/20 to-transparent rounded-lg 
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
-      />
-      <div 
-        className="relative h-full bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                  rounded-lg p-6 overflow-hidden"
-      >
-        <div 
-          className="absolute top-0 right-0 w-32 h-32 bg-[#ff712a]/5 rounded-full 
-                    transform translate-x-16 -translate-y-16" 
-        />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#ff712a]/20 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="relative h-full bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6 overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff712a]/5 rounded-full transform translate-x-16 -translate-y-16" />
         <div className="space-y-4">
           <motion.div
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
-            className="w-12 h-12 rounded-lg bg-[#ff712a]/10 flex items-center justify-center 
-                     text-[#ff712a] group-hover:bg-[#ff712a]/20"
+            className="w-12 h-12 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a] group-hover:bg-[#ff712a]/20"
           >
             <IconComponent size={24} />
           </motion.div>
@@ -192,7 +180,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
     </motion.div>
   );
 };
-
 
 const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) => {
   const { scrollYProgress } = useScroll();
@@ -212,36 +199,36 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
             transition={{ duration: 1 }}
             className="text-center relative z-10"
           >
-            <motion.h1
-              initial={{ y: 50 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              <motion.h1
+                initial={{ y: 50 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               className="text-7xl font-bold mb-6"
-            >
-              {content.title}
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                {content.title}
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
                 className="h-1 bg-[#ff712a] mt-4 mx-auto max-w-[200px]"
-              />
-            </motion.h1>
-            <motion.h2
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+                />
+              </motion.h1>
+              <motion.h2
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               className="text-3xl text-[#ff712a] mb-6"
-            >
-              {content.subtitle}
-            </motion.h2>
-            <motion.p
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                {content.subtitle}
+              </motion.h2>
+              <motion.p
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
               className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            >
-              {content.description}
-            </motion.p>
+              >
+                {content.description}
+              </motion.p>
           </motion.div>
         </div>
       </section>
@@ -249,38 +236,50 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
       {/* Main Content Section */}
       <motion.section className="py-16 relative" style={{ y }}>
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6 text-gray-300"
-              dangerouslySetInnerHTML={{ __html: content.longDescription }}
-            />
+              className="relative rounded-lg overflow-hidden"
+            >
+              <img
+                src={content.image}
+                alt="Service details"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ff712a]/20 to-transparent" />
+            </motion.div>
 
             <motion.div
               initial={{ x: 100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8"
+              className="space-y-6"
             >
-              <h3 className="text-2xl font-bold mb-6">Key Highlights</h3>
-              <div className="space-y-4">
-                {content.keyPoints.map((point, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ x: 50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="flex items-start gap-4"
-                  >
-                    <Check className="w-6 h-6 text-[#ff712a] mt-1 flex-shrink-0" />
-                    <p className="text-gray-300">{point}</p>
-                  </motion.div>
-                ))}
+              <div
+                className="prose prose-invert"
+                dangerouslySetInnerHTML={{ __html: content.longDescription }}
+              />
+
+              <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8">
+                <h3 className="text-2xl font-bold mb-6">Key Highlights</h3>
+                <div className="space-y-4">
+                  {content.keyPoints.map((point, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ x: 50, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="flex items-start gap-4"
+                    >
+                      <Check className="w-6 h-6 text-[#ff712a] mt-1 flex-shrink-0" />
+                      <p className="text-gray-300">{point}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -344,9 +343,7 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
                     scale: 1.05,
                     boxShadow: "0 0 20px rgba(255, 113, 42, 0.3)"
                   }}
-                  className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                           rounded-lg p-4 text-center hover:border-[#ff712a]/30
-                           transition-all duration-300"
+                  className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-4 text-center hover:border-[#ff712a]/30 transition-all duration-300"
                 >
                   <span className="text-gray-300">{tech}</span>
                 </motion.div>
@@ -360,186 +357,210 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
       {content.caseStudy && (
         <section className="py-16 relative bg-black/40">
           <div className="max-w-7xl mx-auto px-4">
-            <motion.div
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-lg overflow-hidden"
+              >
+                <img
+                  src="/api/placeholder/700/500"
+                  alt="Case study visualization"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#ff712a]/5 to-transparent" />
+                <div className="relative z-10">
+                  <h2 className="text-3xl font-bold mb-6">Case Study</h2>
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold text-[#ff712a]">
+                      {content.caseStudy.title}
+                    </h3>
+                    <p className="text-gray-300">
+                      {content.caseStudy.description}
+                    </p>
+                    {content.caseStudy.results && (
+                      <div className="mt-6 space-y-2">
+                        <h4 className="text-xl font-bold">Key Results</h4>
+                        <ul className="space-y-2">
+                          {content.caseStudy.results.map((result, index) => (
+                            <motion.li
+                              key={index}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.5, delay: index * 0.1 }}
+                              className="flex items-start gap-3"
+                            >
+                              <motion.div
+                                whileHover={{ scale: 1.1, rotate: 10 }}
+                                className="flex-shrink-0"
+                              >
+                                <ArrowRight className="w-5 h-5 text-[#ff712a] mt-1" />
+                              </motion.div>
+                              <span className="text-gray-300">{result}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Enhanced Call to Action Section with Image Background */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-[#ff712a]/10 to-transparent rounded-full"
+          />
+          <motion.div
+            animate={{
+              rotate: [360, 0],
+              scale: [1, 1.3, 1],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-[#ff9500]/10 to-transparent rounded-full"
+          />
+          
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0">
+            <img
+              src="/api/placeholder/1920/1080"
+              alt="Background"
+              className="w-full h-full object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <motion.h2 
+              className="text-5xl font-bold"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-8
-                       relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#ff712a]/5 to-transparent" />
-              <div className="relative z-10">
-                <h2 className="text-3xl font-bold mb-6">Case Study</h2>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-[#ff712a]">
-                    {content.caseStudy.title}
-                  </h3>
-                  <p className="text-gray-300">
-                    {content.caseStudy.description}
-                  </p>
-                  {content.caseStudy.results && (
-                    <div className="mt-6 space-y-2">
-                      <h4 className="text-xl font-bold">Key Results</h4>
-                      <ul className="space-y-2">
-                        {content.caseStudy.results.map((result, index) => (
-                          <motion.li
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                          className="flex items-start gap-3"
-                        >
-                          <motion.div
-                            whileHover={{ scale: 1.1, rotate: 10 }}
-                            className="flex-shrink-0"
-                          >
-                            <ArrowRight className="w-5 h-5 text-[#ff712a] mt-1" />
-                          </motion.div>
-                          <span className="text-gray-300">{result}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
+                Ready to Get Started?
+              </span>
+            </motion.h2>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-gray-300 max-w-2xl mx-auto"
+            >
+              Contact us today to learn more about how we can help your organization
+              achieve its goals with our {content.title} solutions.
+            </motion.p>
+
+            <motion.div
+              className="flex flex-col sm:flex-row justify-center gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              {/* Primary CTA Button */}
+              <Button
+                asChild
+                className="group px-8 py-6 bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
+                         hover:from-[#ff9500] hover:to-[#ff712a] transition-all 
+                         duration-300 flex items-center gap-2 text-lg relative
+                         overflow-hidden"
+              >
+                <Link href="/contact">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Contact Us
+                    <motion.div
+                      initial={{ x: 0 }}
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-white/10"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                </Link>
+              </Button>
+
+              {/* Secondary CTA Button */}
+              <Button
+                asChild
+                variant="outline"
+                className="group px-8 py-6 border-[#ff712a] text-white 
+                         hover:bg-[#ff712a]/10 transition-all duration-300 
+                         flex items-center gap-2 text-lg relative
+                         overflow-hidden"
+              >
+                <Link href="/about">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Learn More
+                    <motion.div
+                      initial={{ x: 0 }}
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ArrowUpRight className="w-5 h-5" />
+                    </motion.div>
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-[#ff712a]/0 to-[#ff712a]/10"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '0%' }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </section>
-    )}
 
-    {/* Enhanced Call to Action Section */}
-    <section className="py-20 relative">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-[#ff712a]/10 to-transparent rounded-full"
-        />
-        <motion.div
-          animate={{
-            rotate: [360, 0],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-[#ff9500]/10 to-transparent rounded-full"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
-          <motion.h2 
-            className="text-5xl font-bold"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-              Ready to Get Started?
-            </span>
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
-          >
-            Contact us today to learn more about how we can help your organization
-            achieve its goals with our {content.title} solutions.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row justify-center gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            {/* Primary CTA Button */}
-            <Button
-              asChild
-              className="group px-8 py-6 bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                       hover:from-[#ff9500] hover:to-[#ff712a] transition-all 
-                       duration-300 flex items-center gap-2 text-lg relative
-                       overflow-hidden"
-            >
-              <Link href="/contact">
-                <span className="relative z-10 flex items-center gap-2">
-                  Contact Us
-                  <motion.div
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-white/10"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-              </Link>
-            </Button>
-
-            {/* Secondary CTA Button */}
-            <Button
-              asChild
-              variant="outline"
-              className="group px-8 py-6 border-[#ff712a] text-white 
-                       hover:bg-[#ff712a]/10 transition-all duration-300 
-                       flex items-center gap-2 text-lg relative
-                       overflow-hidden"
-            >
-              <Link href="/about">
-                <span className="relative z-10 flex items-center gap-2">
-                  Learn More
-                  <motion.div
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ArrowUpRight className="w-5 h-5" />
-                  </motion.div>
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[#ff712a]/0 to-[#ff712a]/10"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '0%' }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-
-    {/* Footer Decoration */}
-    <div className="h-2 bg-gradient-to-r from-[#ff712a] via-[#ff9500] to-[#ff712a]" />
-  </div>
-);
+      {/* Footer Decoration */}
+      <div className="h-2 bg-gradient-to-r from-[#ff712a] via-[#ff9500] to-[#ff712a]" />
+    </div>
+  );
 };
 
 export default ServiceTemplate;

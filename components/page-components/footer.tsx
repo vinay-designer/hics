@@ -32,7 +32,7 @@ const Footer = () => {
             className="space-y-6"
           >
             <Link href="/" className="block">
-              <Image loading='lazy' height={10} width={100} className="h-10 w-auto object-contain" src="/page-components/hics-light.png" alt="HICS Logo" />
+              <Image  height={10} width={100} className="h-10 w-auto object-contain" src="/page-components/hics-light.png" alt="HICS Logo" />
             </Link>
             <p className="text-gray-300">
               A leading technology solutions provider specializing in SAP Healthcare, Cloud Infrastructure, Cyber Security, Microsoft Dynamics, and IoT across multiple industries.

@@ -66,6 +66,7 @@ export const servicesData = {
                     icon: "Network"
                 }
             ],
+            image: "/services/sap.jpg",
             keyPoints: [
                 "Certified SAP professionals with extensive industry experience",
                 "Proven track record of successful implementations",
@@ -121,6 +122,7 @@ export const servicesData = {
                     icon: "Network"
                 }
             ],
+            image: "/services/sap.jpg",
             keyPoints: [
                 "5+ years of experience managing SAP on Azure",
                 "Successful migration projects for major enterprises",
@@ -189,6 +191,7 @@ export const servicesData = {
                 "Performance optimization",
                 "Disaster recovery planning"
             ],
+            image: "/services/sap.jpg",
             technologies: [
                 "Amazon EC2",
                 "Amazon S3",
@@ -231,6 +234,7 @@ export const servicesData = {
                     icon: "GraduationCap"
                 }
             ],
+            image: "/services/sap.jpg",
             keyPoints: [
                 "End-to-end migration support",
                 "Minimal business disruption",
@@ -290,6 +294,7 @@ export const servicesData = {
                 "Scalability management",
                 "Disaster recovery planning"
             ],
+            image: '/services/azure.png',
             technologies: [
                 "Azure Virtual Machines",
                 "Azure Kubernetes Service",
@@ -340,6 +345,7 @@ export const servicesData = {
                 "Integration expertise",
                 "User training and adoption support"
             ],
+            image: "/services/microsoft-central.jpg",
             technologies: [
                 "Dynamics 365 Business Central",
                 "Power Platform",
@@ -380,6 +386,7 @@ export const servicesData = {
                     icon: "Network"
                 }
             ],
+            image: "/services/power-platform.png",
             keyPoints: [
                 "Rapid application development",
                 "Process automation expertise",
@@ -437,6 +444,7 @@ export const servicesData = {
                 "Ongoing maintenance",
                 "Technical support"
             ],
+            image: '/services/office365.jpg',
             technologies: [
                 "Microsoft 365",
                 "SharePoint Online",
@@ -493,6 +501,7 @@ export const servicesData = {
                 "Cost optimization expertise",
                 "Custom automation solutions"
             ],
+            image: "/services/broadcom-automatic.webp",
             technologies: [
                 "Automic Workload Automation",
                 "Continuous Delivery Automation",
@@ -546,6 +555,7 @@ export const servicesData = {
                 "Integration capabilities",
                 "Performance optimization"
             ],
+            image: "/services/broadcom-clarity.png",
             technologies: [
                 "Clarity PPM",
                 "Jaspersoft",
