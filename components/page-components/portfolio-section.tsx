@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import PortfolioBackground from '../../animations/homepage/portfolio-background';
+import Image from 'next/image';
 
 const PortfolioSection = () => {
   const portfolioRef = useRef(null);
@@ -91,7 +92,9 @@ const PortfolioSection = () => {
             >
               <div className="relative overflow-hidden rounded-lg bg-black/40 backdrop-blur-xl">
                 <div className="relative h-[400px] transform group-hover:scale-105 transition-transform duration-500">
-                  <img
+                  <Image
+                    loading='lazy' 
+                    fill
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"

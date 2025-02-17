@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, Send, MessageSquare, User, AtSign, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ContactBackground from '@/animations/homepage/contact-background';
+import Image from 'next/image';
 
 const ContactSection = () => {
   const [formFocus, setFormFocus] = useState<string | null>(null);
@@ -208,7 +209,9 @@ const ContactSection = () => {
             {/* Image Section */}
             <div className="relative hidden md:block">
               <div className="absolute inset-0 bg-gradient-to-br from-[#ff712a]/20 to-[#ff9500]/20" />
-              <img
+              <Image
+                loading='lazy'
+                fill
                 src="/page-components/care.avif"
                 alt="Team"
                 className="w-full h-full object-cover"

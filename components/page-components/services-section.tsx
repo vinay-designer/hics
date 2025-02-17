@@ -7,6 +7,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import ServicesBackground from '../../animations/homepage/service-background';
+import TransformBackground from '@/animations/homepage/transform-background';
 
 const ServicesSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<any>(null);
@@ -83,7 +84,8 @@ const ServicesSection = () => {
 
   return (
     <section className="relative py-20 min-h-screen bg-black overflow-hidden">
-      <ServicesBackground />
+      {/* <ServicesBackground /> */}
+      <TransformBackground key="services-bg" />
       
       {/* Background gradients */}
       <div className="absolute inset-0">

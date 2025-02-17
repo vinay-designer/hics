@@ -122,6 +122,7 @@ const PartnersSection = () => {
             className="relative mx-6 bg-black/40 rounded-3xl"
         >
             <motion.img
+                loading='lazy'
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -138,7 +139,8 @@ const PartnersSection = () => {
             key={index}
             className="relative min-w-[180px] h-20 mx-3 bg-black/20 rounded-xl p-4 flex items-center justify-center"
         >
-            <motion.img
+            <motion.img 
+                loading='lazy'
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}

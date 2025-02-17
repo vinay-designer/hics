@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ClientsPartnersBackground from '../../animations/clients-partners/clients-partners-background';
+import Image from 'next/image';
 
 const StatisticCard = ({ icon, value, label }: any) => (
   <motion.div
@@ -404,7 +405,9 @@ const ClientsAndPartnersPage = () => {
                                rounded-lg p-6 transition-all duration-300 hover:border-[#ff712a]">
                     {/* Partner Logo */}
                     <div className="relative aspect-video mb-4 overflow-hidden rounded-lg bg-white/5">
-                      <img
+                      <Image
+                        fill
+                        loading='lazy'
                         src={partner.logo}
                         alt={partner.name}
                         className="w-full h-full object-cover opacity-75 transition-all duration-300 
@@ -536,7 +539,9 @@ const ClientsAndPartnersPage = () => {
                                rounded-lg transition-all duration-300 hover:border-[#ff712a]">
                     {/* Client Logo */}
                     <div className="relative aspect-video overflow-hidden rounded-t-lg bg-white/5">
-                      <img
+                      <Image
+                        loading='lazy'
+                        fill
                         src={client.logo}
                         alt={client.name}
                         className="w-full h-full object-cover opacity-75 transition-all duration-300 

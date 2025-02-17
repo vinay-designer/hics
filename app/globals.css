@@ -78,3 +78,7 @@ body {
 .bg-blur-gradient {
   background: var(--gradient-blur);
 }
+
+.clip-diagonal {
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+}

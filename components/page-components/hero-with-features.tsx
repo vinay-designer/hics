@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useAnimation, AnimatePresence  } from "framer-motion";
 import { Rocket, Zap, Target, Laptop } from "lucide-react";
 import * as THREE from 'three';
+import Image from 'next/image';
 
 
 const contentSets = [
@@ -318,7 +319,9 @@ const HeroWithFeatures = () => {
             <div className="relative z-10">
               <div className="w-full h-[500px] overflow-hidden relative rounded-lg">
                 <div className="absolute inset-0 bg-black/40" />
-                <img
+                <Image
+                  loading='lazy'
+                  fill
                   src="/api/placeholder/800/800"
                   alt="Future Technology"
                   className="relative z-10 w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
