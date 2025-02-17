@@ -227,16 +227,6 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             <div className="space-y-4">
               {renderMobileItems(navigation)}
             </div>
-            <div className="mt-8">
-              <Button 
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg
-                  transition-all duration-200 flex items-center justify-center gap-2"
-                onClick={onClose}
-              >
-                Get Free Quote
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
           </div>
         </motion.div>
       )}
@@ -279,25 +269,6 @@ const Header = () => {
             {navigation.map((item, index) => (
               <DropdownMenu key={index} item={item} />
             ))}
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="hidden md:block">
-              <Button 
-                className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2 rounded-lg
-                  transition-all duration-200 flex items-center gap-2 hover:scale-105"
-              >
-                Get Free Quote
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-            
-            <button
-              className="lg:hidden text-gray-400 hover:text-orange-500 transition-colors duration-200"
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
           </div>
         </div>
       </nav>

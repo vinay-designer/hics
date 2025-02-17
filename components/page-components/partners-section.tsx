@@ -65,36 +65,41 @@ const PartnersSection = () => {
 
     const partners = [
         {
-            name: "SKYLIGHT TECH",
-            logo: "/api/placeholder/400/200",
+            name: "Microsoft",
+            logo: "/page-components/microsoft.jpg",
             color: "#ff712a"
         },
         {
-            name: "DALTON SYSTEMS",
-            logo: "/api/placeholder/400/200",
+            name: "IBM",
+            logo: "/page-components/ibm.jpg",
             color: "#ff9500"
         },
         {
-            name: "HUSTON SOLUTIONS",
-            logo: "/api/placeholder/400/200",
+            name: "ts",
+            logo: "/page-components/t-s.jpg",
             color: "#ff712a"
         },
         {
-            name: "TECH DYNAMICS",
-            logo: "/api/placeholder/400/200",
+            name: "Lumen",
+            logo: "/page-components/lumen.jpg",
             color: "#ff9500"
-        }
+        },
+        {
+            name: "delware",
+            logo: "/page-components/delaware.jpg",
+            color: "#ff712a"
+        },
     ];
 
     const customers = [
-        { name: "Customer 1", logo: "/api/placeholder/160/80" },
-        { name: "Customer 2", logo: "/api/placeholder/160/80" },
-        { name: "Customer 3", logo: "/api/placeholder/160/80" },
-        { name: "Customer 4", logo: "/api/placeholder/160/80" },
-        { name: "Customer 5", logo: "/api/placeholder/160/80" },
-        { name: "Customer 6", logo: "/api/placeholder/160/80" },
-        { name: "Customer 7", logo: "/api/placeholder/160/80" },
-        { name: "Customer 8", logo: "/api/placeholder/160/80" }
+        { name: "Customer 1", logo: "/page-components/aic.jpg" },
+        { name: "Customer 2", logo: "/page-components/bvh.jpg" },
+        { name: "Customer 3", logo: "/page-components/dairy.jpg" },
+        { name: "Customer 4", logo: "/page-components/ihis.jpg" },
+        { name: "Customer 5", logo: "/page-components/sp-g.jpg" },
+        { name: "Customer 6", logo: "/page-components/zp.jpg" },
+        { name: "Customer 7", logo: "/page-components/saint.jpg" },
+        { name: "Customer 8", logo: "/page-components/st-a.jpg" }
     ];
 
     useEffect(() => {
@@ -114,36 +119,32 @@ const PartnersSection = () => {
     const partnerItems = partners.map((partner, index) => (
         <div
             key={index}
-            className="relative px-16 py-12 mx-6 bg-black/40 backdrop-blur-xl 
-                border border-[#ff712a]/10 rounded-3xl"
+            className="relative mx-6 bg-black/40 rounded-3xl"
         >
-            <div
-                className="absolute inset-0 rounded-3xl opacity-20"
-                style={{
-                    background: `linear-gradient(45deg, ${partner.color}33, transparent)`
-                }}
-            />
             <motion.img
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 src={partner.logo}
                 alt={partner.name}
-                className="h-24 w-auto object-contain"
+                className="w-48 h-32 object-contain p-4"
             />
         </div>
     ));
 
+
     const customerItems = customers.map((customer, index) => (
         <div
             key={index}
-            className="relative min-w-[180px] h-20 mx-3 bg-black/20 backdrop-blur-xl 
-                border border-[#ff712a]/10 rounded-xl p-4 flex items-center justify-center"
+            className="relative min-w-[180px] h-20 mx-3 bg-black/20 rounded-xl p-4 flex items-center justify-center"
         >
-            <img
+            <motion.img
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
                 src={customer.logo}
                 alt={customer.name}
-                className="h-10 w-auto object-contain opacity-50"
+                className="h-10 w-auto object-contain"
             />
         </div>
     ));
@@ -224,7 +225,7 @@ const PartnersSection = () => {
                     </motion.div>
 
                     <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black to-transparent 
+                        <div className="absolute inset-0
                             z-10 pointer-events-none" />
 
                         <SmoothMarquee direction="left" speed={30}>
@@ -339,7 +340,7 @@ const PartnersSection = () => {
 
                     <div className="space-y-8">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black to-transparent 
+                            <div className="absolute inset-0
                                 z-10 pointer-events-none" />
 
                             <SmoothMarquee direction="left" speed={35}>
@@ -348,7 +349,7 @@ const PartnersSection = () => {
                         </div>
 
                         <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black to-transparent 
+                            <div className="absolute inset-0
                                 z-10 pointer-events-none" />
 
                             <SmoothMarquee direction="right" speed={30}>

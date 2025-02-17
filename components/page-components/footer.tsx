@@ -126,7 +126,7 @@ const Footer = () => {
                   type="email"
                   placeholder="Your email address..."
                   className="w-full bg-white text-black border border-orange-500/10 rounded-xl px-4 py-3 
-                    text-gray-100 placeholder-gray-500 focus:outline-none focus:border-orange-500 
+                   placeholder-gray-500 focus:outline-none focus:border-orange-500 
                     transition-colors"
                 />
                 <Button

@@ -209,7 +209,7 @@ const ContactSection = () => {
             <div className="relative hidden md:block">
               <div className="absolute inset-0 bg-gradient-to-br from-[#ff712a]/20 to-[#ff9500]/20" />
               <img
-                src="/api/placeholder/800/1000"
+                src="/page-components/care.avif"
                 alt="Team"
                 className="w-full h-full object-cover"
               />

@@ -1,8 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, AnimatePresence  } from "framer-motion";
 import { Rocket, Zap, Target, Laptop } from "lucide-react";
 import * as THREE from 'three';
+
+
+const contentSets = [
+  {
+    headline: "Start your digital transformation journey with us",
+    subtext: "we make an impact, difference that you find is natural"
+  },
+  {
+    headline: "Deal with intelligence by implementing the right solutions",
+    subtext: "SAP, AWS, MICROSOFT, DATA ANALYTICS, RPA and more"
+  },
+  {
+    headline: "Secure your IT today, Cybersecurity is continuous evolution",
+    subtext: "Identity and Access Management, VAPT, PenTest and more"
+  }
+];
+
+const ContentSet: React.FC<{ headline: string; subtext: string; isVisible: boolean }> = ({ headline, subtext, isVisible }) => (
+  <motion.div
+    initial={{ opacity: 0, x: 100 }}
+    animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 100 }}
+    exit={{ opacity: 0, x: -100 }}
+    transition={{ duration: 0.5 }}
+    className="absolute top-0 left-0 w-full"
+  >
+    <div className="space-y-4">
+      <h2 className="text-3xl font-bold text-[#ff712a]">{headline}</h2>
+      <p className="text-gray-400 text-lg">{subtext}</p>
+    </div>
+  </motion.div>
+);
 
 const BackgroundAnimation = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -162,6 +193,15 @@ const AnimatedText = ({ text, delay = 0 }: { text: string; delay?: number }) => 
 };
 
 const HeroWithFeatures = () => {
+  const [currentSetIndex, setCurrentSetIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSetIndex((prev) => (prev + 1) % contentSets.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
   const features = [
     {
       icon: <Rocket className="w-6 h-6" />,
@@ -198,33 +238,54 @@ const HeroWithFeatures = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="pt-20 space-y-8"
+            className="pt-20 space-y-12"
           >
+            {/* Static Header */}
             <div className="space-y-2">
               <div className="text-5xl md:text-7xl font-bold text-white mb-4">
                 <AnimatedText text="POWER UP" delay={0.2} />
               </div>
-              <div className="space-y-0">
-                <div className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500] leading-tight">
-                  <AnimatedText text="YOUR BUSINESS" delay={0.4} />
-                </div>
-                <div className="text-2xl font-light text-[#ffa763] leading-tight mt-4">
-                  <AnimatedText text="Innovate • Transform • Succeed" delay={0.6} />
-                </div>
+              <div className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff712a] to-[#ff9500] leading-tight">
+                <AnimatedText text="YOUR BUSINESS" delay={0.4} />
               </div>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-gray-400 text-lg max-w-xl"
-            >
-              Break through limitations with our cutting-edge solutions.
-              We transform businesses into industry leaders through
-              innovative technology and strategic implementation.
-            </motion.p>
+            {/* Content Sets Container */}
+            <div className="relative h-32"> {/* Adjust height as needed */}
+              <AnimatePresence mode="wait">
+                {contentSets.map((set, index) => (
+                  <ContentSet
+                    key={index}
+                    headline={set.headline}
+                    subtext={set.subtext}
+                    isVisible={currentSetIndex === index}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
 
+            {/* Progress Indicators */}
+            <div className="flex gap-2">
+              {contentSets.map((_, index) => (
+                <motion.div
+                  key={index}
+                  className="h-1 w-16 rounded-full bg-gray-700 overflow-hidden"
+                >
+                  <motion.div
+                    className="h-full bg-[#ff712a]"
+                    initial={{ width: "0%" }}
+                    animate={{
+                      width: currentSetIndex === index ? "100%" : "0%"
+                    }}
+                    transition={{
+                      duration: currentSetIndex === index ? 5 : 0.5
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

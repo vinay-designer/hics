@@ -12,25 +12,25 @@ const PortfolioSection = () => {
       title: "Enterprise Solutions",
       description: "Complete digital transformation for enterprise systems",
       category: "Enterprise",
-      image: "/api/placeholder/800/1000"
+      image: "/page-components/enterprise.jpg"
     },
     {
       title: "Cloud Infrastructure",
       description: "Scalable cloud architecture and migration",
       category: "Cloud",
-      image: "/api/placeholder/800/1000"
+      image: "/page-components/cloud.jpg"
     },
     {
       title: "Security Systems",
       description: "Advanced cybersecurity implementations",
       category: "Security",
-      image: "/api/placeholder/800/1000"
+      image: "/page-components/security.avif"
     },
     {
       title: "IoT Platform",
       description: "Connected device management solutions",
       category: "IoT",
-      image: "/api/placeholder/800/1000"
+      image: "/page-components/iot.avif"
     }
   ];
 
