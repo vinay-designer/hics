@@ -253,7 +253,7 @@ const HeroWithFeatures = () => {
 
             {/* Content Sets Container */}
             <div className="relative h-32"> {/* Adjust height as needed */}
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {contentSets.map((set, index) => (
                   <ContentSet
                     key={index}

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import { Monitor, Cloud, Signal, Users, ArrowUpRight } from 'lucide-react';
 import TransformBackground from '@/animations/homepage/transform-background';
@@ -54,7 +55,7 @@ const KeyFocusSection = () => {
                   <div 
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                     style={{
-                      transform: `translateX(${(mousePosition.x / window.innerWidth) * 100 - 50}%)`,
+                      transform: `translateX(${typeof window !== 'undefined' ? (mousePosition.x / window.innerWidth) * 100 - 50 : -50}%)`,
                       transition: 'transform 0.2s',
                     }}
                   />
