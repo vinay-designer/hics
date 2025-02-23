@@ -1,12 +1,17 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import PortfolioBackground from '../../animations/homepage/portfolio-background';
 import Image from 'next/image';
+import { ArrowUpRight } from 'lucide-react';
 
 const PortfolioSection = () => {
-  const portfolioRef = useRef(null);
-  const isInView = useInView(portfolioRef, { once: true, margin: "-100px" });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const portfolioItems = [
     {
@@ -35,124 +40,130 @@ const PortfolioSection = () => {
     }
   ];
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <section className="py-20 bg-black relative overflow-hidden min-h-screen">
-      <PortfolioBackground />
+    <div className="relative py-20 overflow-hidden bg-white">
+      {/* Background Pattern */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(249,250,251,0.8)_2px,transparent_2px),linear-gradient(90deg,rgba(249,250,251,0.8)_2px,transparent_2px)] bg-[length:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-100/20 via-transparent to-indigo-100/20" />
+      </div>
 
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black via-transparent to-black opacity-80" />
-
-      <div className="container mx-auto px-4 relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+      <div className="max-w-7xl mx-auto px-4 relative">
+        {/* Header Section */}
+        <div className="text-center mb-20">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="inline-block mb-4"
           >
-            <div className="bg-[#ff712a]/10 backdrop-blur-xl px-6 py-2 rounded-full border border-[#ff712a]/20">
-              <h3 className="text-[#ff712a] font-medium">FEATURED PORTFOLIO</h3>
+            <div className="bg-gradient-to-r from-orange-100 to-indigo-100 px-6 py-2 rounded-full border border-orange-200">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-indigo-600 font-medium">
+                FEATURED PORTFOLIO
+              </span>
             </div>
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ff712a] to-[#ff9500]">
-              Impactful projects,
-            </span>
-            <span className="block mt-2">every time</span>
-          </h2>
-          
-          <div className="relative max-w-3xl mx-auto">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#ff712a]/20 to-[#ff9500]/20 rounded-lg blur-xl opacity-50" />
-            <p className="relative text-gray-400 text-lg backdrop-blur-xl p-6 rounded-lg">
-              A showcase of our commitment to delivering top-tier, innovative digital solutions.
-              Our commitment to quality and excellence is unparalleled.
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto"
+          >
+            <h2 className="text-5xl sm:text-6xl font-bold mb-6">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-indigo-600">
+                Impactful Projects
+              </span>
+              <span className="block mt-2 text-gray-900">Innovative Solutions</span>
+            </h2>
+            
+            <p className="text-gray-600 text-lg">
+              Showcasing our commitment to excellence through transformative digital solutions.
             </p>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
-        <motion.div
-          ref={portfolioRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        {/* Portfolio Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {portfolioItems.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
               className="group relative"
             >
-              <div className="relative overflow-hidden rounded-lg bg-black/40 backdrop-blur-xl">
-                <div className="relative h-[400px] transform group-hover:scale-105 transition-transform duration-500">
+              <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
+                <div className="relative h-[400px] transform group-hover:scale-105 transition-all duration-700">
                   <Image
                     loading='lazy' 
                     fill
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    className="w-full h-full object-cover transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/60 to-black/90 opacity-60 group-hover:opacity-80 transition-all duration-700" />
 
-                  <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                    <p className="text-gray-300 mb-4">{item.description}</p>
-                    <Button
+                  {/* Animated Borders */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-orange-500 to-transparent"
+                      animate={{ 
+                        scaleX: [0, 1], 
+                        originX: [0, 0],
+                      }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    />
+                    <motion.div 
+                      className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-l from-indigo-500 to-transparent"
+                      animate={{ 
+                        scaleX: [0, 1], 
+                        originX: [1, 1],
+                      }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    />
+                  </div>
+
+                  {/* Category Tag */}
+                  <div className="absolute top-4 left-4">
+                    <div className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm">
+                      <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-indigo-600">
+                        {item.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center justify-between">
+                      {item.title}
+                      <ArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </h3>
+                    <p className="text-gray-200 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      {item.description}
+                    </p>
+                    {/* <Button
                       variant="outline"
-                      className="border-[#ff712a] text-[#ff712a] hover:bg-[#ff712a] hover:text-white transition-colors duration-300"
+                      className="border-white text-white hover:bg-white hover:text-gray-900 transition-colors"
                     >
-                      PORTFOLIO DETAILS
-                    </Button>
-                  </div>
-
-                  {/* Animated corner accents */}
-                  <motion.div
-                    className="absolute top-0 left-0 w-20 h-20 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                  >
-                    <motion.div
-                      className="w-[2px] h-full bg-gradient-to-b from-[#ff712a] to-transparent absolute top-0 left-6"
-                      animate={{ top: ['-100%', '100%'] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <motion.div
-                      className="w-full h-[2px] bg-gradient-to-r from-[#ff712a] to-transparent absolute top-6 left-0"
-                      animate={{ left: ['-100%', '100%'] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  </motion.div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-bottom-8 transition-all duration-300">
-                <div className="bg-gradient-to-r from-[#ff712a] to-[#ff9500] p-[1px] rounded">
-                  <div className="bg-black px-4 py-1 rounded backdrop-blur-xl">
-                    <span className="text-white font-medium">{item.category}</span>
+                      View Details
+                    </Button> */}
                   </div>
                 </div>
               </div>
 
-              {/* Overlay gradient on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#ff712a]/20 to-transparent rounded-lg" />
-              </div>
+              {/* Hover Glow Effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-indigo-600 rounded-2xl opacity-0 group-hover:opacity-10 blur transition-all duration-500" />
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Additional gradient overlays for depth */}
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-r from-[#ff712a]/10 to-transparent pointer-events-none blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-l from-[#ff9500]/10 to-transparent pointer-events-none blur-3xl" />
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

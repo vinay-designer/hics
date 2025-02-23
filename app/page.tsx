@@ -15,7 +15,7 @@ export default function Home() {
 
 
   return (
-    <main className="min-h-screen bg-black text-white relative overflow-hidden">
+    <main className="min-h-screen text-white">
 
       <HeroWithFeatures />
 
@@ -27,13 +27,15 @@ export default function Home() {
 
       <TransformSection />
 
-      <TrustedClientsSection />
-
       <PortfolioSection />
-
+      
       <ProcessSection />
 
-      <ContactSection />
+      <TrustedClientsSection />
+{/* 
+
+
+      <ContactSection /> */}
     </main>
   );
 }

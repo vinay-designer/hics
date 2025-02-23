@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 
 interface NavItem {
@@ -86,6 +86,7 @@ const navigation: NavItem[] = [
   { title: "Contact Us", path: "/contact" },
 ];
 
+
 const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -96,18 +97,12 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
       if (item.path === '/') return pathname === item.path;
       return pathname.startsWith(item.path);
     }
-    
-    // Check if any child routes are active
     if (item.children) {
       return item.children.some(child => {
-        if (child.path) {
-          return pathname.startsWith(child.path);
-        }
-        // Recursively check nested children
+        if (child.path) return pathname.startsWith(child.path);
         return child.children ? isActive(child) : false;
       });
     }
-    
     return false;
   };
 
@@ -133,15 +128,15 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
             href={item.path}
             className={`text-sm font-medium transition-colors duration-200 ${
               isActive(item)
-                ? 'text-orange-500'
-                : 'text-gray-200 hover:text-orange-500'
+                ? 'text-[#ff712a]'
+                : 'text-gray-700 hover:text-[#ff712a]'
             }`}
           >
             {item.title}
           </Link>
         ) : (
-          <span className={`text-sm font-medium text-gray-200 hover:text-orange-500 transition-colors duration-200 ${
-            isActive(item) || isOpen ? 'text-orange-500' : ''
+          <span className={`text-sm font-medium transition-colors duration-200 ${
+            isActive(item) || isOpen ? 'text-[#ff712a]' : 'text-gray-700 hover:text-[#ff712a]'
           }`}>
             {item.title}
           </span>
@@ -149,7 +144,7 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
         {item.children && (
           <ChevronDown
             className={`w-4 h-4 transition-transform duration-200 ${
-              isOpen ? 'rotate-180 text-orange-500' : 'text-gray-400'
+              isOpen ? 'rotate-180 text-[#ff712a]' : 'text-gray-400'
             }`}
           />
         )}
@@ -157,9 +152,9 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
 
       {item.children && isOpen && (
         <div className={`absolute ${depth === 0 ? 'left-0' : 'left-full'} ${depth === 0 ? 'top-full' : 'top-0'} 
-          min-w-[220px] bg-zinc-900/95 backdrop-blur-sm border border-border-color rounded-lg py-2 shadow-xl z-50"`}>
+          min-w-[220px] bg-white/95 backdrop-blur-sm rounded-lg py-2 shadow-lg z-50`}>
           {item.children.map((child, index) => (
-            <div key={index} className="relative group/item px-4 py-2 hover:bg-zinc-800">
+            <div key={index} className="relative group/item px-4 py-2 hover:bg-gray-50/50">
               {child.children ? (
                 <DropdownMenu item={child} depth={depth + 1} />
               ) : (
@@ -167,8 +162,8 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
                   href={child.path || '#'}
                   className={`block text-sm ${
                     isActive(child)
-                      ? 'text-orange-500'
-                      : 'text-gray-300 hover:text-orange-500'
+                      ? 'text-[#ff712a]'
+                      : 'text-gray-600 hover:text-[#ff712a]'
                   } transition-colors duration-200`}
                 >
                   {child.title}
@@ -197,19 +192,20 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         {item.path ? (
           <Link
             href={item.path}
-            className={`block py-2 text-sm font-medium ${isActive(item.path)
-                ? 'text-orange-500'
-                : 'text-gray-300 hover:text-orange-500'
-              } transition-colors duration-200`}
+            className={`block py-2 text-sm font-medium ${
+              isActive(item.path)
+                ? 'text-[#ff712a]'
+                : 'text-gray-600 hover:text-[#ff712a]'
+            } transition-colors duration-200`}
             onClick={onClose}
           >
             {item.title}
           </Link>
         ) : (
           <div className="py-2">
-            <span className="text-sm font-semibold text-orange-500">{item.title}</span>
+            <span className="text-sm font-semibold text-[#ff712a]">{item.title}</span>
             {item.children && (
-              <div className="pl-4 mt-2 border-l border-border-color">
+              <div className="pl-4 mt-2">
                 {renderMobileItems(item.children, depth + 1)}
               </div>
             )}
@@ -223,17 +219,18 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed inset-0 bg-zinc-900 z-50 overflow-y-auto"
+          initial={{ opacity: 0, x: '100%' }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: '100%' }}
+          transition={{ type: 'tween', duration: 0.3 }}
+          className="fixed inset-y-0 right-0 w-full max-w-sm bg-[#FFF5F5] z-50 overflow-y-auto"
         >
-          <div className="container mx-auto px-4 py-6">
+          <div className="p-6">
             <div className="flex justify-between items-center mb-8">
-              <Image loading='lazy' height={8} width={100} className="h-8 w-auto" src="/page-components/hics-light.png" alt="HICS Logo" />
+              <Image loading='lazy' height={8} width={100} className="h-8 w-auto" src="/page-components/hics-dark.png" alt="HICS Logo" />
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
+                className="text-gray-400 hover:text-[#ff712a] transition-colors duration-200"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -250,23 +247,13 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="sticky top-0 z-50 transition-all duration-200 bg-background/95 border-b border-border-color backdrop-blur-lg"
+      className="absolute top-0 left-0 right-0 z-50"
     >
       <nav className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
@@ -275,7 +262,7 @@ const Header = () => {
               loading='lazy'
               height={8} width={100}
               className="h-8 w-auto"
-              src="/page-components/hics-light.png"
+              src="/page-components/hics-dark.png"
               alt="HICS Logo"
             />
           </Link>
@@ -286,13 +273,33 @@ const Header = () => {
               <DropdownMenu key={index} item={item} />
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="lg:hidden text-gray-600 hover:text-[#ff712a] transition-colors duration-200"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
       />
+
+      {/* Overlay for Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
     </motion.header>
   );
 };

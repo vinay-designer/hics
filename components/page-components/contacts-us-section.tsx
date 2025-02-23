@@ -43,7 +43,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <section className="relative py-32 overflow-hidden bg-black">
+    <section className="relative py-20 overflow-hidden bg-black">
       <ContactBackground />
       {/* Background gradients */}
       <div className="absolute inset-0">
