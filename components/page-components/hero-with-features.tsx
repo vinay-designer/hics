@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Brain, BarChart, Shield, Cloud } from 'lucide-react';
-import ModernFeatures from './feature-section';
+import { ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import ClientSection from './client';
 
-const contentSets = [
-  {
-    headline: "Start your digital transformation journey with us",
-    subtext: "we make an impact, difference that you find is natural"
-  },
-  {
-    headline: "Deal with intelligence by implementing the right solutions",
-    subtext: "SAP, AWS, MICROSOFT, DATA ANALYTICS, RPA and more"
-  },
-  {
-    headline: "Secure your IT today, Cybersecurity is continuous evolution",
-    subtext: "Identity and Access Management, VAPT, PenTest and more"
-  }
-];
-
-// Color scheme centered around brand color #ff712a (vibrant orange)
+// Using the color scheme from the original component
 const colorScheme = {
   orange: {
     main: '#ff712a', // Brand color
@@ -43,246 +28,452 @@ const colorScheme = {
   }
 };
 
-// Reduced to 3 features with updated colors
-const features = [
+const carouselContent = [
   {
-    title: "Digital Solutions",
-    description: "Transform your business with cutting-edge digital solutions that drive innovation and growth. Our comprehensive approach ensures seamless integration.",
-    icon: Brain,
-    color: { main: "#fff3ea", bg: colorScheme.orange.bg, text: 'text-orange-500' }
+    title: "Outthink Outperform",
+    subtitle: "We make SAP work for you",
+    content: "Let's be real—SAP is SAP. There are a zillion others who implement SAP just like we do. But here's the thing: while everyone implements SAP, we outthink and outperform by actually solving problems. We don't just follow a playbook; we stand in your shoes, feel your frustrations, and then make SAP work for you.",
+    image: "/page-components/hero.svg"
   },
   {
-    title: "Smart Analytics",
-    description: "Leverage advanced data analytics to uncover valuable insights and make data-driven decisions. Turn your data into actionable intelligence.",
-    icon: BarChart,
-    color: { main: "#e6e9ff", bg: colorScheme.peach.bg, text: 'text-orange-400' }
+    title: "Customer Success Stories",
+    subtitle: "Real solutions for real problems",
+    content: "Take one of our customers, for example. They needed a simple way to monitor system performance but didn't want the cost or complexity of full-blown tools like SAP ALM or Datadog. Instead of pushing them toward an expensive solution they didn't need, we built them a custom dashboard that gave them exactly what they wanted—quick insights, at a glance.",
+    image: "/page-components/hero.svg"
   },
   {
-    title: "Cyber Security",
-    description: "Protect your digital assets with state-of-the-art security measures. Our comprehensive security solutions safeguard your business 24/7.",
-    icon: Shield,
-    color: { main: "#fff8e1", bg: colorScheme.coral.bg, text: 'text-rose-500' }
+    title: "Our Approach",
+    subtitle: "Beyond the playbook",
+    content: "We're not your typical \"small, dedicated team\" that just ticks boxes. We're a nimble band of SAP problem-solvers who throw out the cookie-cutter playbook. We go beyond SAP when needed. We embed ourselves in your project—right in the thick of it—partnering with you from day one.",
+    image: "/page-components/hero.svg"
   }
 ];
 
-const PastelHeroSection = () => {
-  const [currentSetIndex, setCurrentSetIndex] = useState(0);
+// Client logos for the marquee - extracted from the partners section
+const clients = [
+  { name: "AIC", logo: "/page-components/aic.jpg" },
+  { name: "BVH", logo: "/page-components/bvh.jpg" },
+  { name: "Dairy", logo: "/page-components/dairy.jpg" },
+  { name: "IHIS", logo: "/page-components/ihis.jpg" },
+  { name: "SPG", logo: "/page-components/sp-g.jpg" },
+  { name: "ZP", logo: "/page-components/zp.jpg" },
+  // Duplicates to ensure continuous flow
+  { name: "AIC", logo: "/page-components/aic.jpg" },
+  { name: "BVH", logo: "/page-components/bvh.jpg" },
+  { name: "Dairy", logo: "/page-components/dairy.jpg" },
+  { name: "IHIS", logo: "/page-components/ihis.jpg" },
+  { name: "SPG", logo: "/page-components/sp-g.jpg" },
+  { name: "ZP", logo: "/page-components/zp.jpg" }
+];
 
+const HeroCarouselSection = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  
+  // Auto-rotate carousel
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSetIndex((prev) => (prev + 1) % contentSets.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % carouselContent.length);
+    }, 6000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-blue-50 relative pt-20">
-      {/* Animation Container */}
-      <div className="absolute top-0 left-0 right-0 h-[80vh] overflow-hidden">
-        {/* Main Circle */}
-        <motion.div
-          animate={{
-            x: [-20, 20, -20],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{ backgroundColor: colorScheme.orange.main }}
-          className="absolute top-20 left-20 w-32 h-32 rounded-full opacity-70"
-        />
-
-        {/* Square */}
-        <motion.div
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{ backgroundColor: colorScheme.peach.main }}
-          className="absolute top-40 right-40 w-24 h-24 opacity-70"
-        />
-
-        {/* Small Circle */}
-        <motion.div
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.7, 0.3, 0.7],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{ backgroundColor: colorScheme.coral.main }}
-          className="absolute top-1/3 right-1/4 w-16 h-16 rounded-full"
-        />
-
-        {/* Additional Shapes */}
-        <motion.div
-          animate={{
-            y: [-10, 10, -10],
-            rotate: [0, 45, 0],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{ backgroundColor: colorScheme.sky.main }}
-          className="absolute top-1/4 left-1/3 w-8 h-8 opacity-60"
-        />
-
-        <motion.div
-          animate={{
-            x: [-15, 15, -15],
-            rotate: [0, -30, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{ backgroundColor: colorScheme.lavender.main }}
-          className="absolute bottom-1/3 right-1/3 w-20 h-10 opacity-60"
-        />
-
-        {/* Floating dots */}
-        {[...Array(5)].map((_, i) => (
+    <>
+      <div className="relative min-h-screen bg-gradient-to-b from-orange-50 to-blue-50 py-20 overflow-hidden">
+        {/* Enhanced Background Animation Elements with more color throughout */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Decorative Orbs */}
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 opacity-20 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-gradient-to-tr from-blue-100 to-blue-200 opacity-20 blur-3xl"></div>
+          
+          {/* Additional color elements in the corners */}
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-br-full bg-gradient-to-br from-orange-300/10 to-orange-100/5"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 rounded-tl-full bg-gradient-to-tl from-blue-300/10 to-blue-100/5"></div>
+          
+          {/* Animated floating elements on sides of the screen */}
+          {/* Left side floating elements */}
           <motion.div
-            key={i}
+            animate={{
+              y: [-30, 30, -30],
+              rotate: [0, 15, 0],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-12 top-1/4 w-40 h-40 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent"
+          ></motion.div>
+          
+          <motion.div
+            animate={{
+              y: [20, -20, 20],
+              x: [-10, 10, -10],
+              rotate: [0, -10, 0],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-16 bottom-1/3 w-24 h-24 rounded-lg bg-gradient-to-tr from-orange-400/10 to-transparent"
+            style={{ transform: "rotate(15deg)" }}
+          ></motion.div>
+          
+          {/* Right side floating elements */}
+          <motion.div
+            animate={{
+              y: [20, -40, 20],
+              rotate: [0, -15, 0],
+            }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute right-20 top-1/3 w-32 h-32 rounded-full bg-gradient-to-bl from-blue-300/15 to-transparent"
+          ></motion.div>
+          
+          <motion.div
             animate={{
               y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.3, 0.6, 0.3],
+              x: [10, -10, 10],
+              rotate: [0, 10, 0],
+            }}
+            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute right-24 bottom-1/4 w-36 h-36 rounded-lg bg-gradient-to-tl from-orange-300/15 to-transparent"
+            style={{ transform: "rotate(-15deg)" }}
+          ></motion.div>
+          
+          {/* Floating dots on sides */}
+          {[...Array(8)].map((_, i) => {
+            // Alternate positions between left and right sides
+            const isLeft = i % 2 === 0;
+            const xPosition = isLeft ? `${10 + (i % 4) * 5}%` : `${85 - (i % 4) * 5}%`;
+            const yPosition = `${15 + (i * 10)}%`;
+            const size = 4 + (i % 3) * 2;
+            
+            return (
+              <motion.div
+                key={i}
+                animate={{
+                  y: [-15, 15, -15],
+                  x: [-10, 10, -10],
+                  opacity: [0.4, 0.7, 0.4],
+                }}
+                transition={{
+                  duration: 7 + i,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.7,
+                }}
+                style={{ 
+                  backgroundColor: isLeft ? colorScheme.orange.main : colorScheme.sky.main,
+                  top: yPosition,
+                  left: xPosition,
+                  width: `${size}px`,
+                  height: `${size}px`,
+                }}
+                className="absolute rounded-full"
+              />
+            );
+          })}
+          
+          {/* Shooting stars/lines that occasionally appear on sides */}
+          <motion.div
+            initial={{ x: -100, y: 100, opacity: 0 }}
+            animate={{ 
+              x: 100, 
+              y: -100, 
+              opacity: [0, 1, 0]
             }}
             transition={{
-              duration: 3 + i,
+              duration: 2.5,
               repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5,
+              repeatDelay: 7,
+              ease: "easeOut"
             }}
-            style={{ 
-              backgroundColor: Object.values(colorScheme)[i % 5].main,
-              top: `${20 + (i * 15)}%`,
-              left: `${15 + (i * 18)}%`,
-            }}
-            className="absolute w-4 h-4 rounded-full"
+            className="absolute left-[5%] top-1/4 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"
+            style={{ transform: "rotate(-45deg) scale(2)" }}
           />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-4 pt-32 pb-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column */}
-          <motion.div className="space-y-12">
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-block text-orange-500 font-medium px-4 py-1.5 rounded-full text-sm border border-orange-500/20"
-            >
-              Transform Your Business
-            </motion.span>
-            
-            <div className="space-y-8">
-              <motion.h1 className="text-6xl font-bold tracking-tight">
-                <motion.span 
-                  className="block text-gray-800 mb-2"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  POWER UP
-                </motion.span>
-                <motion.span 
-                  className="block text-orange-500"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  YOUR BUSINESS
-                </motion.span>
-              </motion.h1>
-
-              {/* Fixed height container for changing content */}
-              <div className="h-32">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentSetIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-4"
-                  >
-                    <h2 className="text-2xl text-gray-700">
-                      {contentSets[currentSetIndex].headline}
-                    </h2>
-                    <p className="text-gray-600 text-lg">
-                      {contentSets[currentSetIndex].subtext}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Content change indicators */}
-            <div className="flex gap-2 pt-4">
-              {contentSets.map((_, index) => (
-                <motion.div
-                  key={index}
-                  className={`h-1 w-8 rounded-full ${
-                    index === currentSetIndex ? 'bg-orange-500' : 'bg-gray-200'
-                  }`}
-                  animate={{
-                    scale: index === currentSetIndex ? [1, 1.2, 1] : 1,
-                  }}
-                  transition={{ duration: 0.5 }}
-                />
-              ))}
-            </div>
-
-            {/* Updated button container */}
-            <div className="flex items-center space-x-4 pt-6">
-              <Button 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 text-base font-medium rounded-md"
-              >
-                Get Started
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border border-orange-500 text-orange-500 bg-transparent hover:bg-orange-500/5 px-6 py-2 text-base font-medium rounded-md"
-              >
-                Learn More
-              </Button>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Image */}
+          
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="relative">
-              <img
-                src="/page-components/hero.svg"
-                alt="Digital Innovation"
-                className="w-full h-full object-cover"
+            initial={{ x: 100, y: 200, opacity: 0 }}
+            animate={{ 
+              x: -100, 
+              y: 100, 
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 15,
+              ease: "easeOut",
+              delay: 5
+            }}
+            className="absolute right-[5%] top-1/3 w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"
+            style={{ transform: "rotate(45deg) scale(2)" }}
+          />
+          
+          {/* Main Circle */}
+          <motion.div
+            animate={{
+              x: [-20, 20, -20],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{ backgroundColor: colorScheme.orange.main }}
+            className="absolute top-20 left-20 w-32 h-32 rounded-full opacity-20"
+          />
+
+          {/* Square */}
+          <motion.div
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ backgroundColor: colorScheme.peach.main }}
+            className="absolute top-40 right-40 w-24 h-24 opacity-20"
+          />
+
+          {/* Small Circle */}
+          <motion.div
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.1, 0.2],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{ backgroundColor: colorScheme.coral.main }}
+            className="absolute top-1/3 right-1/4 w-16 h-16 rounded-full"
+          />
+
+          {/* Additional Shapes */}
+          <motion.div
+            animate={{
+              y: [-10, 10, -10],
+              rotate: [0, 45, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{ backgroundColor: colorScheme.sky.main }}
+            className="absolute top-1/4 left-1/3 w-8 h-8 opacity-20"
+          />
+
+          <motion.div
+            animate={{
+              x: [-15, 15, -15],
+              rotate: [0, -30, 0],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{ backgroundColor: colorScheme.lavender.main }}
+            className="absolute bottom-1/3 right-1/3 w-20 h-10 opacity-20"
+          />
+        </div>
+
+        {/* Floating elements that extend beyond the container on both sides */}
+        <div className="container mx-auto relative z-10">
+          {/* Left side floating decorative elements */}
+          <div className="absolute -left-40 top-1/4 z-0">
+            <motion.div
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                rotate: {
+                  duration: 30,
+                  repeat: Infinity,
+                  ease: "linear"
+                },
+                scale: {
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+              className="w-64 h-64 rounded-full border border-orange-200 opacity-50 relative"
+            >
+              <motion.div 
+                className="absolute top-1/2 left-1/2 w-4 h-4 rounded-full bg-orange-300"
+                animate={{
+                  scale: [1, 1.5, 1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{ 
+                  transform: 'translate(-50%, -50%)',
+                }}
               />
+            </motion.div>
+          </div>
+          
+          {/* Right side floating decorative elements */}
+          <div className="absolute -right-32 bottom-1/4 z-0">
+            <motion.div
+              animate={{
+                rotate: [0, -360]
+              }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-56 h-56 relative"
+            >
+              <motion.div 
+                className="absolute top-0 left-1/2 w-2 h-2 rounded-full bg-blue-300"
+                animate={{ opacity: [0.3, 0.7, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ transform: 'translateX(-50%)' }}
+              />
+              <motion.div 
+                className="absolute top-1/4 right-0 w-3 h-3 rounded-full bg-orange-300"
+                animate={{ opacity: [0.7, 0.4, 0.7] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <motion.div 
+                className="absolute bottom-0 left-1/2 w-2 h-2 rounded-full bg-blue-300"
+                animate={{ opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                style={{ transform: 'translateX(-50%)' }}
+              />
+              <motion.div 
+                className="absolute top-1/4 left-0 w-3 h-3 rounded-full bg-orange-400"
+                animate={{ opacity: [0.6, 0.3, 0.6] }}
+                transition={{ duration: 3.5, repeat: Infinity }}
+              />
+              <div className="w-full h-full rounded-full border border-blue-200 opacity-40"></div>
+            </motion.div>
+          </div>
+          
+
+          {/* Main Carousel with enhanced background */}
+          <div className="px-6 relative z-10 mt-20">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl bg-white/30 backdrop-blur-sm min-h-[70vh]">
+              {/* Additional background elements inside the carousel */}
+              <div className="absolute top-0 right-0 w-64 h-64 rounded-bl-full bg-gradient-to-bl from-orange-200/20 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 rounded-tr-full bg-gradient-to-tr from-blue-200/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,113,42,0.03)_0%,transparent_60%)]"></div>
+
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+                {carouselContent.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveSlide(index)}
+                    className={`h-2 transition-all duration-300 rounded-full ${
+                      index === activeSlide ? 'w-10 bg-orange-500' : 'w-3 bg-gray-300'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Carousel Slides */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeSlide}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0"
+                >
+                  <div className="grid lg:grid-cols-2 h-full">
+                    {/* Text Content with enhanced decorative elements */}
+                    <div className="p-12 lg:p-20 flex flex-col justify-center relative">
+                      {/* Decorative accent */}
+                      <div className="absolute top-12 left-12 w-12 h-3 bg-gradient-to-r from-orange-500 to-orange-300 rounded-full opacity-70"></div>
+                      
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.5 }}
+                        className="space-y-6 relative"
+                      >
+                        <div>
+                          <h2 className="text-xl font-medium text-orange-600 mb-2 tracking-wide">
+                            {carouselContent[activeSlide].subtitle}
+                          </h2>
+                          <div className="relative inline-block">
+                            <h1 className="text-5xl font-bold text-gray-800 mb-4 font-sans">
+                              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                                {carouselContent[activeSlide].title}
+                              </span>
+                            </h1>
+                            <div className="absolute -bottom-1 left-0 w-1/2 h-1.5 bg-orange-500 rounded-full"></div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-700 text-lg leading-relaxed">
+                          {carouselContent[activeSlide].content.split(' ').map((word, i) => {
+                            // Highlight every 10th word or important keywords
+                            const keywords = ['outthink', 'outperform', 'SAP', 'problem-solvers', 'solutions', 'partnering'];
+                            const lowercaseWord = word.toLowerCase().replace(/[^a-z]/g, '');
+                            
+                            if (keywords.includes(lowercaseWord)) {
+                              return (
+                                <span key={i} className="font-semibold text-orange-600">
+                                  {word}{' '}
+                                </span>
+                              );
+                            }
+                            return <span key={i}>{word}{' '}</span>;
+                          })}
+                        </p>
+                        
+                        <div className="pt-6">
+                          <Button 
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md text-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-200/50"
+                          >
+                            <span className="flex items-center gap-2">
+                              Get Started
+                              <ArrowRight className="w-5 h-5" />
+                            </span>
+                          </Button>
+                        </div>
+                      </motion.div>
+                    </div>
+                    
+                    {/* Image with background elements */}
+                    <motion.div 
+                      className="hidden lg:flex items-center justify-center p-12 lg:p-20 relative"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3, duration: 0.6 }}
+                    >
+                      {/* Decorative background elements for image side */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-100/40 to-transparent rounded-bl-full"></div>
+                      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-tr-full"></div>
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,113,42,0.05)_0%,transparent_50%)]"></div>
+                      
+                      <img 
+                        src={carouselContent[activeSlide].image} 
+                        alt={carouselContent[activeSlide].title}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </div>
+  <ClientSection />
+    </>
   );
 };
 
-export default PastelHeroSection;
+export default HeroCarouselSection;

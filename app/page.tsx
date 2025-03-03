@@ -21,7 +21,7 @@ export default function Home() {
 
       <KeyFocusSection />
 
-      <HealthcareSection />
+      {/* <HealthcareSection />
 
       <ServicesSection />
 
@@ -31,7 +31,7 @@ export default function Home() {
       
       <ProcessSection />
 
-      <TrustedClientsSection />
+      <TrustedClientsSection /> */}
 {/* 
 
 

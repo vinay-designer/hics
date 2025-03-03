@@ -16,7 +16,7 @@ interface NavItem {
 
 const navigation: NavItem[] = [
   { title: "Home", path: "/" },
-  { title: "About Us", path: "/about" },
+  { title: "Why HICS", path: "/about" },
   {
     title: "Services",
     children: [
@@ -73,16 +73,6 @@ const navigation: NavItem[] = [
       },
     ],
   },
-  {
-    title: "Solutions",
-    children: [
-      { title: "Digital Documentation (eForms)", path: "/solutions/eforms" },
-      { title: "Queue Management System", path: "/solutions/queue-management" },
-      { title: "Single Sign-on (SSO)", path: "/solutions/sso" },
-      { title: "Intelligent Elderly Fall Detection", path: "/solutions/fall-detection" },
-    ],
-  },
-  { title: "Clients & Partners", path: "/clients-partners" },
   { title: "Contact Us", path: "/contact" },
 ];
 
