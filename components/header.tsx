@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 
+
 interface NavItem {
   title: string;
   path?: string;
@@ -16,7 +17,7 @@ interface NavItem {
 
 const navigation: NavItem[] = [
   { title: "Home", path: "/" },
-  { title: "Why HICS", path: "/about" },
+  { title: "Why HICS?", path: "/about" },
   {
     title: "Services",
     children: [
@@ -118,15 +119,15 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
             href={item.path}
             className={`text-sm font-medium transition-colors duration-200 ${
               isActive(item)
-                ? 'text-[#ff712a]'
-                : 'text-gray-700 hover:text-[#ff712a]'
+                ? 'text-orange-500'
+                : 'text-gray-700 hover:text-orange-500'
             }`}
           >
             {item.title}
           </Link>
         ) : (
           <span className={`text-sm font-medium transition-colors duration-200 ${
-            isActive(item) || isOpen ? 'text-[#ff712a]' : 'text-gray-700 hover:text-[#ff712a]'
+            isActive(item) || isOpen ? 'text-orange-500' : 'text-gray-700 hover:text-orange-500'
           }`}>
             {item.title}
           </span>
@@ -134,7 +135,7 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
         {item.children && (
           <ChevronDown
             className={`w-4 h-4 transition-transform duration-200 ${
-              isOpen ? 'rotate-180 text-[#ff712a]' : 'text-gray-400'
+              isOpen ? 'rotate-180 text-orange-500' : 'text-gray-400'
             }`}
           />
         )}
@@ -152,8 +153,8 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
                   href={child.path || '#'}
                   className={`block text-sm ${
                     isActive(child)
-                      ? 'text-[#ff712a]'
-                      : 'text-gray-600 hover:text-[#ff712a]'
+                      ? 'text-orange-500'
+                      : 'text-gray-600 hover:text-orange-500'
                   } transition-colors duration-200`}
                 >
                   {child.title}
@@ -184,8 +185,8 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             href={item.path}
             className={`block py-2 text-sm font-medium ${
               isActive(item.path)
-                ? 'text-[#ff712a]'
-                : 'text-gray-600 hover:text-[#ff712a]'
+                ? 'text-orange-500'
+                : 'text-gray-600 hover:text-orange-500'
             } transition-colors duration-200`}
             onClick={onClose}
           >
@@ -193,7 +194,7 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
           </Link>
         ) : (
           <div className="py-2">
-            <span className="text-sm font-semibold text-[#ff712a]">{item.title}</span>
+            <span className="text-sm font-semibold text-orange-500">{item.title}</span>
             {item.children && (
               <div className="pl-4 mt-2">
                 {renderMobileItems(item.children, depth + 1)}
@@ -217,10 +218,10 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         >
           <div className="p-6">
             <div className="flex justify-between items-center mb-8">
-              <Image loading='lazy' height={8} width={100} className="h-8 w-auto" src="/page-components/hics-dark.png" alt="HICS Logo" />
+              <Image loading='lazy' height={10} width={120} className="h-10 w-auto" src="/page-components/hics-dark.png" alt="HICS Logo" />
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-[#ff712a] transition-colors duration-200"
+                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -238,6 +239,27 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Animation for the stamp text
+  const textVariants = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const letterVariants = {
+    initial: { y: 0 },
+    animate: { 
+      y: [-1, 1, -1],
+      transition: { 
+        repeat: Infinity,
+        repeatType: "mirror",
+        duration: 2.5,
+      }
+    },
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -247,26 +269,95 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
+          {/* Logo - Increased size */}
           <Link href="/" className="flex items-center">
             <Image
               loading='lazy'
-              height={8} width={100}
-              className="h-8 w-auto"
+              height={12} width={150}
+              className="h-12 w-auto"
               src="/page-components/hics-dark.png"
               alt="HICS Logo"
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
             {navigation.map((item, index) => (
               <DropdownMenu key={index} item={item} />
             ))}
           </div>
+          
+          {/* Outthink Outperform Stamp - Visually striking design */}
+          <div className="hidden lg:block">
+            {/* Option 1: Split design with gradient border */}
+            <div className="relative bg-white shadow-md border-l-4 border-orange-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-white opacity-60"></div>
+              <div className="px-3 py-2 relative">
+                <div className="flex flex-col">
+                  <span className="text-gray-800 font-semibold tracking-tight text-sm">outthink<span className="text-orange-500">.</span></span>
+                  <span className="text-orange-500 font-bold tracking-tight text-sm">outperform<span className="text-orange-500">.</span></span>
+                </div>
+              </div>
+            </div>
+
+            {/* Option 2: Animated gradient stamp 
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 animate-gradient-x"></div>
+              <div className="px-4 py-2 bg-white/90 border border-orange-200 relative">
+                <motion.div
+                  variants={textVariants}
+                  initial="initial"
+                  animate="animate"
+                  className="flex gap-1"
+                >
+                  {Array.from("outthink.").map((letter, index) => (
+                    <motion.span 
+                      key={`first-${index}`}
+                      variants={letterVariants}
+                      className={letter === '.' ? "text-orange-500 font-bold" : "text-gray-800 font-medium"}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </motion.div>
+                <motion.div
+                  variants={textVariants}
+                  initial="initial"
+                  animate="animate"
+                  className="flex gap-1"
+                >
+                  {Array.from("outperform.").map((letter, index) => (
+                    <motion.span 
+                      key={`second-${index}`}
+                      variants={letterVariants}
+                      className={letter === '.' ? "text-orange-500 font-bold" : "text-orange-500 font-medium"}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+            */}
+
+            {/* Option 3: Bold contrast with accent line */}
+            {/* 
+            <div className="relative overflow-hidden">
+              <div className="flex flex-col bg-gray-800 text-white px-3 py-2">
+                <div className="absolute top-0 left-0 w-full h-1 bg-orange-500"></div>
+                <span className="text-sm font-medium tracking-tight">outthink<span className="text-orange-400">.</span></span>
+                <span className="text-orange-400 text-sm font-bold tracking-tight">outperform<span className="text-orange-300">.</span></span>
+                <div className="absolute bottom-0 right-0 w-full h-1 bg-orange-500"></div>
+              </div>
+            </div>
+            */}
+          </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-gray-600 hover:text-[#ff712a] transition-colors duration-200"
+            className="lg:hidden text-gray-600 hover:text-orange-500 transition-colors duration-200"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="w-6 h-6" />

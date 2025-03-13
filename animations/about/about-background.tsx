@@ -37,21 +37,21 @@ const AboutBackground = () => {
         positions[i3 + 1] = y;
         positions[i3 + 2] = radius * Math.sin(theta);
 
-        // Gradient colors from orange to white
-        const colorPos = y / 20 + 0.5; // 0 to 1
-        colors[i3] = 1;                // R
-        colors[i3 + 1] = 0.44 + colorPos * 0.56; // G
-        colors[i3 + 2] = 0.16 + colorPos * 0.84; // B
+        // Orange-based gradient colors instead of white
+        // Main orange: #ff712a (rgb: 255, 113, 42)
+        colors[i3] = 1.0;                           // R: 255 (normalized to 1.0)
+        colors[i3 + 1] = 0.44 + (Math.random() * 0.15); // G: 113 (normalized to ~0.44)
+        colors[i3 + 2] = 0.16 + (Math.random() * 0.1);  // B: 42 (normalized to ~0.16)
       }
 
       particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const particleMaterial = new THREE.PointsMaterial({
-        size: 0.05,
+        size: 0.08, // Increased size for better visibility
         vertexColors: true,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.8, // Increased opacity
         blending: THREE.AdditiveBlending
       });
 

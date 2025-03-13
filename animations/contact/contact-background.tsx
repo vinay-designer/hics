@@ -22,8 +22,7 @@ const ContactBackground = () => {
         mountRef.current.appendChild(renderer.domElement);
       }
 
-
-      // Create grid of dots
+      // Create grid of dots - adjusted for light theme
       const geometry = new THREE.BufferGeometry();
       const count = 50;
       const size = 50;
@@ -39,11 +38,15 @@ const ContactBackground = () => {
           positions[index + 1] = 0;
           positions[index + 2] = (i - count / 2) * (size / count);
 
-          // Color gradient from orange to white
+          // Color gradient from orange to blue for light theme
+          // Original orange: RGB(255, 113, 42) -> normalized (1, 0.44, 0.16)
+          // Blue accent: RGB(66, 153, 225) -> normalized (0.26, 0.6, 0.88)
           const mixFactor = Math.abs(Math.sin(i / count * Math.PI) * Math.cos(j / count * Math.PI));
-          colors[index] = 1; // R
-          colors[index + 1] = 0.44 + mixFactor * 0.56; // G
-          colors[index + 2] = 0.16 + mixFactor * 0.84; // B
+          
+          // Mix between orange and light blue
+          colors[index] = 1 - (mixFactor * 0.74); // R: from 1 to 0.26
+          colors[index + 1] = 0.44 + (mixFactor * 0.16); // G: from 0.44 to 0.6
+          colors[index + 2] = 0.16 + (mixFactor * 0.72); // B: from 0.16 to 0.88
         }
       }
 
@@ -54,7 +57,7 @@ const ContactBackground = () => {
         size: 0.15,
         vertexColors: true,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.5, // Reduced opacity for light theme
         blending: THREE.AdditiveBlending
       });
 

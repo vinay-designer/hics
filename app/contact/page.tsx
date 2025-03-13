@@ -7,6 +7,7 @@ import {
   PhoneCall, Send, CheckCircle, ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { typography } from '../../utils/ typography';
 import ContactBackground from '../../animations/contact/contact-background';
 
 const ContactPage = () => {
@@ -41,7 +42,7 @@ const ContactPage = () => {
       teams: ["System Integration", "Support Services"]
     },
     indonesia: {
-      name: "Phillipines office",
+      name: "Philippines Office",
       address: "Menara BTPN, CBD Mega Kuningan",
       area: "Philly 12950",
       phone: "+62 21 2123 4567",
@@ -136,14 +137,152 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center py-24 overflow-hidden">
-      <div className="absolute inset-0">
+      <section className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden">
+        {/* Three.js Background */}
+        <div className="absolute inset-0 z-0">
           <ContactBackground />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90" />
+        
+        {/* Lighter, more transparent overlay to let animation show through better */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/10 to-white/40 z-1" />
+        
+        {/* Additional animated elements for hero section */}
+        <div className="absolute inset-0 overflow-hidden z-1 pointer-events-none">
+          {/* Large gradient orbs */}
+          <motion.div
+            animate={{
+              y: [-20, 20, -20],
+              scale: [1, 1.05, 1],
+              opacity: [0.15, 0.25, 0.15],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent blur-3xl"
+          />
+          
+          <motion.div
+            animate={{
+              y: [20, -20, 20],
+              scale: [1.05, 1, 1.05],
+              opacity: [0.15, 0.2, 0.15],
+            }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute bottom-20 left-[20%] w-96 h-96 rounded-full bg-gradient-to-tr from-blue-300/20 to-transparent blur-3xl"
+          />
+          
+          {/* Animated rings */}
+          <div className="absolute left-[10%] top-[30%]">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-40 h-40 rounded-full border-2 border-orange-200/20 relative"
+            >
+              <motion.div 
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-orange-500/40"
+                animate={{ scale: [1, 1.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+          </div>
+          
+          <div className="absolute right-[15%] bottom-[20%]">
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{
+                duration: 50,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-64 h-64 rounded-full border border-blue-200/20 relative"
+            >
+              <motion.div 
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-500/40"
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.div>
+          </div>
+          
+          {/* Floating particles */}
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <motion.div
+              key={`particle-${idx}`}
+              className="absolute rounded-full"
+              style={{
+                width: 4 + (idx % 4) * 2,
+                height: 4 + (idx % 4) * 2,
+                backgroundColor: idx % 2 === 0 ? '#ff712a' : '#4299E1',
+                opacity: 0.4,
+                left: `${20 + (idx * 8)}%`,
+                top: `${15 + ((idx * 7) % 50)}%`
+              }}
+              animate={{
+                y: [0, -30, 0],
+                x: idx % 2 === 0 ? [0, 20, 0] : [0, -20, 0],
+                opacity: [0.2, 0.5, 0.2]
+              }}
+              transition={{
+                duration: 10 + idx * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: idx * 0.5
+              }}
+            />
+          ))}
+          
+          {/* Animated lines/trails */}
+          <motion.div
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ 
+              x: "200%", 
+              opacity: [0, 0.5, 0]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              repeatDelay: 7,
+              ease: "easeOut"
+            }}
+            className="absolute top-1/4 w-32 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent"
+            style={{ transform: "rotate(-30deg)" }}
+          />
+          
+          <motion.div
+            initial={{ x: "200%", opacity: 0 }}
+            animate={{ 
+              x: "-100%", 
+              opacity: [0, 0.3, 0]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              repeatDelay: 9,
+              ease: "easeOut",
+              delay: 3
+            }}
+            className="absolute bottom-1/3 w-24 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+            style={{ transform: "rotate(20deg)" }}
+          />
+          
+          {/* Corner accent gradients */}
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-orange-50/50 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-50/50 to-transparent"></div>
+        </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -159,18 +298,18 @@ const ContactPage = () => {
               transition={{ delay: 0.2 }}
               className="w-24 h-24 mx-auto mb-8 relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#ff712a] to-[#ff9500] rounded-3xl blur-xl opacity-50" />
-              <div className="relative h-full bg-black/50 rounded-3xl p-6 backdrop-blur-xl border border-[#ff712a]/10 flex items-center justify-center">
-                <MessageSquare className="w-12 h-12 text-white" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 rounded-3xl blur-xl opacity-30" />
+              <div className="relative h-full bg-white/90 rounded-3xl p-6 backdrop-blur-xl border border-orange-300/30 flex items-center justify-center shadow-md">
+                <MessageSquare className="w-12 h-12 text-orange-500" />
               </div>
             </motion.div>
 
-            <h1 className="text-7xl font-bold mb-6">
+            <h1 className={typography.h1}>
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="block text-white"
+                className="block text-gray-800"
               >
                 Let's Build Something
               </motion.span>
@@ -178,7 +317,7 @@ const ContactPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="block text-[#ff712a]"
+                className={`block ${typography.accent}`}
               >
                 Extraordinary
               </motion.span>
@@ -188,7 +327,7 @@ const ContactPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-xl text-gray-300 mb-12 leading-relaxed"
+              className={`${typography.bodyLarge} mb-12`}
             >
               Join us in our mission to transform healthcare technology across Southeast Asia. 
               Whether you're looking to partner, explore career opportunities, or discuss your 
@@ -204,46 +343,46 @@ const ContactPage = () => {
             >
               <div className="group">
                 <a href="tel:+6561234567" className="flex flex-col items-center gap-4 p-6 rounded-xl 
-                                                    bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                                                    hover:border-[#ff712a] transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center justify-center 
-                                text-[#ff712a] group-hover:scale-110 transition-transform duration-300">
+                                                    bg-white/90 backdrop-blur-sm border border-orange-200/30 
+                                                    hover:border-orange-500 transition-all duration-300 hover:shadow-md">
+                  <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center 
+                                text-orange-500 group-hover:scale-110 transition-transform duration-300">
                     <PhoneCall className="w-6 h-6" />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-white font-medium mb-1">Call Us</h3>
-                    <p className="text-gray-400 text-sm">Available 24/7</p>
+                    <h3 className={`${typography.subtitle2} text-gray-800`}>Call Us</h3>
+                    <p className={typography.caption}>Available 24/7</p>
                   </div>
                 </a>
               </div>
 
               <div className="group">
                 <a href="mailto:contact@hics.com" className="flex flex-col items-center gap-4 p-6 
-                                                           rounded-xl bg-black/40 backdrop-blur-sm border 
-                                                           border-[#ff712a]/10 hover:border-[#ff712a] 
-                                                           transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center justify-center 
-                                text-[#ff712a] group-hover:scale-110 transition-transform duration-300">
+                                                           rounded-xl bg-white/90 backdrop-blur-sm border 
+                                                           border-orange-200/30 hover:border-orange-500 
+                                                           transition-all duration-300 hover:shadow-md">
+                  <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center 
+                                text-orange-500 group-hover:scale-110 transition-transform duration-300">
                     <Mail className="w-6 h-6" />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-white font-medium mb-1">Email Us</h3>
-                    <p className="text-gray-400 text-sm">Quick Response</p>
+                    <h3 className={`${typography.subtitle2} text-gray-800`}>Email Us</h3>
+                    <p className={typography.caption}>Quick Response</p>
                   </div>
                 </a>
               </div>
 
               <div className="group">
                 <button className="w-full flex flex-col items-center gap-4 p-6 rounded-xl 
-                                 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                                 hover:border-[#ff712a] transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center justify-center 
-                                text-[#ff712a] group-hover:scale-110 transition-transform duration-300">
+                                 bg-white/90 backdrop-blur-sm border border-orange-200/30 
+                                 hover:border-orange-500 transition-all duration-300 hover:shadow-md">
+                  <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center 
+                                text-orange-500 group-hover:scale-110 transition-transform duration-300">
                     <Send className="w-6 h-6" />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-white font-medium mb-1">Live Chat</h3>
-                    <p className="text-gray-400 text-sm">Start Conversation</p>
+                    <h3 className={`${typography.subtitle2} text-gray-800`}>Live Chat</h3>
+                    <p className={typography.caption}>Start Conversation</p>
                   </div>
                 </button>
               </div>
@@ -253,7 +392,7 @@ const ContactPage = () => {
       </section>
 
       {/* Office Locations Section */}
-      <section className="py-24 relative bg-black/40">
+      <section className="py-24 relative bg-blue-50/50">
         <div className="container mx-auto px-4">
           {/* Section Header */}
           <motion.div
@@ -263,17 +402,17 @@ const ContactPage = () => {
             className="text-center mb-16"
           >
             <div className="inline-block mb-4">
-              <div className="bg-[#ff712a]/10 backdrop-blur-xl px-6 py-2 rounded-full border border-[#ff712a]/20">
-                <h3 className="text-[#ff712a] font-medium">OUR LOCATIONS</h3>
+              <div className="bg-orange-100 px-6 py-2 rounded-full border border-orange-200">
+                <h3 className={`${typography.overline} ${typography.accent}`}>OUR LOCATIONS</h3>
               </div>
             </div>
             
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-white">Visit Our</span>
-              <span className="text-[#ff712a]"> Offices</span>
+            <h2 className={typography.h2}>
+              <span className="text-gray-800">Visit Our</span>
+              <span className={typography.accent}> Offices</span>
             </h2>
             
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className={`${typography.body} max-w-2xl mx-auto`}>
               With offices strategically located across Southeast Asia, we're well-positioned 
               to serve our clients and partners throughout the region.
             </p>
@@ -290,21 +429,21 @@ const ContactPage = () => {
                 className="group"
                 onClick={() => setSelectedOffice(key)}
               >
-                <div className={`h-full bg-black/40 backdrop-blur-sm border rounded-lg p-6 cursor-pointer 
+                <div className={`h-full bg-white/80 backdrop-blur-sm border rounded-lg p-6 cursor-pointer 
                               transition-all duration-300 ${
                                 selectedOffice === key 
-                                  ? 'border-[#ff712a]' 
-                                  : 'border-[#ff712a]/10 hover:border-[#ff712a]'
+                                  ? 'border-orange-500 shadow-md' 
+                                  : 'border-orange-200/30 hover:border-orange-500 hover:shadow-md'
                               }`}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="text-xl font-bold text-white group-hover:text-[#ff712a] 
-                                   transition-colors">{office.name}</h3>
-                        <p className="text-gray-400 text-sm mt-1">{office.area}</p>
+                        <h3 className={`${typography.h4} group-hover:text-orange-500 
+                                   transition-colors`}>{office.name}</h3>
+                        <p className={typography.caption}>{office.area}</p>
                       </div>
-                      <div className={`w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center 
-                                   justify-center text-[#ff712a] group-hover:scale-110 
+                      <div className={`w-12 h-12 rounded-xl bg-orange-100 flex items-center 
+                                   justify-center text-orange-500 group-hover:scale-110 
                                    transition-transform duration-300 ${
                                      selectedOffice === key ? 'scale-110' : ''
                                    }`}>
@@ -313,28 +452,28 @@ const ContactPage = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <Phone className="w-4 h-4 text-[#ff712a]" />
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Phone className="w-4 h-4 text-orange-500" />
                         {office.phone}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <Mail className="w-4 h-4 text-[#ff712a]" />
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Mail className="w-4 h-4 text-orange-500" />
                         {office.email}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <Clock className="w-4 h-4 text-[#ff712a]" />
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Clock className="w-4 h-4 text-orange-500" />
                         {office.hours}
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-[#ff712a]">Teams</h4>
+                      <h4 className={`text-sm font-semibold ${typography.accent}`}>Teams</h4>
                       <div className="flex flex-wrap gap-2">
                         {office.teams.map((team, index) => (
                           <span
-                          key={index}
-                            className="px-2 py-1 text-xs bg-black/20 border border-[#ff712a]/10 
-                                     rounded-full text-gray-400"
+                            key={index}
+                            className="px-2 py-1 text-xs bg-orange-50 border border-orange-200 
+                                     rounded-full text-gray-600"
                           >
                             {team}
                           </span>
@@ -352,9 +491,9 @@ const ContactPage = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative h-[500px] rounded-xl overflow-hidden"
+            className="relative h-[500px] rounded-xl overflow-hidden shadow-md"
           >
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-xl">
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border border-orange-200/30 rounded-xl">
               {/* Integrate your preferred map component here */}
               <iframe
                 src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${offices[selectedOffice as keyof typeof offices].coordinates.lat},${offices[selectedOffice as keyof typeof offices].coordinates.lng}`}
@@ -382,10 +521,10 @@ const ContactPage = () => {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-4xl font-bold mb-4">
-                  <span className="text-[#ff712a]">Get in Touch</span>
+                <h2 className={typography.h2}>
+                  <span className={typography.accent}>Get in Touch</span>
                 </h2>
-                <p className="text-gray-300">
+                <p className={typography.body}>
                   Ready to start your digital transformation journey? Fill out the form 
                   below and we'll get back to you within 24 hours.
                 </p>
@@ -394,40 +533,40 @@ const ContactPage = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm text-gray-300">First Name</label>
+                    <label className="text-sm text-gray-600">First Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 rounded-lg bg-black/40 border border-[#ff712a]/10 
-                               text-white focus:border-[#ff712a] transition-colors"
+                      className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
+                               text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
                       placeholder="John"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm text-gray-300">Last Name</label>
+                    <label className="text-sm text-gray-600">Last Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 rounded-lg bg-black/40 border border-[#ff712a]/10 
-                               text-white focus:border-[#ff712a] transition-colors"
+                      className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
+                               text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300">Email</label>
+                  <label className="text-sm text-gray-600">Email</label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 rounded-lg bg-black/40 border border-[#ff712a]/10 
-                             text-white focus:border-[#ff712a] transition-colors"
+                    className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
+                             text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
                     placeholder="john@example.com"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300">Department</label>
+                  <label className="text-sm text-gray-600">Department</label>
                   <select
-                    className="w-full px-4 py-3 rounded-lg bg-black/40 border border-[#ff712a]/10 
-                             text-white focus:border-[#ff712a] transition-colors"
+                    className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
+                             text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
                   >
                     <option value="">Select Department</option>
                     {departments.map((dept, index) => (
@@ -439,11 +578,11 @@ const ContactPage = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300">Message</label>
+                  <label className="text-sm text-gray-600">Message</label>
                   <textarea
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg bg-black/40 border border-[#ff712a]/10 
-                             text-white focus:border-[#ff712a] transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
+                             text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors resize-none"
                     placeholder="Tell us about your project..."
                   />
                 </div>
@@ -451,9 +590,9 @@ const ContactPage = () => {
                 <Button
                   type="submit"
                   disabled={formStatus === 'sending'}
-                  className="w-full relative overflow-hidden group bg-gradient-to-r from-[#ff712a] 
-                           to-[#ff9500] hover:from-[#ff9500] hover:to-[#ff712a] text-white px-8 
-                           py-4 text-lg rounded-lg"
+                  className="w-full relative overflow-hidden group bg-gradient-to-r from-orange-500
+                           to-orange-600 hover:from-orange-600 hover:to-orange-500 text-white px-8 
+                           py-4 text-lg rounded-lg shadow-md hover:shadow-lg transition-all"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     {formStatus === 'sending' ? (
@@ -482,11 +621,11 @@ const ContactPage = () => {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-4xl font-bold mb-4">
-                  <span className="text-white">Our</span>
-                  <span className="text-[#ff712a]"> Departments</span>
+                <h2 className={typography.h2}>
+                  <span className="text-gray-800">Our</span>
+                  <span className={typography.accent}> Departments</span>
                 </h2>
-                <p className="text-gray-300">
+                <p className={typography.body}>
                   Get in touch with the right team to help you achieve your goals.
                 </p>
               </div>
@@ -501,21 +640,21 @@ const ContactPage = () => {
                     transition={{ delay: index * 0.1 }}
                     className="group"
                   >
-                    <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                                 rounded-lg p-6 hover:border-[#ff712a] transition-all duration-300">
+                    <div className="bg-white/80 backdrop-blur-sm border border-orange-200/30 
+                                 rounded-lg p-6 hover:border-orange-500 hover:shadow-md transition-all duration-300">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center 
-                                     justify-center text-[#ff712a] group-hover:scale-110 
+                        <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center 
+                                     justify-center text-orange-500 group-hover:scale-110 
                                      transition-transform duration-300">
                           {dept.icon}
                         </div>
                         <div>
-                          <h3 className="text-lg font-semibold text-white group-hover:text-[#ff712a] 
-                                     transition-colors">{dept.name}</h3>
-                          <p className="text-gray-400 text-sm mt-1">{dept.description}</p>
+                          <h3 className={`${typography.h4} group-hover:text-orange-500 
+                                     transition-colors`}>{dept.name}</h3>
+                          <p className={`${typography.bodySmall} mt-1`}>{dept.description}</p>
                           <a
                             href={`mailto:${dept.email}`}
-                            className="text-[#ff712a] text-sm mt-2 inline-block hover:underline"
+                            className="text-orange-500 text-sm mt-2 inline-block hover:underline"
                           >
                             {dept.email}
                           </a>
@@ -531,7 +670,7 @@ const ContactPage = () => {
       </section>
 
       {/* Career Opportunities Section */}
-      <section className="py-24 relative bg-black/40">
+      <section className="py-24 relative bg-blue-50/50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -540,17 +679,17 @@ const ContactPage = () => {
             className="text-center mb-16"
           >
             <div className="inline-block mb-4">
-              <div className="bg-[#ff712a]/10 backdrop-blur-xl px-6 py-2 rounded-full border border-[#ff712a]/20">
-                <h3 className="text-[#ff712a] font-medium">JOIN OUR TEAM</h3>
+              <div className="bg-orange-100 px-6 py-2 rounded-full border border-orange-200">
+                <h3 className={`${typography.overline} ${typography.accent}`}>JOIN OUR TEAM</h3>
               </div>
             </div>
             
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-white">Build Your Career</span>
-              <span className="text-[#ff712a]"> With Us</span>
+            <h2 className={typography.h2}>
+              <span className="text-gray-800">Build Your Career</span>
+              <span className={typography.accent}> With Us</span>
             </h2>
             
-            <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+            <p className={`${typography.body} max-w-2xl mx-auto mb-8`}>
               We are a growing technology company dedicated to innovation and using 
               technology to drive positive change in the world. Join our team of architects, 
               consultants, engineers, developers, and designers who are passionate about 
@@ -561,79 +700,79 @@ const ContactPage = () => {
             <div className="grid md:grid-cols-4 gap-6 mb-12">
               {careerPerks.map((perk, index) => (
                 <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="bg-white/80 backdrop-blur-sm border border-orange-200/30 rounded-lg 
+                             p-6 h-full hover:border-orange-500 hover:shadow-md transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center 
+                               text-orange-500 group-hover:scale-110 transition-transform duration-300 mb-4">
+                    {perk.icon}
+                  </div>
+                  <h3 className={`${typography.h4} group-hover:text-orange-500 
+                             transition-colors mb-2`}>{perk.title}</h3>
+                  <p className={typography.bodySmall}>{perk.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Company Values */}
+          <div className="text-left grid md:grid-cols-2 gap-8 mt-16">
+            <div>
+              <h3 className={`${typography.h3} mb-6`}>
+                <span className={typography.accent}>Our Values</span>
+              </h3>
+              <p className={`${typography.body} mb-8`}>
+                Our values shape our culture and guide everything we do. They're not just 
+                words on a wall - they're the principles we live by every day.
+              </p>
+            </div>
+
+            <div className="grid gap-6">
+              {values.map((value, index) => (
+                <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group"
+                  className="bg-white/80 backdrop-blur-sm border border-orange-200/30 rounded-lg p-6 hover:shadow-md transition-all"
                 >
-                  <div className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg 
-                               p-6 h-full hover:border-[#ff712a] transition-all duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-[#ff712a]/10 flex items-center justify-center 
-                                 text-[#ff712a] group-hover:scale-110 transition-transform duration-300 mb-4">
-                      {perk.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold text-white group-hover:text-[#ff712a] 
-                               transition-colors mb-2">{perk.title}</h3>
-                    <p className="text-gray-400 text-sm">{perk.description}</p>
-                  </div>
+                  <h4 className={`${typography.subtitle1} ${typography.accent} mb-2`}>{value.title}</h4>
+                  <p className={typography.bodySmall}>{value.description}</p>
                 </motion.div>
               ))}
             </div>
+          </div>
 
-            {/* Company Values */}
-            <div className="text-left grid md:grid-cols-2 gap-8 mt-16">
-              <div>
-                <h3 className="text-3xl font-bold mb-6">
-                  <span className="text-[#ff712a]">Our Values</span>
-                </h3>
-                <p className="text-gray-300 mb-8">
-                  Our values shape our culture and guide everything we do. They're not just 
-                  words on a wall - they're the principles we live by every day.
-                </p>
-              </div>
-
-              <div className="grid gap-6">
-                {values.map((value, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6"
-                  >
-                    <h4 className="text-lg font-semibold text-[#ff712a] mb-2">{value.title}</h4>
-                    <p className="text-gray-400">{value.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Career CTA */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mt-12"
+          {/* Career CTA */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-12"
+          >
+            <Button
+              size="lg"
+              className="relative overflow-hidden group bg-gradient-to-r from-orange-500 to-orange-600 
+                       hover:from-orange-600 hover:to-orange-500 text-white px-12 py-6 text-lg rounded-lg shadow-md hover:shadow-lg"
             >
-              <Button
-                size="lg"
-                className="relative overflow-hidden group bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                         hover:from-[#ff9500] hover:to-[#ff712a] text-white px-12 py-6 text-lg rounded-lg"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  View Open Positions
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Button>
-            </motion.div>
+              <span className="relative z-10 flex items-center gap-2">
+                View Open Positions
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Button>
           </motion.div>
-        </div>
-      </section>
-    </div>
-  );
+        </motion.div>
+      </div>
+    </section>
+  </div>
+);
 };
 
 export default ContactPage;

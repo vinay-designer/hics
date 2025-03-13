@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Linkedin, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import { typography } from '../../utils/ typography'; // Import our typography system
 
 const Footer = () => {
   const [mounted, setMounted] = useState(false);
@@ -130,22 +131,22 @@ const Footer = () => {
               <Image height={10} width={100} className="h-10 w-auto object-contain" src="/page-components/hics-dark.png" alt="HICS Logo" />
             </Link>
             
-            <p className="text-gray-600 mb-8 pr-4">
+            <p className={`${typography.body} mb-8 pr-4`}>
               A leading technology solutions provider specializing in SAP, Cloud Infrastructure, Cyber Security, Microsoft Dynamics, and IoT across multiple industries.
             </p>
             
             <div className="space-y-5">
               <div className="flex items-start gap-3">
                 <div className="p-2 mt-1 rounded-lg bg-gradient-to-br from-orange-50 to-blue-50">
-                  <span className="text-orange-600">
+                  <span className={typography.accent}>
                     <MapPin className="w-5 h-5" />
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-700 font-medium block">
+                  <span className={`${typography.subtitle2} block`}>
                     HICS TECHNOLOGIES PTE. LTD.
                   </span>
-                  <span className="text-gray-500 text-sm block">
+                  <span className={`${typography.caption} block`}>
                     2 Changi Business Park Ave 1, Singapore 486015
                   </span>
                 </div>
@@ -153,22 +154,22 @@ const Footer = () => {
               
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-gradient-to-br from-orange-50 to-blue-50">
-                  <span className="text-orange-600">
+                  <span className={typography.accent}>
                     <Phone className="w-5 h-5" />
                   </span>
                 </div>
-                <span className="text-gray-700">
+                <span className={typography.body}>
                   +65 6809 7118
                 </span>
               </div>
               
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-gradient-to-br from-orange-50 to-blue-50">
-                  <span className="text-orange-600">
+                  <span className={typography.accent}>
                     <Mail className="w-5 h-5" />
                   </span>
                 </div>
-                <span className="text-gray-700">
+                <span className={typography.body}>
                   info@hics.com.sg
                 </span>
               </div>
@@ -186,7 +187,7 @@ const Footer = () => {
           {/* Column 2: SAP & Broadcom Services */}
           <div className="md:col-span-1 lg:col-span-1">
             <div className="mb-8">
-              <h3 className="text-lg font-bold mb-6 text-gray-800">SAP Services</h3>
+              <h3 className={`${typography.h4} mb-6`}>SAP Services</h3>
               <ul className="space-y-3">
                 {[
                   { title: "SAP Consulting", path: "/services/sap/consulting" },
@@ -196,7 +197,7 @@ const Footer = () => {
                 ].map((service, index) => (
                   <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                     <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                    <Link href={service.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                    <Link href={service.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                       {service.title}
                     </Link>
                   </motion.li>
@@ -205,7 +206,7 @@ const Footer = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-bold mb-6 text-gray-800">Broadcom</h3>
+              <h3 className={`${typography.h4} mb-6`}>Broadcom</h3>
               <ul className="space-y-3">
                 {[
                   { title: "Automic", path: "/services/broadcom/automic" },
@@ -213,7 +214,7 @@ const Footer = () => {
                 ].map((service, index) => (
                   <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                     <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                    <Link href={service.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                    <Link href={service.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                       {service.title}
                     </Link>
                   </motion.li>
@@ -225,7 +226,7 @@ const Footer = () => {
           {/* Column 3: Microsoft & Quick Links */}
           <div className="md:col-span-1 lg:col-span-1">
             <div className="mb-8">
-              <h3 className="text-lg font-bold mb-6 text-gray-800">Microsoft</h3>
+              <h3 className={`${typography.h4} mb-6`}>Microsoft</h3>
               <ul className="space-y-3">
                 {[
                   { title: "Azure Management", path: "/services/microsoft/azure" },
@@ -235,7 +236,7 @@ const Footer = () => {
                 ].map((service, index) => (
                   <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                     <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                    <Link href={service.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                    <Link href={service.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                       {service.title}
                     </Link>
                   </motion.li>
@@ -244,17 +245,16 @@ const Footer = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-bold mb-6 text-gray-800">Quick Links</h3>
+              <h3 className={`${typography.h4} mb-6`}>Quick Links</h3>
               <ul className="space-y-3">
                 {[
                   { title: "Home", path: "/" },
                   { title: "About Us", path: "/about" },
-                  { title: "Clients & Partners", path: "/clients-partners" },
                   { title: "Contact Us", path: "/contact" }
                 ].map((link, index) => (
                   <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                     <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                    <Link href={link.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                    <Link href={link.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                       {link.title}
                     </Link>
                   </motion.li>
@@ -267,7 +267,7 @@ const Footer = () => {
           <div className="md:col-span-1 lg:col-span-2">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-bold mb-6 text-gray-800">Managed Services</h3>
+                <h3 className={`${typography.h4} mb-6`}>Managed Services</h3>
                 <ul className="space-y-3">
                   {[
                     { title: "App & Infra Management", path: "/services/managed/infrastructure" },
@@ -276,7 +276,7 @@ const Footer = () => {
                   ].map((service, index) => (
                     <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                      <Link href={service.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                      <Link href={service.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                         {service.title}
                       </Link>
                     </motion.li>
@@ -285,7 +285,7 @@ const Footer = () => {
               </div>
               
               <div>
-                <h3 className="text-lg font-bold mb-6 text-gray-800">Security & Other</h3>
+                <h3 className={`${typography.h4} mb-6`}>Security & Other</h3>
                 <ul className="space-y-3">
                   {[
                     { title: "Identity & Access Mgmt", path: "/services/security/iam" },
@@ -296,7 +296,7 @@ const Footer = () => {
                   ].map((service, index) => (
                     <motion.li key={index} whileHover={{ x: 5 }} className="flex items-center gap-2">
                       <ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                      <Link href={service.path} className="text-gray-600 hover:text-orange-500 transition-colors">
+                      <Link href={service.path} className={`${typography.bodySmall} hover:text-orange-500 transition-colors`}>
                         {service.title}
                       </Link>
                     </motion.li>
@@ -310,11 +310,11 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="py-8 mt-16 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-600">© {new Date().getFullYear()} HICS Technologies. All rights reserved.</p>
+            <p className={typography.caption}>© {new Date().getFullYear()} HICS Technologies. All rights reserved.</p>
             <div className="flex items-center gap-8 mt-4 md:mt-0">
-              <Link href="#" className="text-sm text-gray-600 hover:text-orange-500 transition-colors">Terms</Link>
-              <Link href="#" className="text-sm text-gray-600 hover:text-orange-500 transition-colors">Privacy</Link>
-              <Link href="#" className="text-sm text-gray-600 hover:text-orange-500 transition-colors">Legal</Link>
+              <Link href="#" className={`${typography.caption} hover:text-orange-500 transition-colors`}>Terms</Link>
+              <Link href="#" className={`${typography.caption} hover:text-orange-500 transition-colors`}>Privacy</Link>
+              <Link href="#" className={`${typography.caption} hover:text-orange-500 transition-colors`}>Legal</Link>
             </div>
           </div>
         </div>

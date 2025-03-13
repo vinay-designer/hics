@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ClientSection from './client';
+import { typography } from '../../utils/ typography'; // Import our typography system
 
 // Using the color scheme from the original component
 const colorScheme = {
@@ -403,12 +404,14 @@ const HeroCarouselSection = () => {
                         className="space-y-6 relative"
                       >
                         <div>
-                          <h2 className="text-xl font-medium text-orange-600 mb-2 tracking-wide">
+                          {/* Updated with typography system */}
+                          <h2 className={`${typography.subtitle1} ${typography.accent} mb-2 tracking-wide`}>
                             {carouselContent[activeSlide].subtitle}
                           </h2>
                           <div className="relative inline-block">
-                            <h1 className="text-5xl font-bold text-gray-800 mb-4 font-sans">
-                              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                            {/* Updated with typography system */}
+                            <h1 className={typography.h1}>
+                              <span className={typography.gradient}>
                                 {carouselContent[activeSlide].title}
                               </span>
                             </h1>
@@ -416,7 +419,8 @@ const HeroCarouselSection = () => {
                           </div>
                         </div>
                         
-                        <p className="text-gray-700 text-lg leading-relaxed">
+                        {/* Updated with typography system */}
+                        <p className={typography.bodyLarge}>
                           {carouselContent[activeSlide].content.split(' ').map((word, i) => {
                             // Highlight every 10th word or important keywords
                             const keywords = ['outthink', 'outperform', 'SAP', 'problem-solvers', 'solutions', 'partnering'];
@@ -424,7 +428,7 @@ const HeroCarouselSection = () => {
                             
                             if (keywords.includes(lowercaseWord)) {
                               return (
-                                <span key={i} className="font-semibold text-orange-600">
+                                <span key={i} className={`font-semibold ${typography.accent}`}>
                                   {word}{' '}
                                 </span>
                               );
@@ -432,17 +436,6 @@ const HeroCarouselSection = () => {
                             return <span key={i}>{word}{' '}</span>;
                           })}
                         </p>
-                        
-                        <div className="pt-6">
-                          <Button 
-                            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md text-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-200/50"
-                          >
-                            <span className="flex items-center gap-2">
-                              Get Started
-                              <ArrowRight className="w-5 h-5" />
-                            </span>
-                          </Button>
-                        </div>
                       </motion.div>
                     </div>
                     
@@ -471,7 +464,7 @@ const HeroCarouselSection = () => {
           </div>
         </div>
       </div>
-  <ClientSection />
+      <ClientSection />
     </>
   );
 };

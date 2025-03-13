@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { typography } from "../../utils/ typography"
 
 // Using the color scheme from the original component
 const colorScheme = {
@@ -276,14 +277,15 @@ const ClientSection = () => {
       </div>
 
       {/* Enhanced Section Title with animations */}
-      <div className="container mx-auto mb-8 relative z-10">
+      <div className="container mx-auto px-8 py-16 mb-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-center text-3xl font-bold text-gray-800 mb-2">Our Clients</h2>
+          {/* Updated with our typography system */}
+          <h2 className={`text-center ${typography.h3} mb-2`}>Our Clients</h2>
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: 96 }}
@@ -296,7 +298,7 @@ const ClientSection = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center text-gray-600 max-w-2xl mx-auto"
+            className={`text-center ${typography.body} max-w-2xl mx-auto`}
           >
             Trusted by leading organizations to deliver exceptional SAP solutions.
           </motion.p>
@@ -332,7 +334,6 @@ const ClientSection = () => {
 
       {/* CLEAN Client Logos Marquee */}
       <div className="relative">
-        
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{

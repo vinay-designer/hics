@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Monitor, Cloud, Signal, Users, ArrowUpRight, Database, Shield, Key, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from "@/components/ui/button";
+import { typography } from "../../utils/ typography"
 
 const KeyFocusSection = () => {
   const [activeIndex, setActiveIndex] = useState<any>(null);
@@ -68,7 +69,7 @@ const KeyFocusSection = () => {
   // Create slide sets (4 items per slide)
   const slides = [
     [0, 1, 2, 3],   // First slide (items 0-3)
-    [4, 5]    // Second slide (items 4-6 + item 0 repeated to make 4)
+    [4, 5]    // Second slide (items 4-5)
   ];
   
   const nextSlide = () => {
@@ -218,13 +219,13 @@ const KeyFocusSection = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-block text-orange-600 font-medium px-6 py-2 rounded-full text-sm bg-orange-50 mb-8"
+                className={`inline-block ${typography.accent} ${typography.buttonText} px-6 py-2 rounded-full text-sm bg-orange-50 mb-8`}
               >
                 Our Areas of Excellence
               </motion.span>
 
               <motion.h2 
-                className="text-6xl font-bold mb-8 bg-gradient-to-r from-indigo-600 via-orange-500 to-teal-500 bg-clip-text text-transparent"
+                className={`${typography.h2} mb-8 bg-gradient-to-r from-indigo-600 via-orange-500 to-teal-500 bg-clip-text text-transparent`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
@@ -243,7 +244,7 @@ const KeyFocusSection = () => {
                   animate={isInView ? { scaleX: [0, 1] } : { scaleX: 0 }}
                   transition={{ duration: 0.7, delay: 0.4 }}
                 />
-                <p className="text-gray-600 text-xl font-medium">Driving Innovation Forward</p>
+                <p className={typography.subtitle1}>Driving Innovation Forward</p>
                 <motion.div 
                   className="h-1 w-20 rounded-full bg-gradient-to-l from-teal-500 to-transparent"
                   animate={isInView ? { scaleX: [0, 1] } : { scaleX: 0 }}
@@ -257,10 +258,10 @@ const KeyFocusSection = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
               >
-                <p className="text-gray-800 text-lg leading-relaxed max-w-3xl mx-auto">
+                <p className={`${typography.bodyLarge} max-w-3xl mx-auto`}>
                   We specialize in delivering cutting-edge enterprise solutions that drive digital transformation and business growth. Our comprehensive suite of services is designed to optimize your operations and enhance your competitive advantage.
                 </p>
-                <p className="text-gray-600 text-base leading-relaxed max-w-2xl mx-auto">
+                <p className={`${typography.body} max-w-2xl mx-auto`}>
                   Through strategic partnerships with industry leaders and our deep technical expertise, we help organizations navigate their digital journey with confidence and precision.
                 </p>
               </motion.div>
@@ -327,15 +328,15 @@ const KeyFocusSection = () => {
 
                           {/* Title and description */}
                           <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-gray-800 flex items-center justify-center gap-2 group-hover:text-current transition-colors duration-500"
+                            <h3 className={`${typography.h4} flex items-center justify-center gap-2 group-hover:text-current transition-colors duration-500`}
                                 style={{ color: activeIndex === itemIndex ? item?.color : undefined }}>
                               {item?.title}
-                              <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                              {/* <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                                 <ArrowUpRight className="w-5 h-5" />
-                              </span>
+                              </span> */}
                             </h3>
 
-                            <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-500">
+                            <p className={`${typography.body} group-hover:text-gray-700 transition-colors duration-500`}>
                               {item?.description}
                             </p>
                           </div>
@@ -374,7 +375,7 @@ const KeyFocusSection = () => {
               className="flex justify-center mt-12"
             >
               <Button 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md text-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-200/50"
+                className={`bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md text-lg ${typography.buttonText} transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-200/50`}
               >
                 <span className="flex items-center gap-2">
                   Explore Our Services
