@@ -174,7 +174,7 @@ const Footer = () => {
                 </span>
               </div>
               
-              <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+              <Link href="https://www.linkedin.com/company/hicssg/" target="_blank" rel="noopener noreferrer">
                 <div className="p-3 rounded-xl bg-gradient-to-br from-orange-50 to-blue-50 hover:from-orange-100 hover:to-blue-100 transition-colors inline-block">
                   <Linkedin className="text-orange-500 w-5 h-5" />
                 </div>

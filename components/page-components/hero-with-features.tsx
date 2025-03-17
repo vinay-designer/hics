@@ -1,8 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import ClientSection from './client';
 import { typography } from '../../utils/ typography'; // Import our typography system
 
 // Using the color scheme from the original component
@@ -464,7 +461,6 @@ const HeroCarouselSection = () => {
           </div>
         </div>
       </div>
-      <ClientSection />
     </>
   );
 };

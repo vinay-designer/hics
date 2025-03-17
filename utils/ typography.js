@@ -13,8 +13,8 @@ export const typography = {
     h4: "text-2xl font-semibold text-gray-800",
     
     // Subtitles and subheaders
-    subtitle1: "text-xl font-medium text-gray-600",
-    subtitle2: "text-lg font-medium text-gray-600",
+    subtitle1: "text-lg font-medium text-gray-600",
+    subtitle2: "text-md font-medium text-gray-600",
     
     // Body text variations
     bodyLarge: "text-lg text-gray-600 leading-relaxed",
