@@ -300,7 +300,7 @@ const Header = () => {
       top: '20px',
       left: '50%',
       transform: 'translateX(-50%)',
-      backgroundColor: 'rgba(255, 242, 219, 0.9)',
+      backgroundColor: 'rgb(253 231 221)',
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
       backdropFilter: 'blur(8px)'
     }
@@ -333,7 +333,8 @@ const Header = () => {
               animate={isSticky ? "sticky" : "initial"}
               variants={navVariants as any}
               transition={{ duration: 0.3 }}
-              className={`hidden text-white p-[16px] rounded-3xl bg-[#FFF2DB] lg:flex items-center gap-8 z-50 
+              style={{ background: 'rgb(253 231 221)'}}
+              className={`hidden text-white p-[16px] rounded-3xl lg:flex items-center gap-8 z-50 
                 ${isSticky ? 'fixed top-5 left-1/2 -translate-x-1/2' : 'absolute left-1/2 -translate-x-1/2'}`}
             >
               {navigation.map((item, index) => (
@@ -343,7 +344,6 @@ const Header = () => {
             
             {/* Outthink Outperform Stamp - Visually striking design */}
             <div className="hidden lg:block">
-              {/* Option 1: Split design with gradient border */}
               <div className="relative bg-white shadow-md border-l-4 border-orange-500 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-white opacity-60"></div>
                 <div className="px-3 py-2 relative">
