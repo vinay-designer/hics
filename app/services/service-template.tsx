@@ -404,26 +404,6 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
         </div>
       </section>
 
-      {/* Image Section */}
-      <section className="py-16 relative">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-2xl overflow-hidden shadow-2xl"
-          >
-            <img
-              src={content.image || "/api/placeholder/1200/500"}
-              alt="Service details"
-              className="w-full h-auto object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/30 to-blue-500/20 mix-blend-multiply" />
-          </motion.div>
-        </div>
-      </section>
-
       {/* Main Content Section */}
       <motion.section className="py-24 relative" style={{ y }}>
         <div className="max-w-7xl mx-auto px-4">

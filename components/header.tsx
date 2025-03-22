@@ -74,6 +74,16 @@ const navigation: NavItem[] = [
       },
     ],
   },
+  {
+    title: "Solutions",
+    children: [
+      { title: "Digital Documentation (eForms)", path: "/solutions/eforms" },
+      { title: "Queue Management System", path: "/solutions/queue-management" },
+      { title: "Single Sign-on (SSO)", path: "/solutions/sso" },
+      { title: "Intelligent Elderly Fall Detection", path: "/solutions/fall-detection" },
+    ],
+  },
+  { title: "Clients & Partners", path: "/clients-partners" },
   { title: "Contact Us", path: "/contact" },
 ];
 
@@ -119,7 +129,7 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
             href={item.path}
             className={`text-sm font-medium transition-colors duration-200 ${
               isActive(item)
-                ? 'text-orange-500'
+                ? 'text-orange-400'
                 : 'text-gray-700 hover:text-orange-500'
             }`}
           >
@@ -238,6 +248,18 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Animation for the stamp text
   const textVariants = {
@@ -260,128 +282,107 @@ const Header = () => {
     },
   };
 
-  return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="absolute top-0 left-0 right-0 z-50"
-    >
-      <nav className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-between">
-          {/* Logo - Increased size */}
-          <Link href="/" className="flex items-center">
-            <Image
-              loading='lazy'
-              height={12} width={150}
-              className="h-12 w-auto"
-              src="/page-components/hics-dark.png"
-              alt="HICS Logo"
-            />
-          </Link>
+  // Animation variants for the sticky navigation
+  const navVariants = {
+    initial: { 
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      position: 'absolute',
+      left: '50%',
+      transform: 'translateX(-50%)'
+    },
+    sticky: { 
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      position: 'fixed',
+      top: '20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: 'rgba(255, 242, 219, 0.9)',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+      backdropFilter: 'blur(8px)'
+    }
+  };
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
-            {navigation.map((item, index) => (
-              <DropdownMenu key={index} item={item} />
-            ))}
-          </div>
-          
-          {/* Outthink Outperform Stamp - Visually striking design */}
-          <div className="hidden lg:block">
-            {/* Option 1: Split design with gradient border */}
-            <div className="relative bg-white shadow-md border-l-4 border-orange-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-white opacity-60"></div>
-              <div className="px-3 py-2 relative">
-                <div className="flex flex-col">
-                  <span className="text-gray-800 font-semibold tracking-tight text-sm">outthink<span className="text-orange-500">.</span></span>
-                  <span className="text-orange-500 font-bold tracking-tight text-sm">outperform<span className="text-orange-500">.</span></span>
+  return (
+    <>
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="absolute top-0 left-0 right-0 z-40"
+      >
+        <nav className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            {/* Logo - Increased size */}
+            <Link href="/" className="flex items-center">
+              <Image
+                loading='lazy'
+                height={12} width={150}
+                className="h-12 w-auto"
+                src="/page-components/hics-dark.png"
+                alt="HICS Logo"
+              />
+            </Link>
+
+            {/* Desktop Navigation - Centered with sticky capabilities */}
+            <motion.div 
+              initial="initial"
+              animate={isSticky ? "sticky" : "initial"}
+              variants={navVariants as any}
+              transition={{ duration: 0.3 }}
+              className={`hidden text-white p-[16px] rounded-3xl bg-[#FFF2DB] lg:flex items-center gap-8 z-50 
+                ${isSticky ? 'fixed top-5 left-1/2 -translate-x-1/2' : 'absolute left-1/2 -translate-x-1/2'}`}
+            >
+              {navigation.map((item, index) => (
+                <DropdownMenu key={index} item={item} />
+              ))}
+            </motion.div>
+            
+            {/* Outthink Outperform Stamp - Visually striking design */}
+            <div className="hidden lg:block">
+              {/* Option 1: Split design with gradient border */}
+              <div className="relative bg-white shadow-md border-l-4 border-orange-500 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-white opacity-60"></div>
+                <div className="px-3 py-2 relative">
+                  <div className="flex flex-col">
+                    <span className="text-gray-800 font-semibold tracking-tight text-sm">OutThink<span className="text-orange-500">.</span></span>
+                    <span className="text-orange-500 font-bold tracking-tight text-sm">OutPerform<span className="text-orange-500">.</span></span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Option 2: Animated gradient stamp 
-            <div className="relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 animate-gradient-x"></div>
-              <div className="px-4 py-2 bg-white/90 border border-orange-200 relative">
-                <motion.div
-                  variants={textVariants}
-                  initial="initial"
-                  animate="animate"
-                  className="flex gap-1"
-                >
-                  {Array.from("outthink.").map((letter, index) => (
-                    <motion.span 
-                      key={`first-${index}`}
-                      variants={letterVariants}
-                      className={letter === '.' ? "text-orange-500 font-bold" : "text-gray-800 font-medium"}
-                      style={{ display: 'inline-block' }}
-                    >
-                      {letter}
-                    </motion.span>
-                  ))}
-                </motion.div>
-                <motion.div
-                  variants={textVariants}
-                  initial="initial"
-                  animate="animate"
-                  className="flex gap-1"
-                >
-                  {Array.from("outperform.").map((letter, index) => (
-                    <motion.span 
-                      key={`second-${index}`}
-                      variants={letterVariants}
-                      className={letter === '.' ? "text-orange-500 font-bold" : "text-orange-500 font-medium"}
-                      style={{ display: 'inline-block' }}
-                    >
-                      {letter}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </div>
-            </div>
-            */}
-
-            {/* Option 3: Bold contrast with accent line */}
-            {/* 
-            <div className="relative overflow-hidden">
-              <div className="flex flex-col bg-gray-800 text-white px-3 py-2">
-                <div className="absolute top-0 left-0 w-full h-1 bg-orange-500"></div>
-                <span className="text-sm font-medium tracking-tight">outthink<span className="text-orange-400">.</span></span>
-                <span className="text-orange-400 text-sm font-bold tracking-tight">outperform<span className="text-orange-300">.</span></span>
-                <div className="absolute bottom-0 right-0 w-full h-1 bg-orange-500"></div>
-              </div>
-            </div>
-            */}
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden text-gray-600 hover:text-orange-500 transition-colors duration-200"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
           </div>
+        </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-gray-600 hover:text-orange-500 transition-colors duration-200"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-      />
-
-      {/* Overlay for Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-          onClick={() => setIsMobileMenuOpen(false)}
+        {/* Mobile Menu */}
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
         />
-      )}
-    </motion.header>
+
+        {/* Overlay for Mobile Menu */}
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </motion.header>
+    </>
   );
 };
 

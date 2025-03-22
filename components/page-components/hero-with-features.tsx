@@ -28,22 +28,22 @@ const colorScheme = {
 
 const carouselContent = [
   {
-    title: "Outthink Outperform",
+    title: "OutThink OutPerform",
     subtitle: "We make SAP work for you",
-    content: "Let's be real—SAP is SAP. There are a zillion others who implement SAP just like we do. But here's the thing: while everyone implements SAP, we outthink and outperform by actually solving problems. We don't just follow a playbook; we stand in your shoes, feel your frustrations, and then make SAP work for you.",
-    image: "/page-components/hero.svg"
+    content: "Let's be real—SAP is SAP. There are a zillion others who implement SAP just like we do. But here's the thing: while everyone implements SAP, we OutThink and OutPerform by actually solving problems. We don't just follow a playbook; we stand in your shoes, feel your frustrations, and then make SAP work for you.",
+    image: "/page-components/hero.png"
   },
   {
     title: "Customer Success Stories",
     subtitle: "Real solutions for real problems",
     content: "Take one of our customers, for example. They needed a simple way to monitor system performance but didn't want the cost or complexity of full-blown tools like SAP ALM or Datadog. Instead of pushing them toward an expensive solution they didn't need, we built them a custom dashboard that gave them exactly what they wanted—quick insights, at a glance.",
-    image: "/page-components/hero.svg"
+    image: "/page-components/hero.png"
   },
   {
     title: "Our Approach",
     subtitle: "Beyond the playbook",
     content: "We're not your typical \"small, dedicated team\" that just ticks boxes. We're a nimble band of SAP problem-solvers who throw out the cookie-cutter playbook. We go beyond SAP when needed. We embed ourselves in your project—right in the thick of it—partnering with you from day one.",
-    image: "/page-components/hero.svg"
+    image: "/page-components/hero.png"
   }
 ];
 
@@ -358,7 +358,7 @@ const HeroCarouselSection = () => {
 
           {/* Main Carousel with enhanced background */}
           <div className="px-6 relative z-10 mt-20">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl bg-white/30 backdrop-blur-sm min-h-[70vh]">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl bg-white/30 backdrop-blur-sm min-h-[80vh]">
               {/* Additional background elements inside the carousel */}
               <div className="absolute top-0 right-0 w-64 h-64 rounded-bl-full bg-gradient-to-bl from-orange-200/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 rounded-tr-full bg-gradient-to-tr from-blue-200/20 to-transparent"></div>
@@ -390,7 +390,7 @@ const HeroCarouselSection = () => {
                 >
                   <div className="grid lg:grid-cols-2 h-full">
                     {/* Text Content with enhanced decorative elements */}
-                    <div className="p-12 lg:p-20 flex flex-col justify-center relative">
+                    <div className="p-8 lg:p-12 flex flex-col justify-center relative">
                       {/* Decorative accent */}
                       <div className="absolute top-12 left-12 w-12 h-3 bg-gradient-to-r from-orange-500 to-orange-300 rounded-full opacity-70"></div>
                       
@@ -436,12 +436,13 @@ const HeroCarouselSection = () => {
                       </motion.div>
                     </div>
                     
-                    {/* Image with background elements */}
+                    {/* Image with background elements - INCREASED SIZE WITHOUT ZOOM OUT */}
                     <motion.div 
-                      className="hidden lg:flex items-center justify-center p-12 lg:p-20 relative"
+                      className="hidden lg:flex items-center justify-center p-0 relative overflow-visible"
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.3, duration: 0.6 }}
+                      style={{ minHeight: '500px' }}
                     >
                       {/* Decorative background elements for image side */}
                       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-100/40 to-transparent rounded-bl-full"></div>
@@ -451,7 +452,8 @@ const HeroCarouselSection = () => {
                       <img 
                         src={carouselContent[activeSlide].image} 
                         alt={carouselContent[activeSlide].title}
-                        className="max-w-full max-h-full object-contain"
+                        className="w-full h-full object-contain max-w-4xl max-h-96"
+                        style={{ transform: 'scale(1.2)' }}
                       />
                     </motion.div>
                   </div>

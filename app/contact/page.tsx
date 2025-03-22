@@ -9,14 +9,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { typography } from '../../utils/ typography';
 import ContactBackground from '../../animations/contact/contact-background';
+import ContactForm from './contact-form';
 
 const ContactPage = () => {
-  const [formStatus, setFormStatus] = useState('idle'); // idle, sending, success, error
   const [selectedOffice, setSelectedOffice] = useState<'singapore' | 'malaysia' | 'indonesia'>('singapore');
   const formRef = useRef<HTMLDivElement>(null);
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleFormSuccess = () => {
+    console.log('Form submitted successfully!');
+    // You can add additional logic here after successful form submission
   };
 
   const offices = {
@@ -129,17 +134,6 @@ const ContactPage = () => {
       description: "We believe in the power of teamwork and fostering a supportive, inclusive environment."
     }
   ];
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus('sending');
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success');
-      // Reset after 3 seconds
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
-  };
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -524,72 +518,8 @@ const ContactPage = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm text-gray-600">First Name</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
-                               text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
-                      placeholder="John"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm text-gray-600">Last Name</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
-                               text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
-                      placeholder="Doe"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-600">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
-                             text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
-                    placeholder="john@example.com"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-600">Message</label>
-                  <textarea
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg bg-white/80 border border-orange-200/30 
-                             text-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors resize-none"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={formStatus === 'sending'}
-                  className="w-full relative overflow-hidden group bg-gradient-to-r from-orange-500
-                           to-orange-600 hover:from-orange-600 hover:to-orange-500 text-white px-8 
-                           py-4 text-lg rounded-lg shadow-md hover:shadow-lg transition-all"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {formStatus === 'sending' ? (
-                      'Sending...'
-                    ) : formStatus === 'success' ? (
-                      <>
-                        Message Sent
-                        <CheckCircle className="w-5 h-5" />
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </span>
-                </Button>
-              </form>
+              {/* Replace the old form with the new ContactForm component */}
+              <ContactForm onSuccess={handleFormSuccess} />
             </motion.div>
 
             {/* Department Info */}
