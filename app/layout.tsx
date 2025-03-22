@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/page-components/hics-light.png',
+    icon: '/page-components/hics-favicon.png',
   },
   viewport: {
     width: 'device-width',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.hics.com/',
+    url: 'https://www.hics.com.sg/',
     siteName: 'HICS',
     title: 'HICS - Leading Healthcare Solutions Provider',
     description: 'HICS delivers innovative healthcare solutions, digital transformation, and IT services.',
@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <link rel="canonical" href="https://www.hics.com" />
+        <link rel="canonical" href="https://www.hics.com.sg" />
         <meta name="theme-color" content="#000000" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

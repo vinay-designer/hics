@@ -75,65 +75,64 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    
-    // Validate form first
-    if (!validateForm()) return;
-    
-    setFormStatus('sending');
-    
-    // EmailJS configuration
-    // Replace these with your actual EmailJS service ID, template ID, and public key
-    const serviceId = 'HICS_Website_ContactUs';
-    const templateId = 'template_ContactUs_HICS';
-    const publicKey = '50EqVqY6DRXrjqcMa';
-    
-    // Prepare template parameters
-    const templateParams = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      message: formData.message
-    };
-    
-    // Send email using EmailJS
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then((response) => {
-        console.log('Email sent successfully!', response);
-        setFormStatus('success');
-        
-        // Reset form after successful submission
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          message: ''
-        });
-        
-        // Call the success callback if provided
-        if (onSuccess) {
-          setTimeout(() => {
-            onSuccess();
-          }, 3000);
-        }
-        
-        // Reset form status after 5 seconds
-        setTimeout(() => {
-          setFormStatus('idle');
-        }, 5000);
-      })
-      .catch((error) => {
-        console.error('Failed to send email:', error);
-        setFormStatus('error');
-        
-        // Reset form status after 5 seconds
-        setTimeout(() => {
-          setFormStatus('idle');
-        }, 5000);
-      });
+ // Handle form submission
+const handleSubmit = (e: any) => {
+  e.preventDefault();
+  
+  // Validate form first
+  if (!validateForm()) return;
+  
+  setFormStatus('sending');
+  
+  // EmailJS configuration
+  // Replace these with your actual EmailJS service ID, template ID, and public key
+  const serviceId = 'HICS_Website_ContactUs';
+  const templateId = 'template_ContactUs_HICS';
+  const publicKey = '50EqVqY6DRXrjqcMa';
+  
+  const templateParams = {
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    user_email: formData.email,
+    message: formData.message
   };
+  
+  // Send email using EmailJS
+  emailjs.send(serviceId, templateId, templateParams, publicKey)
+    .then((response) => {
+      console.log('Email sent successfully!', response);
+      setFormStatus('success');
+      
+      // Reset form after successful submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: ''
+      });
+      
+      // Call the success callback if provided
+      if (onSuccess) {
+        setTimeout(() => {
+          onSuccess();
+        }, 3000);
+      }
+      
+      // Reset form status after 5 seconds
+      setTimeout(() => {
+        setFormStatus('idle');
+      }, 5000);
+    })
+    .catch((error) => {
+      console.error('Failed to send email:', error);
+      setFormStatus('error');
+      
+      // Reset form status after 5 seconds
+      setTimeout(() => {
+        setFormStatus('idle');
+      }, 5000);
+    });
+};
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
