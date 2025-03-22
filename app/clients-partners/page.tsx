@@ -1,226 +1,345 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { 
-  Building2, Users, Star, Award, CheckCircle, ArrowRight, 
-  Briefcase, Globe, Handshake, Shield, Server, Database, 
-  Cloud, Code, Heart, Zap, Target, Clock
+  Handshake, Building2, Users, Code, Heart, 
+  Award, Globe, Shield, CheckCircle, ArrowRight 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ClientsPartnersBackground from '../../animations/clients-partners/clients-partners-background';
-import Image from 'next/image';
+import { typography } from "../../utils/ typography";
+import Link from 'next/link';
 
-const StatisticCard = ({ icon, value, label }: any) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className="bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 rounded-lg p-6 hover:border-[#ff712a] transition-all duration-300"
-  >
-    <div className="flex items-center gap-4">
-      <div className="w-12 h-12 rounded-lg bg-[#ff712a]/10 flex items-center justify-center text-[#ff712a]">
-        {icon}
-      </div>
-      <div>
-        <div className="text-2xl font-bold text-[#ff712a]">{value}</div>
-        <div className="text-gray-400">{label}</div>
-      </div>
-    </div>
-  </motion.div>
-);
+const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }: { children: React.ReactNode; direction?: 'left' | 'right'; speed?: number; className?: string }) => {
+    const [duplicated, setDuplicated] = useState<React.ReactNode[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [containerWidth, setContainerWidth] = useState(0);
 
-const ClientsAndPartnersPage = () => {
-  const [activePartnerCategory, setActivePartnerCategory] = useState('all');
-  const [selectedIndustry, setSelectedIndustry] = useState('Healthcare');
-  
-  const heroStats = [
-    { icon: <Users className="w-6 h-6" />, value: "50+", label: "Active Clients" },
-    { icon: <Star className="w-6 h-6" />, value: "98%", label: "Client Satisfaction" },
-    { icon: <Award className="w-6 h-6" />, value: "25+", label: "Industry Awards" },
-    { icon: <Globe className="w-6 h-6" />, value: "15+", label: "Countries Served" }
-  ];
+    useEffect(() => {
+        if (containerRef.current) {
+            const width = containerRef.current.offsetWidth;
+            setContainerWidth(width);
+            const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
+            setDuplicated(Array(duplicatesNeeded).fill(children));
+        }
 
-  const partnerCategories = [
-    { id: 'all', name: 'All Partners' },
-    { id: 'technology', name: 'Technology' },
-    { id: 'consulting', name: 'Consulting' },
-    { id: 'healthcare', name: 'Healthcare' }
-  ];
+        const handleResize = () => {
+            if (containerRef.current) {
+                const width = containerRef.current.offsetWidth;
+                setContainerWidth(width);
+                const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
+                setDuplicated(Array(duplicatesNeeded).fill(children));
+            }
+        };
 
-  const industries = [
-    'Healthcare', 'Life Sciences', 'Research', 'Government'
-  ];
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [children]);
 
+    return (
+        <div className={`overflow-hidden relative ${className}`}>
+            <motion.div
+                ref={containerRef}
+                animate={{
+                    x: direction === 'left' ? [-containerWidth, 0] : [0, -containerWidth],
+                }}
+                transition={{
+                    duration: containerWidth / speed,
+                    repeat: Infinity,
+                    ease: "linear",
+                    repeatType: "loop"
+                }}
+                className="flex"
+            >
+                {duplicated.map((item, idx) => (
+                    <div key={idx} className="flex shrink-0">
+                        {item}
+                    </div>
+                ))}
+            </motion.div>
+        </div>
+    );
+};
+
+const ClientPartnersPage = () => {
+  // Partners data from the original file
   const partners = [
     {
-      name: "SAP",
-      category: "technology",
-      expertise: "Healthcare Solutions",
-      logo: "/api/placeholder/200/100",
-      description: "Strategic partner for healthcare implementations",
-      achievements: [
-        "100+ Joint Implementations",
-        "Certified Solution Partner",
-        "Innovation Award 2024"
-      ],
-      services: [
-        "SAP Healthcare",
-        "Enterprise Solutions",
-        "Digital Transformation"
-      ]
+        name: "Microsoft",
+        logo: "/page-components/microsoft.jpg",
+        color: "#ff712a"
     },
     {
-      name: "Microsoft",
-      category: "technology",
-      expertise: "Cloud Infrastructure",
-      logo: "/api/placeholder/200/100",
-      description: "Premier cloud and enterprise solutions partner",
-      achievements: [
-        "Azure Expert MSP",
-        "Gold Partner Status",
-        "Cloud Excellence Award"
-      ],
-      services: [
-        "Azure Cloud",
-        "Microsoft 365",
-        "Dynamics 365"
-      ]
+        name: "IBM",
+        logo: "/page-components/ibm.jpg",
+        color: "#ff9500"
     },
     {
-      name: "Deloitte",
-      category: "consulting",
-      expertise: "Healthcare Consulting",
-      logo: "/api/placeholder/200/100",
-      description: "Strategic consulting and implementation partner",
-      achievements: [
-        "Global Healthcare Leader",
-        "Digital Transformation Expert",
-        "Industry Pioneer Award"
-      ],
-      services: [
-        "Strategy Consulting",
-        "Digital Health",
-        "Process Optimization"
-      ]
+        name: "ts",
+        logo: "/page-components/t-s.jpg",
+        color: "#ff712a"
     },
     {
-      name: "Cisco",
-      category: "technology",
-      expertise: "Network Solutions",
-      logo: "/api/placeholder/200/100",
-      description: "Leading network infrastructure partner",
-      achievements: [
-        "Master Networking Partner",
-        "Security Excellence",
-        "Innovation Leader"
-      ],
-      services: [
-        "Network Infrastructure",
-        "Security Solutions",
-        "IoT Integration"
-      ]
-    }
+        name: "Lumen",
+        logo: "/page-components/lumen.jpg",
+        color: "#ff9500"
+    },
+    {
+        name: "delware",
+        logo: "/page-components/delaware.jpg",
+        color: "#ff712a"
+    },
   ];
 
+  // Clients data from the original file
   const clients = [
+    { name: "Customer 1", logo: "/page-components/aic.jpg" },
+    { name: "Customer 2", logo: "/page-components/bvh.jpg" },
+    { name: "Customer 3", logo: "/page-components/dairy.jpg" },
+    { name: "Customer 4", logo: "/page-components/ihis.jpg" },
+    { name: "Customer 5", logo: "/page-components/sp-g.jpg" },
+    { name: "Customer 6", logo: "/page-components/zp.jpg" },
+    { name: "Customer 7", logo: "/page-components/saint.jpg" },
+    { name: "Customer 8", logo: "/page-components/st-a.jpg" }
+  ];
+
+  // Client testimonials for the page
+  const testimonials = [
     {
-      name: "Singapore General Hospital",
-      industry: "Healthcare",
-      region: "Singapore",
-      logo: "/api/placeholder/200/100",
-      description: "Complete digital transformation journey partner",
-      solutions: [
-        "SAP Healthcare Implementation",
-        "Cloud Infrastructure",
-        "Security Solutions"
-      ],
-      results: [
-        "30% Operational Efficiency Increase",
-        "99.9% System Uptime",
-        "24/7 Support Coverage"
-      ],
-      testimonial: {
-        quote: "HICS has been instrumental in our digital transformation journey. Their expertise in healthcare IT solutions is unmatched.",
-        author: "Director of Technology",
-        position: "Singapore General Hospital"
-      }
+      quote: "HICS has been instrumental in our digital transformation journey. Their expertise in SAP Healthcare solutions has significantly improved our operational efficiency.",
+      company: "Leading Hospital Group",
+      position: "Chief Information Officer"
     },
     {
-      name: "National University Hospital",
-      industry: "Healthcare",
-      region: "Singapore",
-      logo: "/api/placeholder/200/100",
-      description: "Strategic technology transformation partner",
-      solutions: [
-        "Enterprise System Integration",
-        "Data Analytics Platform",
-        "Digital Workflow Optimization"
-      ],
-      results: [
-        "40% Reduction in Processing Time",
-        "100% Digital Records Integration",
-        "Real-time Analytics Implementation"
-      ],
-      testimonial: {
-        quote: "The expertise and dedication of the HICS team have helped us achieve our digital transformation goals ahead of schedule.",
-        author: "Chief Information Officer",
-        position: "National University Hospital"
-      }
+      quote: "The team at HICS brought both technical expertise and industry knowledge to our project, delivering results that exceeded our expectations.",
+      company: "Regional Healthcare Provider",
+      position: "Director of Operations"
     },
     {
-      name: "Parkway Hospitals",
-      industry: "Healthcare",
-      region: "Southeast Asia",
-      logo: "/api/placeholder/200/100",
-      description: "Regional healthcare solutions provider",
-      solutions: [
-        "Multi-facility System Integration",
-        "Cross-border Data Management",
-        "Telehealth Platform Implementation"
-      ],
-      results: [
-        "Regional System Standardization",
-        "45% Improvement in Data Access",
-        "Enhanced Patient Experience"
-      ],
-      testimonial: {
-        quote: "HICS's regional expertise has been crucial in standardizing our systems across multiple facilities while maintaining excellence in service.",
-        author: "Regional IT Director",
-        position: "Parkway Hospitals"
-      }
+      quote: "Working with HICS has transformed how we manage our IT infrastructure. Their support team is responsive, knowledgeable, and always goes the extra mile.",
+      company: "Medical Research Institute",
+      position: "Head of Technology"
     }
   ];
 
-  const successMetrics = [
+  // Success stories for the partnership section
+  const successStories = [
     {
-      icon: <Target className="w-6 h-6" />,
-      value: "100%",
-      label: "Project Completion Rate"
+      title: "Healthcare Digital Transformation",
+      description: "Implemented end-to-end SAP healthcare solutions for a leading hospital network, improving patient care coordination and operational efficiency.",
+      icon: <Heart className="w-6 h-6" />
     },
     {
-      icon: <Clock className="w-6 h-6" />,
-      value: "24/7",
-      label: "Support Coverage"
+      title: "Cloud Migration Excellence",
+      description: "Successfully migrated critical systems to cloud infrastructure for a major pharmaceutical company, enhancing security and reducing operational costs.",
+      icon: <Globe className="w-6 h-6" />
     },
     {
-      icon: <Zap className="w-6 h-6" />,
-      value: "500+",
-      label: "System Integrations"
-    },
-    {
-      icon: <Heart className="w-6 h-6" />,
-      value: "95%",
-      label: "Client Retention"
+      title: "Integrated Security Framework",
+      description: "Developed a comprehensive cybersecurity framework for a healthcare data management company, ensuring compliance with international standards.",
+      icon: <Shield className="w-6 h-6" />
     }
   ];
+
+  // Creating partner items for the marquee
+  const partnerItems = partners.map((partner, index) => (
+    <div
+      key={index}
+      className="relative mx-6"
+    >
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        whileHover={{ y: -5 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white shadow-md rounded-xl p-5 border border-orange-100 hover:border-orange-300 transition-all duration-300"
+      >
+        <img
+          loading='lazy'
+          src={partner.logo}
+          alt={partner.name}
+          className="w-48 h-32 object-contain"
+        />
+      </motion.div>
+    </div>
+  ));
+
+  // Creating client items for the marquee
+  const clientItems = clients.map((client, index) => (
+    <div
+      key={index}
+      className="relative mx-4"
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        whileHover={{ y: -5 }}
+        transition={{ duration: 0.3 }}
+        className="min-w-[180px] h-20 bg-white shadow-sm rounded-xl p-4 flex items-center justify-center border border-orange-100 hover:border-orange-300 transition-all duration-300"
+      >
+        <img 
+          loading='lazy'
+          src={client.logo}
+          alt={client.name}
+          className="h-10 w-auto object-contain"
+        />
+      </motion.div>
+    </div>
+  ));
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <ClientsPartnersBackground />
+    <div className="min-h-screen bg-white overflow-hidden">
+      {/* Enhanced background animations */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Animated lines */}
+        <motion.div 
+          className="absolute h-[200vh] w-px bg-gradient-to-b from-transparent via-orange-300 to-transparent rotate-[30deg] -translate-x-1/2 left-1/4 top-0"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: [0, 0.3, 0],
+            top: ["-100vh", "100vh"]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div 
+          className="absolute h-[200vh] w-px bg-gradient-to-b from-transparent via-blue-300 to-transparent rotate-[30deg] -translate-x-1/2 left-3/4 top-0"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: [0, 0.3, 0],
+            top: ["-100vh", "100vh"]
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "linear",
+            delay: 2
+          }}
+        />
+        
+        {/* Moving circles */}
+        <motion.div 
+          className="absolute w-64 h-64 rounded-full border border-orange-200 opacity-30"
+          style={{ 
+            background: "radial-gradient(circle, rgba(255,113,42,0.1) 0%, rgba(255,255,255,0) 70%)"
+          }}
+          initial={{ x: "-30%", y: "20%" }}
+          animate={{ 
+            y: ["20%", "60%", "20%"],
+            x: ["-30%", "-10%", "-30%"],
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
+        />
+        
+        <motion.div 
+          className="absolute w-96 h-96 rounded-full border border-blue-200 opacity-30"
+          style={{ 
+            background: "radial-gradient(circle, rgba(66,153,225,0.1) 0%, rgba(255,255,255,0) 70%)"
+          }}
+          initial={{ x: "70%", y: "60%" }}
+          animate={{ 
+            y: ["60%", "20%", "60%"],
+            x: ["70%", "50%", "70%"],
+          }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        
+        {/* Corner gradients with enhanced visibility */}
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-orange-50 to-transparent opacity-80"></div>
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-50 to-transparent opacity-80"></div>
+      </div>
+
+      {/* Rest of the component code... */}
       
-      {/* Hero Section with Enhanced Visual Elements */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90" />
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden z-10">
+        {/* Additional animated elements for hero section */}
+        <div className="absolute inset-0 overflow-hidden z-1 pointer-events-none">
+          {/* Large gradient orbs */}
+          <motion.div
+            animate={{
+              y: [-20, 20, -20],
+              scale: [1, 1.05, 1],
+              opacity: [0.15, 0.25, 0.15],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent blur-3xl"
+          />
+          
+          <motion.div
+            animate={{
+              y: [20, -20, 20],
+              scale: [1.05, 1, 1.05],
+              opacity: [0.15, 0.2, 0.15],
+            }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute bottom-20 left-[20%] w-96 h-96 rounded-full bg-gradient-to-tr from-blue-300/20 to-transparent blur-3xl"
+          />
+          
+          {/* Animated rings */}
+          <div className="absolute left-[10%] top-[30%]">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-40 h-40 rounded-full border-2 border-orange-200/20 relative"
+            >
+              <motion.div 
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-orange-500/40"
+                animate={{ scale: [1, 1.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+          </div>
+          
+          <div className="absolute right-[15%] bottom-[20%]">
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{
+                duration: 50,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-64 h-64 rounded-full border border-blue-200/20 relative"
+            >
+              <motion.div 
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-500/40"
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.div>
+          </div>
+          
+          {/* Corner accent gradients */}
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-orange-50/50 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-50/50 to-transparent"></div>
+        </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -229,35 +348,35 @@ const ClientsAndPartnersPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            {/* Decorative Elements */}
+            {/* Decorative Icon */}
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2 }}
               className="w-24 h-24 mx-auto mb-8 relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#ff712a] to-[#ff9500] rounded-3xl blur-xl opacity-50" />
-              <div className="relative h-full bg-black/50 rounded-3xl p-6 backdrop-blur-xl border border-[#ff712a]/10 flex items-center justify-center">
-                <Handshake className="w-12 h-12 text-white" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-400 rounded-3xl blur-xl opacity-30" />
+              <div className="relative h-full bg-white/90 rounded-3xl p-6 backdrop-blur-xl border border-orange-300/30 flex items-center justify-center shadow-md">
+                <Handshake className="w-12 h-12 text-orange-500" />
               </div>
             </motion.div>
 
-            <h1 className="text-7xl font-bold mb-6">
+            <h1 className={typography.h1}>
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="block text-white"
+                className="block text-gray-800"
               >
-                Building Trust Through
+                Our Clients and
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="block text-[#ff712a]"
+                className={`block ${typography.accent}`}
               >
-                Excellence
+                Partners
               </motion.span>
             </h1>
             
@@ -265,414 +384,344 @@ const ClientsAndPartnersPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-xl text-gray-300 mb-8 leading-relaxed"
+              className={`${typography.subtitle1} mt-6 mb-8 mx-auto max-w-3xl`}
             >
-              At HICS, we believe in forging lasting partnerships that drive innovation 
-              and transformation. Our network of trusted clients and strategic partners 
-              spans across Southeast Asia, enabling us to deliver exceptional value and 
-              sustainable growth.
+              Celebrate the collaborations that drive innovation and excellence in everything we do
             </motion.p>
-
-            {/* Hero Statistics */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-            >
-              {heroStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 mb-3 rounded-lg bg-[#ff712a]/10 text-[#ff712a]">
-                    {stat.icon}
-                  </div>
-                  <div className="text-2xl font-bold text-[#ff712a]">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* CTA Buttons */}
+            
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="flex justify-center gap-6"
+              transition={{ delay: 1 }}
+              className={`${typography.body} mx-auto max-w-3xl bg-white/80 backdrop-blur-sm p-8 rounded-xl border border-orange-200/30 shadow-sm`}
             >
-              <Button
-                size="lg"
-                className="relative overflow-hidden group bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                         hover:from-[#ff9500] hover:to-[#ff712a] text-white px-8 py-6 text-lg"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Partnerships
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-[#ff712a] text-[#ff712a] hover:bg-[#ff712a] hover:text-white 
-                         px-8 py-6 text-lg transition-all duration-300"
-              >
-                View Success Stories
-              </Button>
+              <p className="mb-4">
+                Welcome to our Clients page, where we celebrate the individuals and organizations that have trusted us 
+                to help them achieve their goals. At our company, we believe that our success is directly linked to 
+                the success of our clients.
+              </p>
+              <p>
+                We've worked with top quality technology partners and System Integrators for several years, and have 
+                the privilege of serving some of the elite customers in Southeast Asia. We are grateful for the trust 
+                and confidence that our clients place in us, and we look forward to continuing to build lasting partnerships.
+              </p>
             </motion.div>
           </motion.div>
         </div>
+      </section>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, repeat: Infinity, repeatType: "reverse", duration: 1.5 }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white/50"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-sm">Scroll to explore</span>
-            <ArrowRight className="w-5 h-5 rotate-90" />
+      {/* Partners Section */}
+      <section className="py-24 relative z-10">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className={typography.overline}>Our Network</span>
+            <h2 className={typography.h2}>
+              Technology <span className={typography.accent}>Partners</span>
+            </h2>
+            <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
+            <p className={`${typography.body} mt-6 max-w-2xl mx-auto`}>
+              Collaborating with industry leaders to deliver innovative solutions that drive business value
+            </p>
+          </motion.div>
+
+          {/* Partners Marquee */}
+          <div className="relative py-8">
+            <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
+            <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
+            
+            <SmoothMarquee direction="left" speed={30}>
+              {partnerItems}
+            </SmoothMarquee>
           </div>
-        </motion.div>
-      </section>
 
-      {/* Partner Showcase Section */}
-      <section className="py-24 relative bg-black/40">
-        <div className="container mx-auto px-4">
-          {/* Section Header */}
+          {/* Partnership Value */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-20 max-w-4xl mx-auto text-center"
           >
-            <div className="inline-block mb-4">
-              <div className="bg-[#ff712a]/10 backdrop-blur-xl px-6 py-2 rounded-full border border-[#ff712a]/20">
-                <h3 className="text-[#ff712a] font-medium">STRATEGIC PARTNERSHIPS</h3>
-              </div>
+            <div className="bg-gradient-to-r from-orange-50 to-blue-50 p-8 rounded-2xl border border-orange-100">
+              <h3 className={typography.h3}>The Power of Strategic Partnerships</h3>
+              <p className={`${typography.body} mt-4`}>
+                We believe in strategic partnerships and partner ecosystem because we can form win-win alliances 
+                and make our customers happy with stronger engagement models. Our partnerships are built on trust, 
+                shared values, and a commitment to excellence.
+              </p>
             </div>
-            
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-[#ff712a]">Industry Leaders</span>
-              <span className="text-white"> United</span>
-            </h2>
-            
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              We collaborate with global technology leaders and industry pioneers to deliver 
-              cutting-edge solutions that drive innovation and transformation.
-            </p>
-          </motion.div>
-
-          {/* Partner Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex justify-center gap-4 mb-12"
-          >
-            {partnerCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActivePartnerCategory(category.id)}
-                className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-                  activePartnerCategory === category.id
-                    ? 'bg-[#ff712a] text-white border-[#ff712a]'
-                    : 'border-[#ff712a]/20 text-gray-400 hover:border-[#ff712a] hover:text-[#ff712a]'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </motion.div>
-
-        {/* Partners Grid */}
-        <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {partners
-              .filter(partner => activePartnerCategory === 'all' || partner.category === activePartnerCategory)
-              .map((partner, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative"
-                >
-                  <div className="h-full bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                               rounded-lg p-6 transition-all duration-300 hover:border-[#ff712a]">
-                    {/* Partner Logo */}
-                    <div className="relative aspect-video mb-4 overflow-hidden rounded-lg bg-white/5">
-                      <Image
-                        fill
-                        loading='lazy'
-                        src={partner.logo}
-                        alt={partner.name}
-                        className="w-full h-full object-cover opacity-75 transition-all duration-300 
-                                 group-hover:opacity-100"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    </div>
-                    
-                    {/* Partner Info */}
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start">
-                        <h3 className="text-xl font-bold text-white group-hover:text-[#ff712a] 
-                                   transition-colors">{partner.name}</h3>
-                        <span className="px-3 py-1 text-xs font-medium text-[#ff712a] bg-[#ff712a]/10 
-                                     rounded-full">{partner.expertise}</span>
-                      </div>
-                      
-                      <p className="text-gray-400 text-sm">{partner.description}</p>
-
-                      {/* Achievements */}
-                      <div className="space-y-2">
-                        <h4 className="text-sm font-semibold text-[#ff712a]">Key Achievements</h4>
-                        <ul className="space-y-1">
-                          {partner.achievements.map((achievement, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
-                              <CheckCircle className="w-4 h-4 text-[#ff712a]" />
-                              {achievement}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Services */}
-                      <div className="flex flex-wrap gap-2">
-                        {partner.services.map((service, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-1 text-xs bg-black/20 border border-[#ff712a]/10 
-                                     rounded-full text-gray-400"
-                          >
-                            {service}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 
-                                 transition-opacity duration-300 pointer-events-none">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#ff712a]/20 
-                                   to-transparent rounded-lg" />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Client Success Stories Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-4">
-          {/* Section Header */}
+      {/* Client Success Stories */}
+      <section className="py-24 relative bg-gradient-to-b from-white to-orange-50 z-10">
+        <div className="container mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <div className="inline-block mb-4">
-              <div className="bg-[#ff712a]/10 backdrop-blur-xl px-6 py-2 rounded-full border border-[#ff712a]/20">
-                <h3 className="text-[#ff712a] font-medium">SUCCESS STORIES</h3>
-              </div>
-            </div>
-            
-            <h2 className="text-5xl font-bold mb-6">
-              <span className="text-white">Transforming</span>
-              <span className="text-[#ff712a]"> Healthcare</span>
+            <span className={typography.overline}>Success Stories</span>
+            <h2 className={typography.h2}>
+              Client <span className={typography.accent}>Achievements</span>
             </h2>
-            
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Discover how we've helped leading healthcare institutions across Southeast Asia 
-              achieve their digital transformation goals through innovative solutions and 
-              dedicated support.
+            <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
+            <p className={`${typography.body} mt-6 max-w-2xl mx-auto`}>
+              Transforming businesses through innovative technology solutions and exceptional service
             </p>
           </motion.div>
 
-          {/* Industry Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex justify-center gap-4 mb-12"
-          >
-            {industries.map((industry) => (
-              <button
-                key={industry}
-                onClick={() => setSelectedIndustry(industry)}
-                className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-                  selectedIndustry === industry
-                    ? 'bg-[#ff712a] text-white border-[#ff712a]'
-                    : 'border-[#ff712a]/20 text-gray-400 hover:border-[#ff712a] hover:text-[#ff712a]'
-                }`}
-              >
-                {industry}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Client Success Stories Grid */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {clients
-              .filter(client => client.industry === selectedIndustry)
-              .map((client, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group"
-                >
-                  <div className="h-full bg-black/40 backdrop-blur-sm border border-[#ff712a]/10 
-                               rounded-lg transition-all duration-300 hover:border-[#ff712a]">
-                    {/* Client Logo */}
-                    <div className="relative aspect-video overflow-hidden rounded-t-lg bg-white/5">
-                      <Image
-                        loading='lazy'
-                        fill
-                        src={client.logo}
-                        alt={client.name}
-                        className="w-full h-full object-cover opacity-75 transition-all duration-300 
-                                 group-hover:opacity-100"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    </div>
-                    
-                    {/* Client Info */}
-                    <div className="p-6 space-y-6">
-                      <div>
-                        <h3 className="text-xl font-bold text-white group-hover:text-[#ff712a] 
-                                   transition-colors mb-2">{client.name}</h3>
-                        <p className="text-gray-400 text-sm">{client.description}</p>
-                      </div>
-
-                      {/* Solutions Implemented */}
-                      <div className="space-y-3">
-                        <h4 className="text-sm font-semibold text-[#ff712a]">Solutions Implemented</h4>
-                        <ul className="space-y-2">
-                          {client.solutions.map((solution, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-gray-400">
-                              <CheckCircle className="w-4 h-4 text-[#ff712a] mt-1 flex-shrink-0" />
-                              {solution}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Key Results */}
-                      <div className="space-y-3">
-                        <h4 className="text-sm font-semibold text-[#ff712a]">Key Results</h4>
-                        <ul className="space-y-2">
-                          {client.results.map((result, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-gray-400">
-                              <Star className="w-4 h-4 text-[#ff712a] mt-1 flex-shrink-0" />
-                              {result}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Testimonial */}
-                      <div className="relative p-4 bg-black/20 rounded-lg border border-[#ff712a]/10">
-                        <div className="absolute -top-3 -left-2 text-[#ff712a] transform -rotate-12">
-                          <svg
-                            className="w-8 h-8 opacity-50"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
-                          </svg>
-                        </div>
-                        <blockquote className="text-sm text-gray-400 italic mb-2">
-                          {client.testimonial.quote}
-                        </blockquote>
-                        <div className="text-sm">
-                          <span className="text-[#ff712a] font-medium">
-                            {client.testimonial.author}
-                          </span>
-                          <span className="text-gray-500"> • {client.testimonial.position}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Success Metrics Section */}
-      <section className="py-24 relative bg-black/40">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-4 gap-6"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {successMetrics.map((metric, index) => (
-              <StatisticCard
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {successStories.map((story, index) => (
+              <motion.div
                 key={index}
-                icon={metric.icon}
-                value={metric.value}
-                label={metric.label}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="group"
+              >
+                <div className="h-full bg-white border border-orange-100 rounded-lg p-6 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div className="space-y-4">
+                    <div className={`w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center ${typography.accent}`}>
+                      {story.icon}
+                    </div>
+                    <h3 className={typography.h4}>{story.title}</h3>
+                    <p className={typography.bodySmall}>{story.description}</p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-4">
+      {/* Client Logos Section */}
+      <section className="py-24 relative z-10">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className={typography.overline}>Our Clients</span>
+            <h2 className={typography.h2}>
+              Trusted by <span className={typography.accent}>Industry Leaders</span>
+            </h2>
+            <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
+            <p className={`${typography.body} mt-6 max-w-2xl mx-auto`}>
+              Proudly serving distinguished organizations across Southeast Asia
+            </p>
+          </motion.div>
+
+          {/* Clients Double Marquee */}
+          <div className="space-y-12">
+            <div className="relative py-4">
+              <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
+              <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
+              
+              <SmoothMarquee direction="left" speed={35}>
+                {clientItems.slice(0, 4)}
+              </SmoothMarquee>
+            </div>
+
+            <div className="relative py-4">
+              <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
+              <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
+              
+              <SmoothMarquee direction="right" speed={30}>
+                {clientItems.slice(4)}
+              </SmoothMarquee>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 relative bg-orange-50 z-10">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className={typography.overline}>Client Voices</span>
+            <h2 className={typography.h2}>
+              What Our <span className={typography.accent}>Clients Say</span>
+            </h2>
+            <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="h-full relative">
+                  <div className="absolute -top-6 left-8 text-orange-500 text-7xl opacity-20">"</div>
+                  <div className="bg-white border border-orange-100 rounded-lg p-8 shadow-sm h-full relative z-10">
+                    <div className="space-y-6">
+                      <p className={typography.bodyLarge}>"{testimonial.quote}"</p>
+                      <div>
+                        <p className="font-semibold text-gray-800">{testimonial.company}</p>
+                        <p className="text-gray-500 text-sm">{testimonial.position}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Partnership Vision */}
+      <section className="py-24 relative z-10 bg-gradient-to-r from-orange-50/50 to-blue-50/50">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto text-center mb-12"
+          >
+            <span className={typography.overline}>Our Approach</span>
+            <h2 className={typography.h2}>
+              Building <span className={typography.accent}>Lasting Relationships</span>
+            </h2>
+            <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
+          </motion.div>
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl font-bold mb-6">
-              Ready to Transform Your Healthcare Operations?
+            <div className="bg-white/80 backdrop-blur-sm border border-orange-100 rounded-xl p-10 shadow-md">
+              <div className={`space-y-6 ${typography.bodyLarge}`}>
+                <p className="text-center">
+                  That's why we work tirelessly to provide personalized service and tailored solutions that meet 
+                  the unique needs of each of our clients. Our commitment to excellence has made us a trusted 
+                  partner for organizations across Asia.
+                </p>
+                
+                <div className="h-px w-full bg-orange-100 my-6"></div>
+                
+                <p className="text-center font-medium text-gray-700">
+                  We focus on end-to-end service strategy, service design, service transition, service operations 
+                  and continual service improvement that is managed by certified ITIL consultants who focus only 
+                  on meeting customer defined service level agreements.
+                </p>
+                
+                <div className="grid md:grid-cols-3 gap-6 mt-10">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-lg p-6 border border-orange-200"
+                    whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                  >
+                    <div className="flex flex-col items-center text-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm border border-orange-200">
+                        <CheckCircle className="w-6 h-6 text-orange-500" />
+                      </div>
+                      <p>We help customers with not just implementation but by managing their systems end to end</p>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-6 border border-blue-200"
+                    whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                  >
+                    <div className="flex flex-col items-center text-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm border border-blue-200">
+                        <CheckCircle className="w-6 h-6 text-blue-500" />
+                      </div>
+                      <p>Allowing our customers to rest the worry on IT operations and focus more on their business process improvements</p>
+                    </div>
+                  </motion.div>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                    className="bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-lg p-6 border border-orange-200"
+                    whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                  >
+                    <div className="flex flex-col items-center text-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm border border-orange-200">
+                        <CheckCircle className="w-6 h-6 text-orange-500" />
+                      </div>
+                      <p>Building strategic partnerships that create win-win alliances for all stakeholders</p>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 relative bg-gradient-to-b from-orange-50 to-white z-10">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h2 className={typography.h2}>
+              Ready to <span className={typography.accent}>Join Our Network?</span>
             </h2>
-            <p className="text-gray-300 mb-8">
-              Join our network of successful healthcare institutions and technology partners. 
-              Let's work together to achieve your digital transformation goals.
+            <p className={`${typography.body} mt-6 mb-12 max-w-2xl mx-auto`}>
+              If you're interested in learning more about our services or would like to discuss how we can help 
+              you achieve your goals, please get in touch. We look forward to exploring how we can work together.
             </p>
+            
             <motion.div
-              className="flex justify-center gap-6"
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Button
-                size="lg"
-                className="relative overflow-hidden group bg-gradient-to-r from-[#ff712a] to-[#ff9500] 
-                         hover:from-[#ff9500] hover:to-[#ff712a] text-white px-8 py-6 text-lg"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Start Your Journey
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-[#ff712a] text-[#ff712a] hover:bg-[#ff712a] hover:text-white 
-                         px-8 py-6 text-lg transition-all duration-300"
-              >
-                Schedule a Consultation
-              </Button>
+              {/* Updated Contact Us Button with Link to Contact Page and Form Section */}
+              <Link href="/contact#contactForm" passHref>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg transition-all duration-300 px-10 py-6 text-lg rounded-lg"
+                >
+                  <span className="flex items-center gap-2">
+                    Contact Us Today
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -681,4 +730,4 @@ const ClientsAndPartnersPage = () => {
   );
 };
 
-export default ClientsAndPartnersPage;
+export default ClientPartnersPage;

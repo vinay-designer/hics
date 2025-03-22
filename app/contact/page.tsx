@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { 
   MapPin, Phone, Mail, Clock, Building2, Globe, 
@@ -12,7 +12,7 @@ import ContactBackground from '../../animations/contact/contact-background';
 import ContactForm from './contact-form';
 
 const ContactPage = () => {
-  const [selectedOffice, setSelectedOffice] = useState<'singapore' | 'malaysia' | 'indonesia'>('singapore');
+  const [selectedOffice, setSelectedOffice] = useState<'singapore' | 'philippines' | 'india'>('singapore');
   const formRef = useRef<HTMLDivElement>(null);
 
   const scrollToForm = () => {
@@ -24,42 +24,50 @@ const ContactPage = () => {
     // You can add additional logic here after successful form submission
   };
 
+  useEffect(() => {
+    // Check if there's a hash in the URL
+    if (window.location.hash === '#contactForm') {
+      // Scroll to the form section
+      formRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
   const offices = {
     singapore: {
       name: "Singapore Headquarters",
-      address: "71 Ayer Rajah Crescent, #06-14",
-      area: "Singapore 139951",
+      address: "9 Tampines Grande, 02-11",
+      area: "Asia Green, Singapore 528735",
       phone: "+65 6123 4567",
       email: "sg@hics.com",
       coordinates: {
-        lat: 1.2966,
-        lng: 103.7764
+        lat: 1.3522,
+        lng: 103.9454
       },
       hours: "Monday - Friday: 9:00 AM - 6:00 PM",
       teams: ["Technology Solutions", "Healthcare IT", "Cloud Services"]
     },
-    malaysia: {
-      name: "India Office",
-      address: "Madhapur, HITEC City",
-      area: "Hyderabad, Telangana 500081",
-      phone: "+91 40 1234 5678",
-      email: "my@hics.com",
+    philippines: {
+      name: "Philippines Office",
+      address: "30th Floor Yuchengco Tower, RCBC Plaza",
+      area: "6819 Ayala Avenue, Makati City",
+      phone: "+63 2 1234 5678",
+      email: "ph@hics.com",
       coordinates: {
-        lat: 3.1343,
-        lng: 101.6864
+        lat: 14.5577,
+        lng: 121.0150
       },
       hours: "Monday - Friday: 9:00 AM - 6:00 PM",
       teams: ["System Integration", "Support Services"]
     },
-    indonesia: {
-      name: "Philippines Office",
-      address: "Menara BTPN, CBD Mega Kuningan",
-      area: "Philly 12950",
-      phone: "+62 21 2123 4567",
-      email: "id@hics.com",
+    india: {
+      name: "India Office",
+      address: "Jain Sadguru Images Capital Park, 502B",
+      area: "Capital Pk Rd, Madhapur, Hyderabad, Telangana 500081",
+      phone: "+91 40 1234 5678",
+      email: "in@hics.com",
       coordinates: {
-        lat: -6.2296,
-        lng: 106.8067
+        lat: 17.4482,
+        lng: 78.3874
       },
       hours: "Monday - Friday: 9:00 AM - 6:00 PM",
       teams: ["Enterprise Solutions", "Digital Transformation"]
@@ -134,6 +142,9 @@ const ContactPage = () => {
       description: "We believe in the power of teamwork and fostering a supportive, inclusive environment."
     }
   ];
+
+  // Google Maps API Key - Replace with your actual key
+  const googleMapsApiKey = "AIzaSyDFL1JO3oGUm1zSTv70TIr4TFBHvl34RvQ";
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -415,7 +426,7 @@ const ContactPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className="group"
-                onClick={() => setSelectedOffice(key as 'singapore' | 'malaysia' | 'indonesia')}
+                onClick={() => setSelectedOffice(key as 'singapore' | 'philippines' | 'india')}
               >
                 <div className={`h-full bg-white/80 backdrop-blur-sm border rounded-lg p-6 cursor-pointer 
                               transition-all duration-300 ${
@@ -440,6 +451,10 @@ const ContactPage = () => {
                     </div>
 
                     <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin className="w-4 h-4 text-orange-500" />
+                        {office.address}
+                      </div>
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Phone className="w-4 h-4 text-orange-500" />
                         {office.phone}
@@ -481,10 +496,10 @@ const ContactPage = () => {
             viewport={{ once: true }}
             className="relative h-[500px] rounded-xl overflow-hidden shadow-md"
           >
-            <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border border-orange-200/30 rounded-xl">
-              {/* Integrate your preferred map component here */}
+            <div className="absolute inset-0 border border-gray-800 rounded-xl overflow-hidden">
+              {/* Standard Google Maps iframe using satellite view */}
               <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${offices[selectedOffice].coordinates.lat},${offices[selectedOffice].coordinates.lng}`}
+                src={`https://www.google.com/maps/embed/v1/place?key=${googleMapsApiKey}&q=${offices[selectedOffice].address.replace(/ /g, "+")},+${offices[selectedOffice].area.replace(/ /g, "+")}&zoom=16&maptype=satellite`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

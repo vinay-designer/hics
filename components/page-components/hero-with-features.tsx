@@ -37,13 +37,13 @@ const carouselContent = [
     title: "Customer Success Stories",
     subtitle: "Real solutions for real problems",
     content: "Take one of our customers, for example. They needed a simple way to monitor system performance but didn't want the cost or complexity of full-blown tools like SAP ALM or Datadog. Instead of pushing them toward an expensive solution they didn't need, we built them a custom dashboard that gave them exactly what they wanted—quick insights, at a glance.",
-    image: "/page-components/hero.png"
+    image: "/page-components/hero-cust-success.png"
   },
   {
     title: "Our Approach",
     subtitle: "Beyond the playbook",
     content: "We're not your typical \"small, dedicated team\" that just ticks boxes. We're a nimble band of SAP problem-solvers who throw out the cookie-cutter playbook. We go beyond SAP when needed. We embed ourselves in your project—right in the thick of it—partnering with you from day one.",
-    image: "/page-components/hero.png"
+    image: "/page-components/hero-our-approach.png"
   }
 ];
 
