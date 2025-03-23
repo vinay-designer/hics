@@ -127,7 +127,7 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
         {item.path ? (
           <Link
             href={item.path}
-            className={`text-sm font-medium transition-colors duration-200 ${
+            className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
               isActive(item)
                 ? 'text-orange-400'
                 : 'text-gray-700 hover:text-orange-500'
@@ -136,7 +136,7 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
             {item.title}
           </Link>
         ) : (
-          <span className={`text-sm font-medium transition-colors duration-200 ${
+          <span className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
             isActive(item) || isOpen ? 'text-orange-500' : 'text-gray-700 hover:text-orange-500'
           }`}>
             {item.title}
@@ -178,8 +178,10 @@ const DropdownMenu = ({ item, depth = 0 }: { item: NavItem; depth?: number }) =>
   );
 };
 
+// Updated MobileMenu component with modern design
 const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const pathname = usePathname();
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
 
   const isActive = (path?: string) => {
     if (!path) return false;
@@ -187,28 +189,64 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     return pathname.startsWith(path);
   };
 
+  const toggleSection = (title: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [title]: !prev[title]
+    }));
+  };
+
   const renderMobileItems = (items: NavItem[], depth = 0) => {
     return items.map((item, index) => (
-      <div key={index} className={`pl-${depth * 4}`}>
+      <div key={index} className={`${depth > 0 ? 'pl-4 border-l border-orange-100' : ''}`}>
         {item.path ? (
           <Link
             href={item.path}
-            className={`block py-2 text-sm font-medium ${
+            className={`flex items-center py-3 group transition-all duration-300 ease-in-out ${
               isActive(item.path)
-                ? 'text-orange-500'
-                : 'text-gray-600 hover:text-orange-500'
-            } transition-colors duration-200`}
+                ? 'text-orange-500 font-medium'
+                : 'text-gray-700 hover:text-orange-500'
+            }`}
             onClick={onClose}
           >
-            {item.title}
+            <span className="relative text-sm font-medium">
+              {item.title}
+              <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 ease-in-out group-hover:w-full ${
+                isActive(item.path) ? 'w-full' : 'w-0'
+              }`}></span>
+            </span>
           </Link>
         ) : (
-          <div className="py-2">
-            <span className="text-sm font-semibold text-orange-500">{item.title}</span>
+          <div className="border-b border-gray-100 last:border-0">
+            <button
+              onClick={() => toggleSection(item.title)}
+              className="flex items-center justify-between w-full py-3 group"
+            >
+              <span className={`text-sm font-medium ${expandedSections[item.title] ? 'text-orange-500' : 'text-gray-700'}`}>
+                {item.title}
+              </span>
+              <ChevronDown 
+                className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
+                  expandedSections[item.title] ? 'rotate-180 text-orange-500' : ''
+                }`} 
+              />
+            </button>
+            
             {item.children && (
-              <div className="pl-4 mt-2">
-                {renderMobileItems(item.children, depth + 1)}
-              </div>
+              <motion.div 
+                initial="collapsed"
+                animate={expandedSections[item.title] ? "open" : "collapsed"}
+                variants={{
+                  open: { opacity: 1, height: "auto", marginTop: 8, marginBottom: 8 },
+                  collapsed: { opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }
+                }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="pl-4 py-1 border-l-2 border-orange-200 space-y-1">
+                  {renderMobileItems(item.children, depth + 1)}
+                </div>
+              </motion.div>
             )}
           </div>
         )}
@@ -219,28 +257,62 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, x: '100%' }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: '100%' }}
-          transition={{ type: 'tween', duration: 0.3 }}
-          className="fixed inset-y-0 right-0 w-full max-w-sm bg-[#FFF5F5] z-50 overflow-y-auto"
-        >
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-8">
-              <Image loading='lazy' height={10} width={120} className="h-10 w-auto" src="/page-components/hics-dark.png" alt="HICS Logo" />
-              <button
-                onClick={onClose}
-                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
-              >
-                <X className="w-6 h-6" />
-              </button>
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            onClick={onClose}
+          />
+          
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl z-50 overflow-y-auto"
+          >
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex justify-between items-center p-4 border-b border-gray-100">
+                <Image loading='lazy' height={10} width={120} className="h-10 w-auto" src="/page-components/hics-dark.png" alt="HICS Logo" />
+                <button
+                  onClick={onClose}
+                  className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-50 text-gray-500 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              {/* Slogan */}
+              <div className="mx-4 my-3 p-3 bg-gradient-to-r from-orange-50 to-white rounded-lg border-l-4 border-orange-400">
+                <div className="flex flex-col">
+                  <span className="text-gray-800 font-semibold tracking-tight text-sm">OutThink<span className="text-orange-500">.</span></span>
+                  <span className="text-orange-500 font-bold tracking-tight text-sm">OutPerform<span className="text-orange-500">.</span></span>
+                </div>
+              </div>
+              
+              {/* Menu Items */}
+              <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
+                {renderMobileItems(navigation)}
+              </div>
+              
+              {/* Footer */}
+              <div className="p-4 bg-gray-50 mt-auto">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white"
+                  asChild
+                >
+                  <Link href="/contact">Contact Us</Link>
+                </Button>
+              </div>
             </div>
-            <div className="space-y-4">
-              {renderMobileItems(navigation)}
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
@@ -249,38 +321,32 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
     const handleScroll = () => {
       setIsSticky(window.scrollY > 100);
     };
 
+    // Set initial window width
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => {
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  // Animation for the stamp text
-  const textVariants = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const letterVariants = {
-    initial: { y: 0 },
-    animate: { 
-      y: [-1, 1, -1],
-      transition: { 
-        repeat: Infinity,
-        repeatType: "mirror",
-        duration: 2.5,
-      }
-    },
-  };
+  // Determine the screen size and adjust navigation accordingly
+  const isMediumScreen = windowWidth > 1024 && windowWidth < 1280;
+  const isLargeScreen = windowWidth >= 1280;
 
   // Animation variants for the sticky navigation
   const navVariants = {
@@ -334,7 +400,7 @@ const Header = () => {
               variants={navVariants as any}
               transition={{ duration: 0.3 }}
               style={{ background: 'rgb(253 231 221)'}}
-              className={`hidden text-white p-[16px] rounded-3xl lg:flex items-center gap-8 z-50 
+              className={`hidden text-white lg:flex items-center gap-3 xl:gap-8 z-50 p-[16px] rounded-3xl
                 ${isSticky ? 'fixed top-5 left-1/2 -translate-x-1/2' : 'absolute left-1/2 -translate-x-1/2'}`}
             >
               {navigation.map((item, index) => (
