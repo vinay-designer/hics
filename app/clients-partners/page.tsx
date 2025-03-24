@@ -70,7 +70,7 @@ const ClientPartnersPage = () => {
     },
     {
       name: "Lumen",
-      logo: "/page-components/lumen.jpg",
+      logo: "/page-components/lumen.png",
       color: "#ff9500"
     },
     {

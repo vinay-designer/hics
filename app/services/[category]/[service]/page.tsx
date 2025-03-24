@@ -54,7 +54,7 @@ export default function ServicePage({ params }: { params: { category: string; se
             "provider": {
               "@type": "Organization",
               "name": "HICS",
-              "url": "https://hics.com"
+              "url": "https://hics.com.sg"
             },
             "serviceType": params.category,
             "areaServed": "Singapore",

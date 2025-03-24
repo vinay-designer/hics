@@ -52,7 +52,7 @@ export default function SolutionPage({ params }: { params: { slug: string } }) {
             "brand": {
               "@type": "Organization",
               "name": "HICS",
-              "url": "https://hics.com"
+              "url": "https://hics.com.sg"
             },
             "category": "Software Solution",
             "offers": {

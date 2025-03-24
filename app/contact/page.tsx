@@ -38,7 +38,7 @@ const ContactPage = () => {
       address: "9 Tampines Grande, 02-11",
       area: "Asia Green, Singapore 528735",
       phone: "+65 6932 2988",
-      email: "sg@hics.com",
+      email: "info@hics.com.sg",
       coordinates: {
         lat: 1.3522,
         lng: 103.9454
@@ -51,7 +51,7 @@ const ContactPage = () => {
       address: "30th Floor Yuchengco Tower, RCBC Plaza",
       area: "6819 Ayala Avenue, Makati City",
       phone: "+63 9178767714",
-      email: "ph@hics.com",
+      email: "info@hics.com.sg",
       coordinates: {
         lat: 14.5577,
         lng: 121.0150
@@ -64,7 +64,7 @@ const ContactPage = () => {
       address: "Jain Sadguru Images Capital Park, 502B",
       area: "Capital Pk Rd, Madhapur, Hyderabad, Telangana 500081",
       phone: "+91 9063427434",
-      email: "in@hics.com",
+      email: "info@hics.com.sg",
       coordinates: {
         lat: 17.4482,
         lng: 78.3874
@@ -78,19 +78,19 @@ const ContactPage = () => {
     {
       name: "Technology Solutions",
       description: "For inquiries about our enterprise technology solutions and implementations",
-      email: "info@hics.com.sg",
+      email: "support@hics.com.sg",
       icon: <Code className="w-6 h-6" />
     },
     {
       name: "Healthcare IT",
       description: "Specialized healthcare technology solutions and consulting",
-      email: "careers@hics.com.sg",
+      email: "support@hics.com.sg",
       icon: <Heart className="w-6 h-6" />
     },
     {
       name: "Career Opportunities",
       description: "Join our team of innovators and technology experts",
-      email: "info@hics.com.sg",
+      email: "careers@hics.com.sg",
       icon: <Briefcase className="w-6 h-6" />
     },
     {
