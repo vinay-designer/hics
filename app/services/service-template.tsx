@@ -385,21 +385,7 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({ content, category }) 
             >
               {content.description}
             </motion.p>
-            
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white rounded-full px-8 py-6 text-lg">
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50 rounded-full px-8 py-6 text-lg">
-                Learn More
-              </Button>
-            </motion.div>
+
           </motion.div>
         </div>
       </section>

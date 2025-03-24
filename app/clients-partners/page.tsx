@@ -102,14 +102,27 @@ const ClientPartnersPage = () => {
 
   // Clients data from the original file
   const clients = [
-    { name: "Customer 1", logo: "/page-components/aic.jpg" },
+    { name: "Customer 1", logo: "/page-components/aic.png" },
     { name: "Customer 2", logo: "/page-components/bvh.jpg" },
     { name: "Customer 3", logo: "/page-components/dairy.jpg" },
-    { name: "Customer 4", logo: "/page-components/ihis.jpg" },
+    { name: "Customer 4", logo: "/page-components/ihis.png" },
     { name: "Customer 5", logo: "/page-components/sp-g.jpg" },
     { name: "Customer 6", logo: "/page-components/zp.jpg" },
     { name: "Customer 7", logo: "/page-components/saint.jpg" },
-    { name: "Customer 8", logo: "/page-components/st-a.jpg" }
+    { name: "Customer 8", logo: "/page-components/st-a.jpg" },
+    { name: "Customer 9", logo: "/page-components/ihh.jpeg" },
+    { name: "Customer 10", logo: "/page-components/jhfg.jpeg" },
+    { name: "Customer 11", logo: "/page-components/kfc.png" },
+    { name: "Customer 12", logo: "/page-components/ktph-logo.svg" },
+    { name: "Customer 13", logo: "/page-components/nuh.png" },
+    { name: "Customer 14", logo: "/page-components/panasonic.png" },
+    { name: "Customer 15", logo: "/page-components/pizzahut.png" },
+    { name: "Customer 16", logo: "/page-components/pngwing.png" },
+    { name: "Customer 17", logo: "/page-components/rec-solar-logo.jpg" },
+    { name: "Customer 18", logo: "/page-components/ren-ci-logo.png" },
+    { name: "Customer 19", logo: "/page-components/sembcorp.png" },
+    { name: "Customer 20", logo: "public/page-components/stlogistics.jpg" },
+    { name: "Customer 21", logo: "public/page-components/thk.jpg" },
   ];
 
   // Client testimonials for the page

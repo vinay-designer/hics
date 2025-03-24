@@ -25,7 +25,7 @@ const navigation: NavItem[] = [
         title: "SAP",
         children: [
           { title: "SAP Consulting", path: "/services/sap/consulting" },
-          { title: "SAP BPT", path: "/services/sap/bpt" },
+          { title: "SAP BTP", path: "/services/sap/btp" },
           { title: "SAP on Azure", path: "/services/sap/azure" },
           { title: "SAP on AWS", path: "/services/sap/aws" },
           { title: "S/4HANA Migration", path: "/services/sap/s4hana" },

@@ -86,15 +86,15 @@ export const servicesData = {
                 "SAP Solution Manager"
             ]
         },
-        bpt: {
-            title: "SAP BPT",
-            subtitle: "SAP Business Process Transformation Solutions",
-            description: "Comprehensive SAP Business Process Transformation services to optimize and modernize your business operations.",
+        btp: {
+            title: "SAP BTP",
+            subtitle: "SAP Business Technology Platform Solutions",
+            description: "Comprehensive SAP Business Technology Platform services to optimize and modernize your business operations.",
             longDescription: `
-          SAP Business Process Transformation (BPT) is a strategic approach to redesigning and optimizing business processes using SAP technologies. Our BPT services help organizations streamline operations, improve efficiency, and drive digital transformation.
-          
-          We combine deep industry knowledge with SAP expertise to analyze your current processes, identify opportunities for improvement, and implement solutions that align with your business goals. Our approach focuses on people, processes, and technology to ensure successful transformation and adoption.
-        `,
+              SAP Business Technology Platform (BTP) is a strategic approach to designing and optimizing business processes using SAP technologies. Our BTP services help organizations streamline operations, improve efficiency, and drive digital transformation.
+              
+              We combine deep industry knowledge with SAP expertise to analyze your current processes, identify opportunities for improvement, and implement solutions that align with your business goals. Our approach focuses on people, processes, and technology to ensure successful transformation and adoption.
+            `,
             features: [
                 {
                     title: "Process Assessment",

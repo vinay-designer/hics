@@ -367,22 +367,6 @@ const KeyFocusSection = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.7, delay: 0.6 }}
-              className="flex justify-center mt-12"
-            >
-              <Button 
-                className={`bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md text-lg ${typography.buttonText} transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-200/50`}
-              >
-                <span className="flex items-center gap-2">
-                  Explore Our Services
-                  <ArrowUpRight className="w-5 h-5" />
-                </span>
-              </Button>
-            </motion.div>
           </div>
         </motion.div>
       </div>
