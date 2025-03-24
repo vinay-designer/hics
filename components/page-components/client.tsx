@@ -62,10 +62,10 @@ const clients = [
   { name: "Customer 21", logo: "/page-components/thk.jpg" },
 ];
 
-const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }) => {
-  const containerRef = useRef(null);
+const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }: { children: React.ReactNode, direction?: 'left' | 'right', speed?: number, className?: string }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [childrenArray, setChildrenArray] = useState([]);
+  const [childrenArray, setChildrenArray] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
     if (containerRef.current) {
