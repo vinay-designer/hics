@@ -159,7 +159,7 @@ const Footer = () => {
                   </span>
                 </div>
                 <span className={typography.body}>
-                  +65 6809 7118
+                  +65 6932 2988
                 </span>
               </div>
               

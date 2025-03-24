@@ -1,92 +1,102 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from "framer-motion";
-import { 
-  Handshake, Building2, Users, Code, Heart, 
-  Award, Globe, Shield, CheckCircle, ArrowRight 
+import {
+  Handshake, Building2, Users, Code, Heart,
+  Award, Globe, Shield, CheckCircle, ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { typography } from "../../utils/ typography";
 import Link from 'next/link';
 
 const SmoothMarquee = ({ children, direction = 'left', speed = 25, className = '' }: { children: React.ReactNode; direction?: 'left' | 'right'; speed?: number; className?: string }) => {
-    const [duplicated, setDuplicated] = useState<React.ReactNode[]>([]);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [containerWidth, setContainerWidth] = useState(0);
+  const [duplicated, setDuplicated] = useState<React.ReactNode[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-    useEffect(() => {
-        if (containerRef.current) {
-            const width = containerRef.current.offsetWidth;
-            setContainerWidth(width);
-            const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
-            setDuplicated(Array(duplicatesNeeded).fill(children));
-        }
+  useEffect(() => {
+    if (containerRef.current) {
+      const width = containerRef.current.offsetWidth;
+      setContainerWidth(width);
+      const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
+      setDuplicated(Array(duplicatesNeeded).fill(children));
+    }
 
-        const handleResize = () => {
-            if (containerRef.current) {
-                const width = containerRef.current.offsetWidth;
-                setContainerWidth(width);
-                const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
-                setDuplicated(Array(duplicatesNeeded).fill(children));
-            }
-        };
+    const handleResize = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.offsetWidth;
+        setContainerWidth(width);
+        const duplicatesNeeded = Math.ceil((window.innerWidth * 2) / width) + 2;
+        setDuplicated(Array(duplicatesNeeded).fill(children));
+      }
+    };
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [children]);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [children]);
 
-    return (
-        <div className={`overflow-hidden relative ${className}`}>
-            <motion.div
-                ref={containerRef}
-                animate={{
-                    x: direction === 'left' ? [-containerWidth, 0] : [0, -containerWidth],
-                }}
-                transition={{
-                    duration: containerWidth / speed,
-                    repeat: Infinity,
-                    ease: "linear",
-                    repeatType: "loop"
-                }}
-                className="flex"
-            >
-                {duplicated.map((item, idx) => (
-                    <div key={idx} className="flex shrink-0">
-                        {item}
-                    </div>
-                ))}
-            </motion.div>
-        </div>
-    );
+  return (
+    <div className={`overflow-hidden relative ${className}`}>
+      <motion.div
+        ref={containerRef}
+        animate={{
+          x: direction === 'left' ? [-containerWidth, 0] : [0, -containerWidth],
+        }}
+        transition={{
+          duration: containerWidth / speed,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "loop"
+        }}
+        className="flex"
+      >
+        {duplicated.map((item, idx) => (
+          <div key={idx} className="flex shrink-0">
+            {item}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
 };
 
 const ClientPartnersPage = () => {
   // Partners data from the original file
   const partners = [
     {
-        name: "Microsoft",
-        logo: "/page-components/microsoft.jpg",
-        color: "#ff712a"
+      name: "ts",
+      logo: "/page-components/t-s.jpg",
+      color: "#ff712a"
     },
     {
-        name: "IBM",
-        logo: "/page-components/ibm.jpg",
-        color: "#ff9500"
+      name: "Lumen",
+      logo: "/page-components/lumen.jpg",
+      color: "#ff9500"
     },
     {
-        name: "ts",
-        logo: "/page-components/t-s.jpg",
-        color: "#ff712a"
+      name: "capgemini",
+      logo: "/page-components/capgemini.png",
+      color: "#ff712a"
     },
     {
-        name: "Lumen",
-        logo: "/page-components/lumen.jpg",
-        color: "#ff9500"
+      name: "abdream",
+      logo: "/page-components/abdream.png",
+      color: "#ff9500"
     },
     {
-        name: "delware",
-        logo: "/page-components/delaware.jpg",
-        color: "#ff712a"
+      name: "infosys",
+      logo: "/page-components/infosys_logo.svg.png",
+      color: "#ff712a"
+    },
+    {
+      name: "crayon-seeklogo",
+      logo: "/page-components/crayon-seeklogo.png",
+      color: "#ff9500"
+    },
+    {
+      name: "tcs",
+      logo: "/page-components/tcs_logo.png",
+      color: "#ff712a"
     },
   ];
 
@@ -146,7 +156,7 @@ const ClientPartnersPage = () => {
       key={index}
       className="relative mx-6"
     >
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
@@ -178,7 +188,7 @@ const ClientPartnersPage = () => {
         transition={{ duration: 0.3 }}
         className="min-w-[180px] h-20 bg-white shadow-sm rounded-xl p-4 flex items-center justify-center border border-orange-100 hover:border-orange-300 transition-all duration-300"
       >
-        <img 
+        <img
           loading='lazy'
           src={client.logo}
           alt={client.name}
@@ -193,10 +203,10 @@ const ClientPartnersPage = () => {
       {/* Enhanced background animations */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         {/* Animated lines */}
-        <motion.div 
+        <motion.div
           className="absolute h-[200vh] w-px bg-gradient-to-b from-transparent via-orange-300 to-transparent rotate-[30deg] -translate-x-1/2 left-1/4 top-0"
           initial={{ opacity: 0 }}
-          animate={{ 
+          animate={{
             opacity: [0, 0.3, 0],
             top: ["-100vh", "100vh"]
           }}
@@ -206,11 +216,11 @@ const ClientPartnersPage = () => {
             ease: "linear"
           }}
         />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute h-[200vh] w-px bg-gradient-to-b from-transparent via-blue-300 to-transparent rotate-[30deg] -translate-x-1/2 left-3/4 top-0"
           initial={{ opacity: 0 }}
-          animate={{ 
+          animate={{
             opacity: [0, 0.3, 0],
             top: ["-100vh", "100vh"]
           }}
@@ -221,50 +231,50 @@ const ClientPartnersPage = () => {
             delay: 2
           }}
         />
-        
+
         {/* Moving circles */}
-        <motion.div 
+        <motion.div
           className="absolute w-64 h-64 rounded-full border border-orange-200 opacity-30"
-          style={{ 
+          style={{
             background: "radial-gradient(circle, rgba(255,113,42,0.1) 0%, rgba(255,255,255,0) 70%)"
           }}
           initial={{ x: "-30%", y: "20%" }}
-          animate={{ 
+          animate={{
             y: ["20%", "60%", "20%"],
             x: ["-30%", "-10%", "-30%"],
           }}
-          transition={{ 
-            duration: 20, 
+          transition={{
+            duration: 20,
             repeat: Infinity,
-            ease: "easeInOut" 
+            ease: "easeInOut"
           }}
         />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute w-96 h-96 rounded-full border border-blue-200 opacity-30"
-          style={{ 
+          style={{
             background: "radial-gradient(circle, rgba(66,153,225,0.1) 0%, rgba(255,255,255,0) 70%)"
           }}
           initial={{ x: "70%", y: "60%" }}
-          animate={{ 
+          animate={{
             y: ["60%", "20%", "60%"],
             x: ["70%", "50%", "70%"],
           }}
-          transition={{ 
-            duration: 25, 
+          transition={{
+            duration: 25,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 1
           }}
         />
-        
+
         {/* Corner gradients with enhanced visibility */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-orange-50 to-transparent opacity-80"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-50 to-transparent opacity-80"></div>
       </div>
 
       {/* Rest of the component code... */}
-      
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden z-10">
         {/* Additional animated elements for hero section */}
@@ -283,7 +293,7 @@ const ClientPartnersPage = () => {
             }}
             className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-orange-300/20 to-transparent blur-3xl"
           />
-          
+
           <motion.div
             animate={{
               y: [20, -20, 20],
@@ -298,7 +308,7 @@ const ClientPartnersPage = () => {
             }}
             className="absolute bottom-20 left-[20%] w-96 h-96 rounded-full bg-gradient-to-tr from-blue-300/20 to-transparent blur-3xl"
           />
-          
+
           {/* Animated rings */}
           <div className="absolute left-[10%] top-[30%]">
             <motion.div
@@ -310,14 +320,14 @@ const ClientPartnersPage = () => {
               }}
               className="w-40 h-40 rounded-full border-2 border-orange-200/20 relative"
             >
-              <motion.div 
+              <motion.div
                 className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-orange-500/40"
                 animate={{ scale: [1, 1.5, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
             </motion.div>
           </div>
-          
+
           <div className="absolute right-[15%] bottom-[20%]">
             <motion.div
               animate={{ rotate: -360 }}
@@ -328,19 +338,19 @@ const ClientPartnersPage = () => {
               }}
               className="w-64 h-64 rounded-full border border-blue-200/20 relative"
             >
-              <motion.div 
+              <motion.div
                 className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-500/40"
                 animate={{ scale: [1, 1.3, 1] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
             </motion.div>
           </div>
-          
+
           {/* Corner accent gradients */}
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-orange-50/50 to-transparent"></div>
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-50/50 to-transparent"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -379,8 +389,8 @@ const ClientPartnersPage = () => {
                 Partners
               </motion.span>
             </h1>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
@@ -388,21 +398,21 @@ const ClientPartnersPage = () => {
             >
               Celebrate the collaborations that drive innovation and excellence in everything we do
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
               className={`${typography.body} mx-auto max-w-3xl bg-white/80 backdrop-blur-sm p-8 rounded-xl border border-orange-200/30 shadow-sm`}
             >
               <p className="mb-4">
-                Welcome to our Clients page, where we celebrate the individuals and organizations that have trusted us 
-                to help them achieve their goals. At our company, we believe that our success is directly linked to 
+                Welcome to our Clients page, where we celebrate the individuals and organizations that have trusted us
+                to help them achieve their goals. At our company, we believe that our success is directly linked to
                 the success of our clients.
               </p>
               <p>
-                We've worked with top quality technology partners and System Integrators for several years, and have 
-                the privilege of serving some of the elite customers in Southeast Asia. We are grateful for the trust 
+                We've worked with top quality technology partners and System Integrators for several years, and have
+                the privilege of serving some of the elite customers in Southeast Asia. We are grateful for the trust
                 and confidence that our clients place in us, and we look forward to continuing to build lasting partnerships.
               </p>
             </motion.div>
@@ -434,7 +444,7 @@ const ClientPartnersPage = () => {
           <div className="relative py-8">
             <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
             <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
-            
+
             <SmoothMarquee direction="left" speed={30}>
               {partnerItems}
             </SmoothMarquee>
@@ -451,8 +461,8 @@ const ClientPartnersPage = () => {
             <div className="bg-gradient-to-r from-orange-50 to-blue-50 p-8 rounded-2xl border border-orange-100">
               <h3 className={typography.h3}>The Power of Strategic Partnerships</h3>
               <p className={`${typography.body} mt-4`}>
-                We believe in strategic partnerships and partner ecosystem because we can form win-win alliances 
-                and make our customers happy with stronger engagement models. Our partnerships are built on trust, 
+                We believe in strategic partnerships and partner ecosystem because we can form win-win alliances
+                and make our customers happy with stronger engagement models. Our partnerships are built on trust,
                 shared values, and a commitment to excellence.
               </p>
             </div>
@@ -531,7 +541,7 @@ const ClientPartnersPage = () => {
             <div className="relative py-4">
               <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
               <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
-              
+
               <SmoothMarquee direction="left" speed={35}>
                 {clientItems.slice(0, 4)}
               </SmoothMarquee>
@@ -540,7 +550,7 @@ const ClientPartnersPage = () => {
             <div className="relative py-4">
               <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
               <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
-              
+
               <SmoothMarquee direction="right" speed={30}>
                 {clientItems.slice(4)}
               </SmoothMarquee>
@@ -610,7 +620,7 @@ const ClientPartnersPage = () => {
             </h2>
             <div className="h-px w-16 bg-orange-500 mx-auto mt-4"></div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -621,21 +631,21 @@ const ClientPartnersPage = () => {
             <div className="bg-white/80 backdrop-blur-sm border border-orange-100 rounded-xl p-10 shadow-md">
               <div className={`space-y-6 ${typography.bodyLarge}`}>
                 <p className="text-center">
-                  That's why we work tirelessly to provide personalized service and tailored solutions that meet 
-                  the unique needs of each of our clients. Our commitment to excellence has made us a trusted 
+                  That's why we work tirelessly to provide personalized service and tailored solutions that meet
+                  the unique needs of each of our clients. Our commitment to excellence has made us a trusted
                   partner for organizations across Asia.
                 </p>
-                
+
                 <div className="h-px w-full bg-orange-100 my-6"></div>
-                
+
                 <p className="text-center font-medium text-gray-700">
-                  We focus on end-to-end service strategy, service design, service transition, service operations 
-                  and continual service improvement that is managed by certified ITIL consultants who focus only 
+                  We focus on end-to-end service strategy, service design, service transition, service operations
+                  and continual service improvement that is managed by certified ITIL consultants who focus only
                   on meeting customer defined service level agreements.
                 </p>
-                
+
                 <div className="grid md:grid-cols-3 gap-6 mt-10">
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -650,8 +660,8 @@ const ClientPartnersPage = () => {
                       <p>We help customers with not just implementation but by managing their systems end to end</p>
                     </div>
                   </motion.div>
-                  
-                  <motion.div 
+
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -666,7 +676,7 @@ const ClientPartnersPage = () => {
                       <p>Allowing our customers to rest the worry on IT operations and focus more on their business process improvements</p>
                     </div>
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -702,10 +712,10 @@ const ClientPartnersPage = () => {
               Ready to <span className={typography.accent}>Join Our Network?</span>
             </h2>
             <p className={`${typography.body} mt-6 mb-12 max-w-2xl mx-auto`}>
-              If you're interested in learning more about our services or would like to discuss how we can help 
+              If you're interested in learning more about our services or would like to discuss how we can help
               you achieve your goals, please get in touch. We look forward to exploring how we can work together.
             </p>
-            
+
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}

@@ -86,6 +86,67 @@ export const servicesData = {
                 "SAP Solution Manager"
             ]
         },
+        bpt: {
+            title: "SAP BPT",
+            subtitle: "SAP Business Process Transformation Solutions",
+            description: "Comprehensive SAP Business Process Transformation services to optimize and modernize your business operations.",
+            longDescription: `
+          SAP Business Process Transformation (BPT) is a strategic approach to redesigning and optimizing business processes using SAP technologies. Our BPT services help organizations streamline operations, improve efficiency, and drive digital transformation.
+          
+          We combine deep industry knowledge with SAP expertise to analyze your current processes, identify opportunities for improvement, and implement solutions that align with your business goals. Our approach focuses on people, processes, and technology to ensure successful transformation and adoption.
+        `,
+            features: [
+                {
+                    title: "Process Assessment",
+                    description: "Comprehensive analysis of existing business processes to identify inefficiencies and improvement opportunities.",
+                    icon: "Search"
+                },
+                {
+                    title: "Process Redesign",
+                    description: "Expert redesign of business processes to optimize efficiency and align with best practices.",
+                    icon: "RefreshCw"
+                },
+                {
+                    title: "Process Automation",
+                    description: "Implementation of automation solutions to streamline operations and reduce manual effort.",
+                    icon: "Zap"
+                },
+                {
+                    title: "Change Management",
+                    description: "Comprehensive change management to ensure successful adoption of new processes.",
+                    icon: "Users"
+                },
+                {
+                    title: "Process Monitoring",
+                    description: "Ongoing monitoring and optimization of business processes to ensure continuous improvement.",
+                    icon: "Activity"
+                },
+                {
+                    title: "Integration Services",
+                    description: "Seamless integration of SAP processes with other business systems and applications.",
+                    icon: "Network"
+                }
+            ],
+            image: "/services/sap-bpt.jpg",
+            keyPoints: [
+                "End-to-end process transformation",
+                "Industry-specific best practices",
+                "Data-driven process optimization",
+                "User-centric design approach",
+                "Continuous improvement methodology",
+                "Integration with existing systems"
+            ],
+            technologies: [
+                "SAP S/4HANA",
+                "SAP Process Automation",
+                "SAP Signavio",
+                "SAP Business Process Intelligence",
+                "SAP Intelligent RPA",
+                "SAP Workflow Management",
+                "SAP Process Orchestration",
+                "SAP Integration Suite"
+            ]
+        },
         azure: {
             title: "SAP on Azure",
             subtitle: "Powerful SAP Solutions on Microsoft Azure",

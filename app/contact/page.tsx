@@ -37,7 +37,7 @@ const ContactPage = () => {
       name: "Singapore Headquarters",
       address: "9 Tampines Grande, 02-11",
       area: "Asia Green, Singapore 528735",
-      phone: "+65 6123 4567",
+      phone: "+65 6932 2988",
       email: "sg@hics.com",
       coordinates: {
         lat: 1.3522,
@@ -50,7 +50,7 @@ const ContactPage = () => {
       name: "Philippines Office",
       address: "30th Floor Yuchengco Tower, RCBC Plaza",
       area: "6819 Ayala Avenue, Makati City",
-      phone: "+63 2 1234 5678",
+      phone: "+63 9178767714",
       email: "ph@hics.com",
       coordinates: {
         lat: 14.5577,
@@ -63,7 +63,7 @@ const ContactPage = () => {
       name: "India Office",
       address: "Jain Sadguru Images Capital Park, 502B",
       area: "Capital Pk Rd, Madhapur, Hyderabad, Telangana 500081",
-      phone: "+91 40 1234 5678",
+      phone: "+91 9063427434",
       email: "in@hics.com",
       coordinates: {
         lat: 17.4482,
