@@ -147,7 +147,7 @@ const Footer = () => {
                     HICS TECHNOLOGIES PTE. LTD.
                   </span>
                   <span className={`${typography.caption} block`}>
-                    2 Changi Business Park Ave 1, Singapore 486015
+                  9 Tampines Grande, 02-11, Asia Green, Singapore 528735
                   </span>
                 </div>
               </div>
